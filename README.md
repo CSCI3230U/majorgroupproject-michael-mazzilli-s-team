@@ -8,7 +8,7 @@ Before you submit your project, modify the following table to include everyone's
 | <first_name2> <last_name2> | <github_username2> |
 | <first_name3> <last_name3> | <github_username3> |
 | Ammar Khan                 | ammarkhan310       |
-| <first_name5> <last_name5> | <github_username5> |
+| Connor Henderson           | connordhenderson   |
 
 _**Note:** You can delete the unused rows from the table._
 
