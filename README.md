@@ -6,7 +6,7 @@ Before you submit your project, modify the following table to include everyone's
 | :------------------------- |:------------------:|
 | <first_name1> <last_name1> | <github_username1> |
 | <first_name2> <last_name2> | <github_username2> |
-| <first_name3> <last_name3> | <github_username3> |
+| Justin Katerberg           | jkaterberg         |
 | Ammar Khan                 | ammarkhan310       |
 | Connor Henderson           | connordhenderson   |
 
