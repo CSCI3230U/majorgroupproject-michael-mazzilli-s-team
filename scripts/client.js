@@ -11,7 +11,7 @@ $(document).ready(function() {
     // Click listener for sending a message
     document.getElementById('send-message').addEventListener("click", function() {
         msg = document.getElementById('message').value
-        sendMessage("lobby", msg)
+        socket.emit("sendMessage", username, "lobby", msg)
         document.getElementById('message').value = ''
     })
     
@@ -42,6 +42,7 @@ $(document).ready(function() {
         }
     );
 
+    // Join chat rooms that are dynamically created for your team/lobby
     socket.on('registerChat', function(roomName) {
         console.log("registering to room:", roomName)
         socket.on(roomName), function(username, team, message) {
@@ -50,18 +51,16 @@ $(document).ready(function() {
     })    
     
     socket.on("lobby"), function(username, message) {
+        console.log("message",message)
         appendMessage("<b>" + username + "</b>: " + message)
+    }
+
+    function sendMessage(team, message) {
+        socket.emit("sendMessage", username, "lobby", message)
     }
 });
 
-function sendMessage(team, message) {
-    if (message == "joinLobby") {
-        // Join a lobby
-        socket.emit("joinLobbyRequest", username, "testLobby")
-        return
-    } 
-    socket.emit("sendMessage", username, "lobby", msg)
-}
+
 
 function appendMessage(message) {
     document.getElementById('chat-messages').innerHTML += message + "<br>"

@@ -20,7 +20,7 @@ io.on("connection", socket => {
   socket.on("sendMessage", function (username, team, message)  {
     user = users[username]
     console.log(`'${user.nickname}'->[${user.lobby.name + team}]: ${message}`)
-    user.socket.in(user.lobby.name + team).emit("lobby", username, team, message)
+    io.in(user.lobby.name + team).emit("appendMessage", "<b>" + user.username + ":</b> " + message)
   });
 
   // Register a socket:username
@@ -68,7 +68,7 @@ function addUser(socket, username, nickname) {
   console.log('[' + username + '] REGISTERED')
 }
 
-// Register to a chat channel for broadcasting
+// Dynamically register to a chat channel for broadcasting purposes
 function registerChat(user, roomName) {
   console.log(`'${user.username}' registered to room '${roomName}'`)
   user.socket.emit('registerChat', roomName)
