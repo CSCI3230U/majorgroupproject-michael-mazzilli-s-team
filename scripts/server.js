@@ -6,7 +6,6 @@ const io = require("socket.io")(3000, {
 });
 
 var lobbyList = {}
-var lobby = []
 
 var users = {}
 var sockets = {}
@@ -68,13 +67,7 @@ function addUser(socket, username, nickname) {
   console.log('[' + username + '] REGISTERED')
 }
 
-// Dynamically register to a chat channel for broadcasting purposes
-function registerChat(user, roomName) {
-  console.log(`'${user.username}' registered to room '${roomName}'`)
-  user.socket.emit('registerChat', roomName)
-  user.socket.join(roomName)
-}
-
+// Generates a random RGB colour that's used when a user joins a lobby
 function getRandomColor() {
   const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
   r = randomBetween(0, 255);
@@ -83,3 +76,18 @@ function getRandomColor() {
   rgb = `rgb(${r},${g},${b})`; // Collect all to a css color string
   return rgb
 }
+
+// Dynamically register to a chat channel for broadcasting purposes
+function registerChat(user, roomName) {
+  console.log(`'${user.username}' registered to room '${roomName}'`)
+  user.socket.emit('registerChat', roomName)
+  user.socket.join(roomName)
+}
+
+function sendLobbyList(lobbyName) {
+  lobby = lobbyList[lobbyName]
+  for (var uname in lobbyList[lobbyName].users) {
+    console.log(uname)
+  }
+}
+

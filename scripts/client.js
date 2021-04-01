@@ -1,8 +1,8 @@
 // Socket connection to the server
 const socket = io("ws://localhost:3000");
 var username = "Connor"
-var team = "all"
-var lobby = "testLobby"
+var team = "lobby"
+var lobbyName = "testLobby"
 
 $(document).ready(function() {
 
@@ -11,7 +11,8 @@ $(document).ready(function() {
     // Click listener for sending a message
     document.getElementById('send-message').addEventListener("click", function() {
         msg = document.getElementById('message').value
-        socket.emit("sendMessage", username, "lobby", msg)
+        console.log(`sending '${msg}' to ${lobbyName + team}`)
+        socket.emit("sendMessage", username, team, msg)
         document.getElementById('message').value = ''
     })
     
@@ -45,18 +46,19 @@ $(document).ready(function() {
     // Join chat rooms that are dynamically created for your team/lobby
     socket.on('registerChat', function(roomName) {
         console.log("registering to room:", roomName)
-        socket.on(roomName), function(username, team, message) {
+
+        socket.on(roomName, function(username, team, message) {
             appendMessage("<b>" + username + "</b>: " + message)
-        }
-    })    
+        })
+    }) 
     
-    socket.on("lobby"), function(username, message) {
-        console.log("message",message)
-        appendMessage("<b>" + username + "</b>: " + message)
-    }
+    // Get an updated list of who's in the lobby we're in
+    socket.on("updateLobbyInfo", function(lobby) {
+        lobby = lobby
+    })
 
     function sendMessage(team, message) {
-        socket.emit("sendMessage", username, "lobby", message)
+        socket.emit("sendMessage", username, lobbyName + team, message)
     }
 });
 
