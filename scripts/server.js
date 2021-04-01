@@ -20,7 +20,7 @@ io.on("connection", socket => {
   socket.on("sendMessage", function (username, team, message)  {
     user = users[username]
     console.log(`'${user.nickname}'->[${user.lobby.name + team}]: ${message}`)
-    io.in(user.lobby.name + team).emit("appendMessage", "<b>" + user.username + ":</b> " + message)
+    io.in(user.lobby.name + team).emit("appendMessage", "<b style=\"color:" + user.color + "\">" + user.username + ":</b> " + message)
   });
 
   // Register a socket:username
@@ -58,10 +58,10 @@ function addUserToLobby(user, lobbyName) {
 function addUser(socket, username, nickname) {
   if (users.hasOwnProperty(username)) { 
     console.log('name taken!')
-    users[username] = {socket : socket, username : username, nickname : nickname, lobby : null}
+    users[username] = {socket : socket, username : username, nickname : nickname, lobby : null, color : getRandomColor()}
     console.log('using it anyway!')
   } else {
-    users[username] = {socket : socket, username : username, nickname : nickname, lobby : null}
+    users[username] = {socket : socket, username : username, nickname : nickname, lobby : null, color : getRandomColor()}
   }
   
   sockets[socket] = users[username]
@@ -75,3 +75,11 @@ function registerChat(user, roomName) {
   user.socket.join(roomName)
 }
 
+function getRandomColor() {
+  const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+  r = randomBetween(0, 255);
+  g = randomBetween(0, 255);
+  b = randomBetween(0, 255);
+  rgb = `rgb(${r},${g},${b})`; // Collect all to a css color string
+  return rgb
+}
