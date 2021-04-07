@@ -1,14 +1,25 @@
-<template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+<template lang="pug">
+#app
+  #nav  
+    Navbar
+    router-view
 </template>
 
+<script>
+import Navbar from '@/components/Navbar.vue';
+
+export default {
+  components: {
+    Navbar
+  }
+}
+</script>
+
+
 <style>
+/* import bulma globally */
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
