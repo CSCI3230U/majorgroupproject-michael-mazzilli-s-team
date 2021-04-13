@@ -6,7 +6,8 @@ var mongoose = require('mongoose');
 var userModel = require('./models/user_model.js');
 var postModel = require('./models/post_model.js');
 
-var router = require('./routes/index');
+var default_router = require('./routes/index');
+var user_api = require('./routes/user');
 
 var app = express();
 
@@ -25,7 +26,8 @@ mongoose.connect(uri, {
 
 
 //Routing
-app.use('/', router);
+app.use(default_router);
+app.use(user_api);
 
 //TODO: Setup routing to the application endpoints. Was thinking put each route in separate file in ./routes
 
