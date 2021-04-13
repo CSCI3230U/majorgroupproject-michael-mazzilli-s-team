@@ -20,45 +20,10 @@
         <!-- center column -->
         <div id="posts" class="tile is-parent is-vertical is-6">
           <!-- Potential post layout -->
-          <div class="post tile is-child box">
-            <div class="content">
-              <p>
-                A potential post layout. Obviously needs to be dynamically
-                generated at some point, but its a start. Probably want to add
-                authors and whatnot as well
-              </p>
-              <blockquote>
-                <p>Example of a first layer comment</p>
-                <blockquote class="post">
-                  <p>
-                    Second layer comment. Should probably set a max depth to
-                    display
-                  </p>
-                </blockquote>
-              </blockquote>
-              <blockquote>Another first layer comment</blockquote>
-            </div>
-          </div>
-
-          <div class="post tile is-child box">
-            <div class="content">
-              <p>
-                A potential post layout. Obviously needs to be dynamically
-                generated at some point, but its a start. Probably want to add
-                authors and whatnot as well
-              </p>
-              <blockquote>
-                <p>Example of a first layer comment</p>
-                <blockquote class="post">
-                  <p>
-                    Second layer comment. Should probably set a max depth to
-                    display
-                  </p>
-                </blockquote>
-              </blockquote>
-              <blockquote>Another first layer comment</blockquote>
-            </div>
-          </div>
+          <Post/>
+          <Post/>
+          <Post/>
+          <Post/>          
         </div>
         <MessageBox/>
       </div>
@@ -68,6 +33,7 @@
 
 <script>
 import MessageBox from './MessageBox.vue'
+import Post from './Post.vue'
 
 export default {
   name: "Feed",
@@ -76,6 +42,7 @@ export default {
   },
   components: {
     MessageBox,
+    Post,
   },
 };
 </script>
