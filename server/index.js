@@ -3,8 +3,8 @@ var path = require('path');
 
 //Database imports
 var mongoose = require('mongoose');
-var userModel = require('./models/user_model');
-var postModel = require('./models/post_model');
+var userModel = require('./models/user_model.js');
+var postModel = require('./models/post_model.js');
 
 var router = require('./routes/index');
 
