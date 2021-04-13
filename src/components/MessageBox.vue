@@ -10,14 +10,19 @@
               </div>
             </div>
             <div class="control">
-              <button class="button is-link">Post</button>
+              <Button/>
             </div>
           </div>
         </div>
 </template>
 
 <script>
+import Button from './Button';
+
 export default {
   name: "MessageBox",
+  components: {
+      Button
+  }
 };
 </script>
