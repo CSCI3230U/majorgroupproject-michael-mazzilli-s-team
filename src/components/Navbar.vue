@@ -2,12 +2,32 @@
 div(class="navbar" role="navigation" aria-label="main navigation")
     // site logo
     .navbar-brand
-        img(src="../assets/logo.png" width="50" height="50")
-    
-    .navbar-menu
+        a.navbar-item(href='#index.html')
+            img(src='../assets/logo.png')
+        a.navbar-burger(role='button' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample')
+            span(aria-hidden='true')
+            span(aria-hidden='true')
+            span(aria-hidden='true')
+    #navbarBasicExample.navbar-menu
         .navbar-start
-            router-link(class="navbar-item" to="/") Home
-            router-link(class="navbar-item" to="/about") About
+            a.navbar-item
+                | Home
+            a.navbar-item
+                | Documentation
+            .navbar-item.has-dropdown.is-hoverable
+                a.navbar-link
+                    | More
+                .navbar-dropdown
+                    a.navbar-item
+                        | About
+                    a.navbar-item
+                        | Jobs
+                    a.navbar-item
+                        | Contact
+                    hr.navbar-divider
+                    a.navbar-item
+                        | Report an issue
+
         .navbar-end
             div(class="navbar-item" v-if="!$auth.loading")
                 div(class="navbar-item has-dropdown is-hoverable" v-if="$auth.isAuthenticated")
