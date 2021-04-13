@@ -6,24 +6,57 @@
                 generated at some point, but its a start. Probably want to add
                 authors and whatnot as well
               </p>
-              <blockquote>
-                <p>Example of a first layer comment</p>
-                <blockquote class="post">
-                  <p>
-                    Second layer comment. Should probably set a max depth to
-                    display
-                  </p>
-                </blockquote>
-              </blockquote>
+              <Comment 
+                :nodes="commentTree.nodes" 
+                :depth="0"   
+                :message="commentTree.message"
+              />
               <blockquote>Another first layer comment</blockquote>
             </div>
           </div>
 </template>
 
 <script>
+import Comment from './Comment';
+
 export default {
   name: "Post",
-
+  components: {
+      Comment,
+  },
+  data: function() {
+        return {
+            commentTree: {
+            id: 0,
+            message: 'root',
+            nodes: [
+                {
+                id: 1,
+                message: 'item1',
+                nodes: [
+                    {
+                    id: 2,
+                    message: 'item1.1'
+                    },
+                    {
+                    message: 'item1.2',
+                    nodes: [
+                        {
+                        id: 3,
+                        message: 'item1.2.1'
+                        }
+                    ]
+                    }
+                ]
+                }, 
+                {
+                id: 4,
+                message: 'item2'  
+                }
+            ]
+            }
+        }
+  },
 };
 </script>
 
