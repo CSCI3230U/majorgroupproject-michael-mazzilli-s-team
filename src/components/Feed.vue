@@ -20,10 +20,8 @@
         <!-- center column -->
         <div id="posts" class="tile is-parent is-vertical is-6">
           <!-- Potential post layout -->
-          <Post/>
-          <Post/>
-          <Post/>
-          <Post/>          
+          <Post :post="post1" :user="user"/>
+          <Post :post="post1" :user="user"/>   
         </div>
         <MessageBox/>
       </div>
@@ -44,6 +42,32 @@ export default {
     MessageBox,
     Post,
   },
+  data: function () {
+      return {
+        post1: {
+          text: 'A potential post layout. Obviously needs to be dynamically generated at some point, but its a start. Probably want to add authors and what not as well.',
+          datetime: new Date('2021-04-14T00:35:30'),
+        },
+        user: {
+          firstName: 'John',
+          lastName: 'Doe',
+          username: 'johnD123',
+          picture: 'https://randomuser.me/api/portraits/men/11.jpg',
+        }
+      }
+    },
+    methods: {
+      async getUser() {
+        const res = await fetch('https://randomuser.me/api')
+        const { results } = await res.json()
+
+        this.user.firstName = results[0].name.first
+        this.user.lastName = results[0].name.last
+        this.user.username = results[0].username
+        this.user.picture = results[0].picture.large
+        console.log("fetching data");
+      }
+    },
 };
 </script>
 

@@ -3,7 +3,7 @@ div(class="navbar" role="navigation" aria-label="main navigation")
     // site logo
     .navbar-brand
         a.navbar-item(href='#index.html')
-            img(src='../assets/logo.png')
+            img(src='../assets/temp.png')
         a.navbar-burger(role='button' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample')
             span(aria-hidden='true')
             span(aria-hidden='true')
@@ -42,10 +42,10 @@ div(class="navbar" role="navigation" aria-label="main navigation")
 </template>
 
 <style scoped>
-    img.profile{
+    img {
         border-radius: 50%;
-        scale: 175%;
-        margin-right: 2rem;
+        scale: 200%;
+        margin-right: 1rem;
     }
 
     .navbar-dropdown {            

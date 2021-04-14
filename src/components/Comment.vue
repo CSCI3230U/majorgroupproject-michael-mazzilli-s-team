@@ -1,18 +1,18 @@
 <template>
   <div class="Comment" id="Comment">
     <div class="label-wrapper" @click="toggleChildren">
-      <blockquote :style="indent" :class="labelClasses">
+      <div :style="indent" :class="labelClasses">
         <p v-if="nodes"></p>
         {{ message }}
-      </blockquote>
+      </div>
     </div>
     <Comment 
-      v-bind:key="node.id"
-      
-      v-for="node in nodes"
-      :nodes="node.nodes" 
-      :message="node.message"
-      :depth="depth + 1"   
+        v-bind:key="node.id"
+        
+        v-for="node in nodes"
+        :nodes="node.nodes" 
+        :message="node.message"
+        :depth="depth + 1"   
     >
     </Comment>
   </div>  
@@ -32,7 +32,9 @@ export default {
       return { 'has-children': this.nodes }
     },
     indent() {
-      return { transform: `translate(${this.depth * 50}px)` }
+      return { transform: `translate(${this.depth * 35}px)`,
+               width: 600 - (this.depth * 35) + "px"
+      }
     }
   },
   methods: {
@@ -45,10 +47,11 @@ export default {
 </script>
 
 <style scoped>
-.Comment .label-wrapper .blockquote {
+.Comment .label-wrapper div {
   padding: 0.5rem;
   margin-bottom: 0.5rem;
   background-color: azure;
+  text-align: start;
 }
 
 .post.box {
