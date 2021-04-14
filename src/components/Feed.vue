@@ -21,7 +21,7 @@
         <div id="posts" class="tile is-parent is-vertical is-6">
           <!-- Potential post layout -->
           <Post :post="post1" :user="user"/>
-          <Post :post="post1" :user="user"/>   
+          <Post :post="post2" :user="user2"/>   
         </div>
         <MessageBox/>
       </div>
@@ -48,11 +48,21 @@ export default {
           text: 'A potential post layout. Obviously needs to be dynamically generated at some point, but its a start. Probably want to add authors and what not as well.',
           datetime: new Date('2021-04-14T00:35:30'),
         },
+        post2: {
+          text: 'There should be a way for the comments to be minimized and opened up again.',
+          datetime: new Date('2021-04-14T15:25:30'),
+        },
         user: {
           firstName: 'John',
           lastName: 'Doe',
-          username: 'johnD123',
+          username: 'john123',
           picture: 'https://randomuser.me/api/portraits/men/11.jpg',
+        },
+        user2: {
+          firstName: 'Mary',
+          lastName: 'Ann',
+          username: 'mAnn99',
+          picture: 'https://randomuser.me/api/portraits/women/11.jpg',
         }
       }
     },

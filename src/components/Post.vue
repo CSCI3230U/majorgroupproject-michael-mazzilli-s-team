@@ -129,10 +129,12 @@ img {
 
 .user-name {
     font-weight: bold;
+    justify-self: start;
 }
 
 .username {
     font-weight: normal;
+    justify-self: start;
 }
 
 .timeSince {
@@ -144,7 +146,7 @@ img {
     grid-row: 2;
     grid-column: 2;
     text-align: start;
-    padding-left: 1.5em;
+    padding-left: 1em;
 }
 
 </style>
