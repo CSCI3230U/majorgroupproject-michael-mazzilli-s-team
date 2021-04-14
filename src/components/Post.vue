@@ -67,8 +67,15 @@ export default {
   },
   methods: {
       timeSince () {
-          let currentDate = new Date('2021-04-15T00:34:30')
-          this.timesince = currentDate.getTime() - this.post.datetime.getTime();
+          var currentdate = new Date(); 
+          currentdate = currentdate.getFullYear() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getDate() + " "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+          let newDate = new Date(currentdate)
+          this.timesince = newDate.getTime() - this.post.datetime.getTime();
           if (this.timesince >= 31560000000) {
               this.timesince = Math.floor(this.timesince / 1000 / 60 / 60 / 24 / 30 / 12) + 'y';
           } else if (this.timesince >= 2630000000) {

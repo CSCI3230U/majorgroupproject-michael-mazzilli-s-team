@@ -8,7 +8,6 @@
     </div>
     <Comment 
         v-bind:key="node.id"
-        
         v-for="node in nodes"
         :nodes="node.nodes" 
         :message="node.message"
@@ -33,7 +32,7 @@ export default {
     },
     indent() {
       return { transform: `translate(${this.depth * 35}px)`,
-               width: 600 - (this.depth * 35) + "px"
+               width: 500 - (this.depth * 35) + "px"
       }
     }
   },
@@ -52,6 +51,7 @@ export default {
   margin-bottom: 0.5rem;
   background-color: azure;
   text-align: start;
+  font-size: 0.95em;
 }
 
 .post.box {
@@ -65,6 +65,5 @@ export default {
 .Comment .label-wrapper .has-children {
     cursor: pointer;
 }
-
 
 </style>
