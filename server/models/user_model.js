@@ -6,10 +6,15 @@ let Schema = mongoose.Schema;
 let userSchema = new Schema({
     uid: String,
     username: String,
+    name: {
+        first: String,
+        last: String
+    },
     friends: [{
         uid: String, 
         username: String
     }],
+    picture: String,
     last_login: Date,
     settings: Array
 })

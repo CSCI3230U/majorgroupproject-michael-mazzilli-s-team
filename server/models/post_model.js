@@ -4,8 +4,8 @@ const mongoose=require('mongoose');
 //generate database schema
 let Schema = mongoose.Schema;
 let postSchema = new Schema({
-    uid: String,
-    comment_id: String,
+    poster_id: String,
+    post_id: String,
     date_contributed: {type: Date, default: Date.now},
     body: String,
     score: Number,
