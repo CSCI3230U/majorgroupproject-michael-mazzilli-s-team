@@ -7,11 +7,12 @@ var userModel = require('./models/user_model.js');
 var postModel = require('./models/post_model.js');
 
 var default_router = require('./routes/index');
-var user_api = require('./routes/user');
+var getuser = require('./routes/getuser');
+var getpost = require('./routes/getpost');
 
 var app = express();
 
-//TODO: Setup and connect to mongoDB
+//connect to mongodb
 const uri = "mongodb+srv://jkaterberg:sc5RvWag5alW27Ot@cluster0.jbb5v.mongodb.net/tweetbook?retryWrites=true&w=majority";
 mongoose.connect(uri, {
 	useNewUrlParser: true,
@@ -24,13 +25,12 @@ mongoose.connect(uri, {
 	}
 })
 
-
 //Routing
 app.use(default_router);
-app.use(user_api);
+app.use(getuser);
+app.use(getpost);
 
-//TODO: Setup routing to the application endpoints. Was thinking put each route in separate file in ./routes
-
+//start the application
 app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), function(){
 	console.log(`Listening for requests on port ${app.get('port')}`)
