@@ -10,10 +10,12 @@ div(class="navbar" role="navigation" aria-label="main navigation")
             span(aria-hidden='true')
     #navbarBasicExample.navbar-menu
         .navbar-start
-            a.navbar-item
+            a.navbar-item(href="/")
                 | Home
-            a.navbar-item
-                | Documentation
+            a.navbar-item(href="/profile")
+                | Profile
+            a.navbar-item(href="/messages")
+                | Messages
             .navbar-item.has-dropdown.is-hoverable
                 a.navbar-link
                     | More
@@ -29,6 +31,8 @@ div(class="navbar" role="navigation" aria-label="main navigation")
                         | Report an issue
 
         .navbar-end
+            SearchBar.navbar-item
+                | SearchBar
             div(class="navbar-item" v-if="!$auth.loading")
                 div(class="navbar-item has-dropdown is-hoverable" v-if="$auth.isAuthenticated")
                     img(class="profile" :src="$auth.user.picture" alt="profile")
@@ -54,8 +58,12 @@ div(class="navbar" role="navigation" aria-label="main navigation")
 </style>
 
 <script>
+import SearchBar from '@/components/SearchBar.vue'
 
-export default({
+export default {
+    components: {
+        SearchBar,
+    },
     data: function(){
         return {
             profile_pic: false
@@ -82,5 +90,5 @@ export default({
           });
         },
     }
-})
+}
 </script>
