@@ -38,3 +38,5 @@ router.get('/getpost/user/:id', (req,res) => {
         }
     });
 });
+
+module.exports = router;
