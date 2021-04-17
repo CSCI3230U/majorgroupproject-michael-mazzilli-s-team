@@ -17,6 +17,7 @@ var default_router = require('./routes/index');
 var getuser = require('./routes/getuser');
 var getpost = require('./routes/getpost');
 var adduser = require('./routes/adduser');
+var signin = require('./routes/login');
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -41,6 +42,7 @@ app.use(default_router);
 app.use(getuser);
 app.use(getpost);
 app.use(adduser);
+app.use(signin);
 
 //start the application
 app.set('port', process.env.PORT || 3000);
