@@ -4,55 +4,79 @@ var jwt = require('jsonwebtoken');
 var router = express.Router();
 var loginModel = require('../models/login_model');
 var userModel = require('../models/user_model');
+var { check, validationResult } = require('express-validator');
 
-router.post('/signin', (req,res)=>{
-    var getUser;
+/**
+ * Gets the login info from the client. Determines whether its valid.
+ * Issues a token if the login succeeds
+ * 
+ * Required fields:
+ *  username - username of user to log in
+ *  password - password of user to log in
+ * 
+ *  Command to test:
+ *  curl -X POST -H "Content-Type: application/json" -d '{"username":"test", "password":"password"}' http://localhost:3000/login
+ */
+router.post('/login', [
+    check('username', 'username is required')
+        .not()
+        .isEmpty(),
+    check('password', 'password is required')
+        .not()
+        .isEmpty()
+], (req,res)=>{
+    var errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(422).jsonp(errors.array());
+    }else{
+        var getUser;
 
-    //Find the user in question
-    loginModel.Logins.findOne({
-        username: req.body.username
-    }).then(user => {
-        //check if a user was found
-        if(!user){
-            return res.status(401).json({
-                message: "No user found"
+        //Find the user in question
+        loginModel.Logins.findOne({
+            username: req.body.username
+        }).then(user => {
+            //check if a user was found
+            if(!user){
+                return res.status(401).json({
+                    message: "No user found"
+                });
+            }
+            //get the user information
+            userModel.Users.findOne({
+                uid: user.uid
+            }).then(info => getUser=info);
+
+            //Check the inputted password against the saved password
+            return bcrypt.compare(req.body.password, user.password);
+        }).then(response => {
+            //password incorrect
+            if(!response){
+                return res.status(401).json({
+                    message: "Incorrect password"
+                });
+            }
+
+            //Create the token
+            var jwToken = jwt.sign({
+                username: getUser.username,
+                userId: getUser.uid
+            }, 'client secret, gotta change this around later', {
+                expiresIn: '1h'
             });
-        }
-        //get the user information
-        userModel.Users.findOne({
-            uid: user.uid
-        }).then(info => getUser=info);
 
-        //Check the inputted password against the saved password
-        return bcrypt.compare(req.body.password, user.password);
-    }).then(response => {
-        //password incorrect
-        if(!response){
-            return res.status(401).json({
-                message: "Incorrect password"
+            //send the token to the client
+            res.status(200).json({
+                token: jwToken,
+                expiresIn: 3600,
+                msg: getUser
             });
-        }
-
-        //Create the token
-        var jwToken = jwt.sign({
-            username: getUser.username,
-            userId: getUser.uid
-        }, 'client secret, gotta change this around later', {
-            expiresIn: '1h'
+        }).catch(err => {
+            console.log(err);
+            return res.status(401).json({
+                message: "Some other problem good luck"
+            });
         });
-
-        //send the token to the client
-        res.status(200).json({
-            token: jwToken,
-            expiresIn: 3600,
-            msg: getUser
-        });
-    }).catch(err => {
-        console.log(err);
-        return res.status(401).json({
-            message: "Some other problem good luck"
-        });
-    });
+    }
 });
 
 module.exports = router;
