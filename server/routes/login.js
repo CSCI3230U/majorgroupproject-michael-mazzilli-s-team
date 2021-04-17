@@ -6,6 +6,10 @@ var loginModel = require('../models/login_model');
 var userModel = require('../models/user_model');
 var { check, validationResult } = require('express-validator');
 
+//single error because we don't really want to tell whoever is trying to log in
+//what they got wrong
+var error = "Authentication failed";
+
 /**
  * Gets the login info from the client. Determines whether its valid.
  * Issues a token if the login succeeds
@@ -38,7 +42,7 @@ router.post('/login', [
             //check if a user was found
             if(!user){
                 return res.status(401).json({
-                    message: "No user found"
+                    message: error 
                 });
             }
             //get the user information
@@ -52,16 +56,19 @@ router.post('/login', [
             //password incorrect
             if(!response){
                 return res.status(401).json({
-                    message: "Incorrect password"
+                    message: error 
                 });
             }
+
+            //update the login time for the user
+            getUser.last_login = Date.now();
 
             //Create the token
             var jwToken = jwt.sign({
                 username: getUser.username,
                 userId: getUser.uid
             }, 'client secret, gotta change this around later', {
-                expiresIn: '1h'
+                expiresIn: '24hr'
             });
 
             //send the token to the client
@@ -73,7 +80,7 @@ router.post('/login', [
         }).catch(err => {
             console.log(err);
             return res.status(401).json({
-                message: "Some other problem good luck"
+                message: error 
             });
         });
     }
