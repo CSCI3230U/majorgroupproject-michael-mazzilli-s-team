@@ -34,6 +34,7 @@ let userSchema = new Schema({
         default: `https://robohash.org/default`
     },
     last_login: Date,
+    date_created: Date,
     settings: Array
 })
 

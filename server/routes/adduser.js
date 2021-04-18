@@ -51,7 +51,8 @@ router.post('/adduser',
                         last: req.body.last
                     },
                     picture: `https://robohash.org/${newUID}`,
-                    last_login: Date.now()
+                    last_login: Date.now(),
+                    date_created: Date.now()
                 })
 
                 //Create a new login document using the existing schema
