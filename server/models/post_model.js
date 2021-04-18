@@ -21,14 +21,13 @@ let postSchema = new Schema({
         required: true
     },
     score: Number,
-    Replies: [{
-        uid: String,
-        reply_id: String,
+    replies:[{
+        poster_id: String,
+        reply_id:String,
         date_contributed: Date,
-        body: String,
-        score: Number
+        contents: String,
     }]
-})
+});
 
 //export model for use later
 module.exports.Posts = mongoose.model('posts', postSchema);

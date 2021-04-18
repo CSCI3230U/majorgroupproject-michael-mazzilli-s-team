@@ -5,6 +5,20 @@ This is an overview of all the functionality currently implemented in the tweetb
 - `nodemon` for autoreload on save, 
 - Otherwise `node index.js`
 
+## `<domain>/addfriend/:id`
+### POST
+Adds user as a friend to the currently logged in user, provided the friend is unique and they exist.
+_Requires an access token to be used_
+
+**Required Parameters:**\
+`id`        - uid of friend to add to current user\
+`token`     - in body or as query. Token issued when user logged in
+
+**Example:**\
+`curl -X POST -H "Content-Type: application/json" -d '{"token":"<token>"}' http://<domain>/addfriend/<id>`
+
+[source](routes/addfriend.js)
+
 ## `<domain>/adduser`
 ### POST
 Adds user with the given information into the database. Generates a uuid and a profile picture.
@@ -21,20 +35,6 @@ _Requires an access token to be used_
 `curl -X POST -H "Content-Type: application/json" -d '{"username":"JohnDoe", "first":"John", "last":"Doe", "password":"password"}' http://<domain>/adduser`
 
 [source](routes/adduser.js)
-
-## `<domain>/addfriend/:id`
-### POST
-Adds user as a friend to the currently logged in user, provided the friend is unique and they exist.
-_Requires an access token to be used_
-
-**Required Parameters:**\
-`id`        - uid of friend to add to current user\
-`token`     - in body or as query. Token issued when user logged in
-
-**Example:**\
-`curl -X POST -H "Content-Type: application/json" -d '{"token":"<token>"}' http://<domain>/addfriend/<id>`
-
-[source](routes/addfriend.js)
 
 ## `<domain>/getpost`
 ### GET
@@ -108,6 +108,21 @@ Logs in a client provided they sent a correct username/password combo. Issues an
 `curl -X POST -H "Content-Type: application/json" -d '{"username":"test", "password":"password"}' http://<domain>/login`
 
 [source](routes/login.js)
+
+## `<domain>/submitcomment/:id`
+### POST
+Creates new comment on parent post with id
+_Requires token to use_
+
+**Required Parameters:**\
+`id`        - identifier of original post\
+`contents`  - text body of comment\
+`token`     - access token of currently logged in user
+
+**Example:**\
+ `curl -X POST -H "Content-Type: application/json" -d '{"token":<token>, "contents":<contents>}' http://<domain>/submitcomment/<id>`
+
+ [source](routes/submitcomment.js);
 
 ## `<domain>/submitpost`
 ### POST

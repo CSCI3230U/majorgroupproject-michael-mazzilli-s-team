@@ -15,6 +15,7 @@ var adduser = require('./routes/adduser');
 var login = require('./routes/login');
 var addfriend = require('./routes/addfriend');
 var submitpost = require('./routes/submitpost');
+var submitcomment = require('./routes/submitcomment');
 
 var app = express();
 app.use(express.urlencoded({extended: false}));
@@ -42,6 +43,7 @@ app.use(adduser);
 app.use(login);
 app.use(verifyToken, addfriend);
 app.use(verifyToken, submitpost);
+app.use(verifyToken, submitcomment);
 
 //start the application
 app.set('port', process.env.PORT || 3000);
