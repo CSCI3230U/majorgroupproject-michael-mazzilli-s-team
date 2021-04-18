@@ -1,7 +1,7 @@
 # TweetBook API
 This is an overview of all the functionality currently implemented in the tweetbook API. Every endpoint is listed along with its function and parameters.
 
-***Running the server***: 
+**Running the server**: 
 - `nodemon` for autoreload on save, 
 - Otherwise `node index.js`
 
@@ -36,14 +36,50 @@ _Requires an access token to be used_
 
 [source](routes/addfriend.js)
 
+## `<domain>/getpost`
+### GET
+Gets all the posts stored in the database
+
+**Required Parameters:**\
+_None_
+
+**Example:**\
+`curl http://<domain>/getpost`
+
+[source](routes/getpost.js)
+
+## `<domain>/getpost/:id`
+### GET
+Gets a unique post by id
+
+**Required Parameters:**\
+`id`        - id of the post
+
+**Example:**\
+`curl http://<domain>/getpost/<id>`
+
+[source](routes/getpost.js)
+
+## `<domain>/getpost/user/:id`
+### GET
+Gets all posts from a specific user
+
+**Required Parameters:**\
+`id`        - id of the user
+
+**Example:**\
+ `curl http://<domain>/getpost/user/<id>`
+
+[source](routes/getpost.js)
+
 ## `<domain>/getuser/:id`
 ### GET
 Retrieves a user's public information based on their uid
 
-***Required Parameters:***\
+**Required Parameters:**\
 `id`        - uid of player to fetch
 
-***Example:***\
+**Example:**\
 `curl http://<domain>/getuser/<id>`
 
 [source](routes/getuser.js)
@@ -52,10 +88,10 @@ Retrieves a user's public information based on their uid
 ### GET
 Retrieves all users contained in the database
 
-***Required Parameters:***\
+**Required Parameters:**\
 _None_
 
-***Example:***\
+**Example:**\
 `curl http://<domain>/getuser`
 
 [source](routes/getuser.js)
@@ -64,11 +100,11 @@ _None_
 ### POST
 Logs in a client provided they sent a correct username/password combo. Issues an access token if login is successful
 
-***Required Parameters:***\
+**Required Parameters:**\
 `username`  - Username of user to be logged in\
 `password`  - Password of user to be logged in
 
-***Example:***\
+**Example:**\
 `curl -X POST -H "Content-Type: application/json" -d '{"username":"test", "password":"password"}' http://<domain>/login`
 
 [source](routes/login.js)
@@ -78,11 +114,11 @@ Logs in a client provided they sent a correct username/password combo. Issues an
 Creates a new post and stores it in the database/
 _Requires token to use_
 
-***Required Parameters:***\
+**Required Parameters:**\
 `contents`  - text body of post\
 `token`     - access token of currently logged in user
 
-***Example:***\
+**Example:**\
 `curl -X POST -H "Content-Type: application/json" -d '{"token":"<token>", "contents":"<post contents>"}' http://<domain>/submitpost`
 
 [source](routes/submitpost.js)
