@@ -1,17 +1,11 @@
 //General imports
 var express = require('express');
-var bodyParser = require('body-parser');
-var path = require('path');
 
 //Auth imports
-var jwt = require('jsonwebtoken');
-var bcrypt = require('bcrypt');
 let verifyToken = require('./middleware/authorize');
 
 //Database imports
 var mongoose = require('mongoose');
-var userModel = require('./models/user_model.js');
-var postModel = require('./models/post_model.js');
 
 //router imports
 var default_router = require('./routes/index');
@@ -20,6 +14,7 @@ var getpost = require('./routes/getpost');
 var adduser = require('./routes/adduser');
 var login = require('./routes/login');
 var addfriend = require('./routes/addfriend');
+var submitpost = require('./routes/submitpost');
 
 var app = express();
 app.use(express.urlencoded({extended: false}));
@@ -46,6 +41,7 @@ app.use(getpost);
 app.use(adduser);
 app.use(login);
 app.use(verifyToken, addfriend);
+app.use(verifyToken, submitpost);
 
 //start the application
 app.set('port', process.env.PORT || 3000);

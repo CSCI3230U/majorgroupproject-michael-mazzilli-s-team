@@ -6,7 +6,7 @@ This is an overview of all the functionality currently implemented in the tweetb
 - Otherwise `node index.js`
 
 ## `<domain>/adduser`
-#### POST
+### POST
 Adds user with the given information into the database. Generates a uuid and a profile picture.
 
 _Requires an access token to be used_
@@ -20,10 +20,10 @@ _Requires an access token to be used_
 **Example:**\
 `curl -X POST -H "Content-Type: application/json" -d '{"username":"JohnDoe", "first":"John", "last":"Doe", "password":"password"}' http://<domain>/adduser`
 
-[source](routes/adduser.js)\
+[source](routes/adduser.js)
 
 ## `<domain>/addfriend/:id`
-#### POST
+### POST
 Adds user as a friend to the currently logged in user, provided the friend is unique and they exist.
 _Requires an access token to be used_
 
@@ -37,7 +37,7 @@ _Requires an access token to be used_
 [source](routes/addfriend.js)
 
 ## `<domain>/getuser/:id`
-#### GET
+### GET
 Retrieves a user's public information based on their uid
 
 ***Required Parameters:***\
@@ -49,7 +49,7 @@ Retrieves a user's public information based on their uid
 [source](routes/getuser.js)
 
 ## `<domain>/getuser`
-#### GET
+### GET
 Retrieves all users contained in the database
 
 ***Required Parameters:***\
@@ -61,7 +61,7 @@ _None_
 [source](routes/getuser.js)
 
 ## `<domain>/login`
-#### POST
+### POST
 Logs in a client provided they sent a correct username/password combo. Issues an access token if login is successful
 
 ***Required Parameters:***\
@@ -72,3 +72,17 @@ Logs in a client provided they sent a correct username/password combo. Issues an
 `curl -X POST -H "Content-Type: application/json" -d '{"username":"test", "password":"password"}' http://<domain>/login`
 
 [source](routes/login.js)
+
+## `<domain>/submitpost`
+### POST
+Creates a new post and stores it in the database/
+_Requires token to use_
+
+***Required Parameters:***\
+`contents`  - text body of post\
+`token`     - access token of currently logged in user
+
+***Example:***\
+`curl -X POST -H "Content-Type: application/json" -d '{"token":"<token>", "contents":"<post contents>"}' http://<domain>/submitpost`
+
+[source](routes/submitpost.js)
