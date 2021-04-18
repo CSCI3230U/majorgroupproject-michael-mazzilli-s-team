@@ -6,7 +6,7 @@ This is an overview of all the functionality currently implemented in the tweetb
 - Otherwise `node index.js`
 
 ## `<domain>/addfriend/:id`
-### POST
+### `POST`
 Adds user as a friend to the currently logged in user, provided the friend is unique and they exist.
 _Requires an access token to be used_
 
@@ -20,7 +20,7 @@ _Requires an access token to be used_
 [source](routes/addfriend.js)
 
 ## `<domain>/adduser`
-### POST
+### `POST`
 Adds user with the given information into the database. Generates a uuid and a profile picture.
 
 _Requires an access token to be used_
@@ -37,7 +37,7 @@ _Requires an access token to be used_
 [source](routes/adduser.js)
 
 ## `<domain>/getpost`
-### GET
+### `GET`
 Gets all the posts stored in the database
 
 **Required Parameters:**\
@@ -49,7 +49,7 @@ _None_
 [source](routes/getpost.js)
 
 ## `<domain>/getpost/:id`
-### GET
+### `GET`
 Gets a unique post by id
 
 **Required Parameters:**\
@@ -61,7 +61,7 @@ Gets a unique post by id
 [source](routes/getpost.js)
 
 ## `<domain>/getpost/user/:id`
-### GET
+### `GET`
 Gets all posts from a specific user
 
 **Required Parameters:**\
@@ -73,7 +73,7 @@ Gets all posts from a specific user
 [source](routes/getpost.js)
 
 ## `<domain>/getuser/:id`
-### GET
+### `GET`
 Retrieves a user's public information based on their uid
 
 **Required Parameters:**\
@@ -85,7 +85,7 @@ Retrieves a user's public information based on their uid
 [source](routes/getuser.js)
 
 ## `<domain>/getuser`
-### GET
+### `GET`
 Retrieves all users contained in the database
 
 **Required Parameters:**\
@@ -97,7 +97,7 @@ _None_
 [source](routes/getuser.js)
 
 ## `<domain>/login`
-### POST
+### `POST`
 Logs in a client provided they sent a correct username/password combo. Issues an access token if login is successful
 
 **Required Parameters:**\
@@ -110,8 +110,8 @@ Logs in a client provided they sent a correct username/password combo. Issues an
 [source](routes/login.js)
 
 ## `<domain>/submitcomment/:id`
-### POST
-Creates new comment on parent post with id
+### `POST`
+Creates new comment on parent post with id\
 _Requires token to use_
 
 **Required Parameters:**\
@@ -125,8 +125,8 @@ _Requires token to use_
  [source](routes/submitcomment.js);
 
 ## `<domain>/submitpost`
-### POST
-Creates a new post and stores it in the database/
+### `POST`
+Creates a new post and stores it in the database\
 _Requires token to use_
 
 **Required Parameters:**\
