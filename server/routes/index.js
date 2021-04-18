@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var md = require('markdown-it')('default');
+var md = require('markdown-it')();
+
 var fs = require('fs');
 
 router.get('/', (req, res) => {

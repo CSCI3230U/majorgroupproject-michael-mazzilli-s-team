@@ -7,7 +7,7 @@ This is an overview of all the functionality currently implemented in the tweetb
 
 ## `<domain>/addfriend/:id`
 ### `POST`
-Adds user as a friend to the currently logged in user, provided the friend is unique and they exist.
+Adds user as a friend to the currently logged in user, provided the friend is unique and they exist.\
 _Requires an access token to be used_
 
 **Required Parameters:**\

@@ -1,5 +1,7 @@
 //General imports
 var express = require('express');
+var fs = require('fs');
+var config = JSON.parse(fs.readFileSync('./config.json'));
 
 //Auth imports
 let verifyToken = require('./middleware/authorize');
@@ -22,8 +24,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
 //connect to mongodb
-const uri = "mongodb+srv://jkaterberg:sc5RvWag5alW27Ot@cluster0.jbb5v.mongodb.net/tweetbook?retryWrites=true&w=majority";
-mongoose.connect(uri, {
+mongoose.connect(config.db_uri, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 }, function(error){
