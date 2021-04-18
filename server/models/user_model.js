@@ -22,10 +22,13 @@ let userSchema = new Schema({
             last: String
         }
     },
-    friends: [{
+    friends: {
+        type: [{
         uid: String, 
         username: String
-    }],
+        }],
+        unique: true
+    },
     picture: {
         type: String,
         default: `https://robohash.org/default`

@@ -54,4 +54,4 @@ _None_
 ***Example:***\
 `curl http://<domain>/getuser`
 
-[source](routes/getuser.js)\
+[source](routes/getuser.js)

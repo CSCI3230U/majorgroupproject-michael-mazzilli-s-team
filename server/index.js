@@ -18,7 +18,7 @@ var default_router = require('./routes/index');
 var getuser = require('./routes/getuser');
 var getpost = require('./routes/getpost');
 var adduser = require('./routes/adduser');
-var signin = require('./routes/login');
+var login = require('./routes/login');
 var addfriend = require('./routes/addfriend');
 
 var app = express();
@@ -44,7 +44,7 @@ app.use(default_router);
 app.use(getuser);
 app.use(getpost);
 app.use(adduser);
-app.use(signin);
+app.use(login);
 app.use(verifyToken, addfriend);
 
 //start the application

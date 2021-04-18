@@ -62,20 +62,21 @@ router.post('/login', [
 
             //update the login time for the user
             getUser.last_login = Date.now();
+            getUser.save().then(function(){
+                //Create the token
+                var jwToken = jwt.sign({
+                    username: getUser.username,
+                    userId: getUser.uid
+                }, 'client secret, gotta change this around later', {
+                    expiresIn: '24hr'
+                });
 
-            //Create the token
-            var jwToken = jwt.sign({
-                username: getUser.username,
-                userId: getUser.uid
-            }, 'client secret, gotta change this around later', {
-                expiresIn: '24hr'
-            });
-
-            //send the token to the client
-            res.status(200).json({
-                token: jwToken,
-                expiresIn: 3600,
-                msg: getUser
+                //send the token to the client
+                res.status(200).json({
+                    token: jwToken,
+                    expiresIn: 3600,
+                    msg: getUser
+                });
             });
         }).catch(err => {
             console.log(err);
