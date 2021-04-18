@@ -1,9 +1,13 @@
 # TweetBook API
 This is an overview of all the functionality currently implemented in the tweetbook API. Every endpoint is listed along with its function and parameters.
 
+**Setting up**
+Create new file called `config.json` in the root of the server directory. See `config.json.sample` for structure.
+
 **Running the server**: 
 - `nodemon` for autoreload on save, 
 - Otherwise `node index.js`
+_Uses port 3000 by default_
 
 ## `<domain>/addfriend/:id`
 ### `POST`
