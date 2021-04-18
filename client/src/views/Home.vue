@@ -1,7 +1,7 @@
 <template lang="pug">
 .home
-  img(alt="Vue logo" src="../assets/logo.png")
-  HelloWorld(msg="Welcome to Your Vue.js App")
+  //img(alt="Vue logo" src="../assets/logo.png")
+  Feed(msg="Welcome to Your Vue.js App")
 
   // check that the sdk client is not currently loading before accessing its methods
   div(v-if="!$auth.loading")
@@ -13,13 +13,13 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Feed from '@/components/Feed.vue'
 import Navbar from '@/components/Navbar.vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld,
+    Feed,
     Navbar
   },
 
