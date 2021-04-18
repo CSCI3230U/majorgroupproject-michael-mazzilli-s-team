@@ -22,23 +22,36 @@ router.post('/addfriend/:id', (req, res) => {
             uid: req.decoded.userId
         }).then(user => {
             //create an updated friends array
-            newFriends = user.friends;
-            newFriends.push({
-                uid: friend.uid,
-                username: friend.username
-            });
+            var newFriends = user.friends;
 
-            //update document
-            user.friends = newFriends;
-            user.save().then((response) => {
-                res.status(201).json({
-                    error: error
+            //ensure the user is not already a friend
+            var present = false;
+            for(var i=0; i<newFriends.length; i++){
+                present = (newFriends[i].uid === friend.uid);
+                if(present){ break; }
+            }
+            if(!present){
+                newFriends.push({
+                    uid: friend.uid,
+                    username: friend.username
                 });
-            }).catch(error => {
-                res.status(500).json({
-                    error:error
+
+                //update document
+                user.friends = newFriends;
+                user.save().then((response) => {
+                    res.status(201).json({
+                        error: error
+                    });
+                }).catch(error => {
+                    res.status(500).json({
+                        error:error
+                    });
                 });
-            });
+            }else{
+                res.status(403).json({
+                    error: "Users are already friends"
+                });
+            }
         });
     });
 });
