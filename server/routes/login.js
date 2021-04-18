@@ -5,6 +5,8 @@ var router = express.Router();
 var loginModel = require('../models/login_model');
 var userModel = require('../models/user_model');
 var { check, validationResult } = require('express-validator');
+var fs = require('fs');
+var secret = JSON.parse(fs.readFileSync('./config.json')).secret;
 
 //single error because we don't really want to tell whoever is trying to log in
 //what they got wrong
@@ -67,7 +69,7 @@ router.post('/login', [
                 var jwToken = jwt.sign({
                     username: getUser.username,
                     userId: getUser.uid
-                }, 'client secret, gotta change this around later', {
+                }, secret, {
                     expiresIn: '24hr'
                 });
 

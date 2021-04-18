@@ -6,6 +6,7 @@ This is an overview of all the functionality currently implemented in the tweetb
 - Otherwise `node index.js`
 
 ## `<domain>/adduser`
+#### POST
 Adds user with the given information into the database. Generates a uuid and a profile picture.
 
 _Requires an access token to be used_
@@ -22,6 +23,7 @@ _Requires an access token to be used_
 [source](routes/adduser.js)\
 
 ## `<domain>/addfriend/:id`
+#### POST
 Adds user as a friend to the currently logged in user, provided the friend is unique and they exist.
 _Requires an access token to be used_
 
@@ -35,6 +37,7 @@ _Requires an access token to be used_
 [source](routes/addfriend.js)
 
 ## `<domain>/getuser/:id`
+#### GET
 Retrieves a user's public information based on their uid
 
 ***Required Parameters:***\
@@ -46,6 +49,7 @@ Retrieves a user's public information based on their uid
 [source](routes/getuser.js)
 
 ## `<domain>/getuser`
+#### GET
 Retrieves all users contained in the database
 
 ***Required Parameters:***\
@@ -55,3 +59,16 @@ _None_
 `curl http://<domain>/getuser`
 
 [source](routes/getuser.js)
+
+## `<domain>/login`
+#### POST
+Logs in a client provided they sent a correct username/password combo. Issues an access token if login is successful
+
+***Required Parameters:***\
+`username`  - Username of user to be logged in\
+`password`  - Password of user to be logged in
+
+***Example:***\
+`curl -X POST -H "Content-Type: application/json" -d '{"username":"test", "password":"password"}' http://<domain>/login`
+
+[source](routes/login.js)
