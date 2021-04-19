@@ -70,7 +70,6 @@ export default {
           //get the current date, and date posted
           var now = new Date();
           var postDate = Date.parse(this.post.date_contributed);
-          console.log((now.getTime() - postDate)/1000)
 
             //determine time between
           this.timesince = now.getTime() - postDate;

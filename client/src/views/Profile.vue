@@ -7,7 +7,7 @@
   </div>
   <div class="tile is-parent">
     <div class="tile is-child">
-      <Post v-for="post in posts" :key="post.poster_id" :post="post" :user="user"/>
+      <Post v-for="post in posts" :key="post.post_id" :post="post" :user="user"/>
     </div>
   </div>
 </div>
@@ -39,22 +39,29 @@ export default {
     },
     methods: {
       getUser() {
-        //load the logged in user from cookies
-        var user_data = document.cookie;
-        user_data = user_data.split('=')[1]
-        user_data = JSON.parse(user_data);
+        //get the user data
+        var uid = this.$route.params.uid;
+        var user_data;
 
-        fetch(this.$server+'/getpost/user/'+user_data.msg.uid)
+        fetch(this.$server+"/getuser/"+uid)
           .then(response => response.json())
           .then(response => {
-            console.log(response);
-            this.posts = response;
+            user_data = response;
+          }).then(() => {
+            this.user.firstName = user_data.name.first;
+            this.user.lastName = user_data.name.last;
+            this.user.username = user_data.username;
+            this.user.picture = user_data.picture;
+
+            //fetch user's posts
+            fetch(this.$server+'/getpost/user/'+user_data.uid)
+              .then(response => response.json())
+              .then(response => {
+                this.posts = response;
+              });
           });
 
-        this.user.firstName = user_data.msg.name.first;
-        this.user.lastName = user_data.msg.name.last;
-        this.user.username = user_data.msg.username;
-        this.user.picture = user_data.msg.picture;
+
       }
     },
     created() {

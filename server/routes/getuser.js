@@ -21,12 +21,11 @@ var userModel = require('../models/user_model');
  */
 router.get('/getuser/:uid', (req,res) => {
     //get and ensure there are queries
-    userModel.Users.find({uid: req.params.uid}).then(function(err, result){
-        console.log("fetching user");
+    userModel.Users.find({uid: req.params.uid}).then(function(result, err){
         if(err){
             res.send(err);
         }else{
-            res.send(result);
+            res.send(result[0]);
         }
     });
 });
