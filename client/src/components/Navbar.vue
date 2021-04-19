@@ -2,13 +2,37 @@
 div(class="navbar" role="navigation" aria-label="main navigation")
     // site logo
     .navbar-brand
-        img(src="../assets/logo.png" width="50" height="50")
-    
-    .navbar-menu
+        a.navbar-item(href='#index.html')
+            img(src='../assets/temp.png')
+        a.navbar-burger(role='button' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample')
+            span(aria-hidden='true')
+            span(aria-hidden='true')
+            span(aria-hidden='true')
+    #navbarBasicExample.navbar-menu
         .navbar-start
-            router-link(class="navbar-item" to="/") Home
-            router-link(class="navbar-item" to="/about") About
+            a.navbar-item(href="/")
+                | Home
+            a.navbar-item(href="/profile")
+                | Profile
+            a.navbar-item(href="/messages")
+                | Messages
+            .navbar-item.has-dropdown.is-hoverable
+                a.navbar-link
+                    | More
+                .navbar-dropdown
+                    a.navbar-item
+                        | About
+                    a.navbar-item
+                        | Jobs
+                    a.navbar-item
+                        | Contact
+                    hr.navbar-divider
+                    a.navbar-item
+                        | Report an issue
+
         .navbar-end
+            SearchBar.navbar-item
+                | SearchBar
             div(class="navbar-item" v-if="!$auth.loading")
                 div(class="navbar-item has-dropdown is-hoverable" v-if="$auth.isAuthenticated")
                     img(class="profile" :src="$auth.user.picture" alt="profile")
@@ -22,10 +46,10 @@ div(class="navbar" role="navigation" aria-label="main navigation")
 </template>
 
 <style scoped>
-    img.profile{
+    img {
         border-radius: 50%;
-        scale: 175%;
-        margin-right: 2rem;
+        scale: 200%;
+        margin-right: 1rem;
     }
 
     .navbar-dropdown {            
@@ -34,8 +58,12 @@ div(class="navbar" role="navigation" aria-label="main navigation")
 </style>
 
 <script>
+import SearchBar from '@/components/SearchBar.vue'
 
-export default({
+export default {
+    components: {
+        SearchBar,
+    },
     data: function(){
         return {
             profile_pic: false
@@ -62,5 +90,5 @@ export default({
           });
         },
     }
-})
+}
 </script>
