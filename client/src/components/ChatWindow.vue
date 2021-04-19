@@ -12,8 +12,8 @@
             <ChatMessage :message="chatLog.message1"/>
             <ChatMessage :message="chatLog.message2"/>
         </div>
-        <div class="tile is-parent"> 
-            <input class="input is-rounded" type="text" placeholder="Type a message">
+        <div class="tile is-parent">
+                <input class="input is-rounded" type="text" placeholder="Type a message">
         </div>
     </div>
 </template>
@@ -44,5 +44,25 @@ export default {
     position: absolute;
     width: 100%;
     bottom: 0px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 </style>
