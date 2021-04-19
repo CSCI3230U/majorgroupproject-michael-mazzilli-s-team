@@ -68,7 +68,8 @@ import SearchBar from '@/components/SearchBar.vue'
     try {
         data = JSON.parse(data);
     } catch (e) {
-        console.log(data, e)
+        console.log("data:", data)
+        console.log("exception:", e)
     }
 
 export default {
