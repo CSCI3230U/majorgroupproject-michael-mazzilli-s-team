@@ -36,7 +36,7 @@ export default {
 .chats {
     position: relative;
     overflow-y: scroll;
-    max-height: 77vh;
+    max-height: 76vh;
     padding-right: 2em;
 }
 

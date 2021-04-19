@@ -15,10 +15,11 @@
       <!-- Using Bulma's tiles to control the layout -->
       <div id="page-content" class="tile is-ancestor">
         <!-- Sidebar for additional content. Maybe put a graph here for site activity? -->
-        <div v-if="show" id="left-sidebar" class="tile is-4 is-child box">
+        <div v-if="show" id="left-sidebar" class="tile is-4 is-parent box" @click="toggleChat">
           <ChatWindow :chatLog= "chatLog"/>
         </div>
-        <div v-if="!show" id="left-sidebar" class="tile is-4 is-child box">
+        <div v-if="!show" id="left-sidebar" class="chats tile is-4 is-vertical is-parent" @click="toggleChat">
+          <div class="tile is-child box">
           <Chats :message="chatLog.message2"/>
           <Chats :message="chatLog.message1"/>
           <Chats :message="chatLog.message1"/>
@@ -27,13 +28,17 @@
           <Chats :message="chatLog.message1"/>
           <Chats :message="chatLog.message2"/>
           <Chats :message="chatLog.message2"/>
+          <Chats :message="chatLog.message1"/>
+          <Chats :message="chatLog.message2"/>
+          <Chats :message="chatLog.message2"/>
+          </div>
         </div>
         <!-- center column -->
-        <div id="posts" class="tile is-parent is-vertical is-6">
+        <div id="posts" class="tile is-parent is-vertical is-6 box">
           <!-- Potential post layout -->
           <Post v-for="post in posts" :key="post._id" :post="post"/>   
         </div>
-        <div id="right-sidebar" class="tile is-8 is-child box">
+        <div id="right-sidebar" class="tile is-parent is-2 box">
         <MessageBox/>
         </div>
       </div>
@@ -61,6 +66,29 @@ export default {
   data: function () {
       return {
         posts: [],
+        chatLog: {
+        message1: {
+          user: {
+            firstName: 'John',
+            lastName: 'Doe',
+            username: 'john123',
+            picture: 'https://randomuser.me/api/portraits/men/11.jpg',
+          },
+          text: "This is a test message. Padding out the text to see how it overflows. This is a test message. Padding out the text to see how it overflows. This is a test message. Padding out the text to see how it overflows.",
+          datetime: new Date('2021-04-17T15:25:30')
+        },
+        message2: {
+          user: {
+            firstName: 'Mary',
+            lastName: 'Ann',
+            username: 'mAnn123',
+            picture: 'https://randomuser.me/api/portraits/women/11.jpg',
+          },
+          text: "This is a test message. Padding out the text to see how it overflows.",
+          datetime: new Date('2021-04-18T15:25:30')
+        }
+      },
+      show: true,
       }
     },
     methods: {
@@ -70,6 +98,10 @@ export default {
           .then(response => {
             this.posts = response;
         });
+      },
+      toggleChat() {
+        this.show = !this.show;
+        console.log(this.show);
       }
     },
 
@@ -83,10 +115,13 @@ export default {
 <style scoped>
 nav {
   margin-bottom: 1rem;
+  overflow: hidden;
 }
 
 #page-content {
-  margin: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 0.5rem;
 }
 
 .post blockquote {
@@ -97,5 +132,39 @@ nav {
 
 .post.box {
   background-color: azure;
+}
+
+#right-sidebar {
+  max-height: 85vh;
+}
+
+#posts {
+    overflow-y: scroll;
+    max-height: 90vh;
+}
+
+.chats {
+    overflow-y: scroll;
+    max-height: 88vh;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f100; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: azure;
 }
 </style>
