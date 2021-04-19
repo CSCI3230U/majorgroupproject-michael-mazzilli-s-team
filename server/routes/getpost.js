@@ -1,6 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var postModel = require('../models/post_model');
+
+var Users = require('../models/user_model');
+var Posts = require('../models/post_model');
+var Logins = require('../models/login_model');
+var Comments = require('../models/comment_model');
+
+Users.toString();
 
 /**
  * Get all posts in the database
@@ -9,7 +15,10 @@ var postModel = require('../models/post_model');
  *  curl http://<domain>/getpost
  */
 router.get('/getpost', (req, res) => {
-    postModel.Posts.find().then(function(err,result){
+    Posts.find()
+    .populate('author')
+    .populate('replies')
+    .then(function(err,result){
         if(err){
             res.send(err);
         }else{
@@ -28,7 +37,10 @@ router.get('/getpost', (req, res) => {
  *  curl http://<domain>/getpost/<id>
  */
 router.get('/getpost/:id', (req,res) => {
-    postModel.Posts.find({post_id: req.params.id}, (err,result) => {
+    Posts.findById(req.params.id)
+        .populate('author')
+        .populate('replies')
+        .then((err,result) => {
         if(err){
             res.send(err);
         }else{
@@ -47,12 +59,16 @@ router.get('/getpost/:id', (req,res) => {
  *  curl http://<domain>/getpost/user/<id>
  */
 router.get('/getpost/user/:id', (req,res) => {
-    postModel.Posts.find({poster_id: req.params.id}).then(function(err,result){
-        if(err){
-            res.send(err);
-        }else{
-            res.send(result);
-        }
+    Posts.find({'author': req.params.id})
+        .populate('author')
+        .populate('replies')
+        .then(function(err,result){
+            console.log(err);
+            if(err){
+                res.send(err);
+            }else{
+                res.send(result);
+            }
     });
 });
 

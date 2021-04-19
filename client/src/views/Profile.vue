@@ -7,10 +7,7 @@
   </div>
   <div class="tile is-parent">
     <div class="tile is-child">
-      <Post :post="post" :user="user"/>
-      <Post :post="post" :user="user"/>
-      <Post :post="post" :user="user"/>
-      <Post :post="post" :user="user"/>
+      <Post v-for="post in posts" :key="post.post_id" :post="post"/>
     </div>
   </div>
 </div>
@@ -29,27 +26,45 @@ export default {
   data: function () {
       return {
         user: {
-          firstName: 'John',
-          lastName: 'Doe',
-          username: 'john123',
-          picture: 'https://randomuser.me/api/portraits/men/11.jpg',
+          firstName: '',
+          lastName: '',
+          username: '',
+          picture: '',
         },
-        post: {
+        posts: []/*{
           text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?',
           datetime: new Date('2021-04-17T00:35:30'),
-        },
+        },*/
       }
     },
     methods: {
-      async getUser() {
-        const res = await fetch('https://randomuser.me/api')
-        const { results } = await res.json()
+      getUser() {
+        //get the user data
+        var uid = this.$route.params.uid;
+        var user_data;
 
-        this.user.firstName = results[0].name.first
-        this.user.lastName = results[0].name.last
-        this.user.username = results[0].login.username
-        this.user.picture = results[0].picture.large
-        console.log(results[0].username);
+        fetch(this.$server+"/getuser/"+uid)
+          .then(response => response.json())
+          .then(response => {
+            user_data = response;
+          }).then(() => {
+            this.user.firstName = user_data.name.first;
+            this.user.lastName = user_data.name.last;
+            this.user.username = user_data.username;
+            this.user.picture = user_data.picture;
+
+            //fetch user's posts
+            fetch(this.$server+'/getpost/user/'+user_data._id)
+              .then(response => response.json())
+              .then(response => {
+                console.log(response);
+                if(Object.entries(response).length != 0){
+                  this.posts = response;
+                }
+              });
+          });
+
+
       }
     },
     created() {

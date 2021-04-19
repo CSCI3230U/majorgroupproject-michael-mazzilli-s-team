@@ -5,14 +5,10 @@ var uniqueValidator = require('mongoose-unique-validator');
 //generate database schema
 let Schema = mongoose.Schema;
 let userSchema = new Schema({
-    uid: {
-        type:String,
-        require: true
-    },
     username: {
         type: String,
-        unique: true,
-        require: true
+        require: true,
+        unique: true
     },
     name: {
         type: Object,
@@ -21,13 +17,6 @@ let userSchema = new Schema({
             first: String,
             last: String
         }
-    },
-    friends: {
-        type: [{
-        uid: String, 
-        username: String
-        }],
-        unique: true
     },
     picture: {
         type: String,
@@ -41,9 +30,13 @@ let userSchema = new Schema({
         type: Date,
         default: Date.now()
     },
+    friends: [
+        {type: Schema.Types.ObjectId, ref: "users"}
+    ],
     settings: Array
 })
 
 //export model for use later
 userSchema.plugin(uniqueValidator, { message: "Username taken" });
-module.exports.Users = mongoose.model('users', userSchema);
+
+module.exports = mongoose.model('users', userSchema);
