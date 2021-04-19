@@ -111,6 +111,12 @@ img {
     grid-template-rows: 20% 80%;
 }
 
+@-moz-document url-prefix() {
+  .wrapper {
+      height: 12vh
+  }
+}
+
 .user-name-date {
     justify-self: start;
     padding-left: 1em;
