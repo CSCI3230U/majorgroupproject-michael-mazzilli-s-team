@@ -22,6 +22,14 @@ export function getCookie(name){
     return "";
 }
 
+export function getToken(){
+    var user = this.getCookie('user');
+    if(user === "" || user === undefined){
+        user = "{}";
+    }
+    return JSON.parse(user).token;
+}
+
 export function resetCookie(name){
     document.cookie = `"${name}"=""`;
 }

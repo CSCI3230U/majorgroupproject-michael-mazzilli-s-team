@@ -1,12 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var Users = require('../models/user_model');
 var Posts = require('../models/post_model');
-var Logins = require('../models/login_model');
-var Comments = require('../models/comment_model');
-
-Users.toString();
 
 /**
  * Get all posts in the database
