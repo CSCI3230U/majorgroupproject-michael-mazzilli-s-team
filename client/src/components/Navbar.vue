@@ -16,19 +16,19 @@ div(class="navbar" role="navigation" aria-label="main navigation")
                 | Profile
             a.navbar-item(href="/messages")
                 | Messages
-            .navbar-item.has-dropdown.is-hoverable
-                a.navbar-link
-                    | More
-                .navbar-dropdown
-                    a.navbar-item
-                        | About
-                    a.navbar-item
-                        | Jobs
-                    a.navbar-item
-                        | Contact
-                    hr.navbar-divider
-                    a.navbar-item
-                        | Report an issue
+            //- .navbar-item.has-dropdown.is-hoverable
+            //-     a.navbar-link
+            //-         | More
+            //-     .navbar-dropdown
+            //-         a.navbar-item
+            //-             | About
+            //-         a.navbar-item
+            //-             | Jobs
+            //-         a.navbar-item
+            //-             | Contact
+            //-         hr.navbar-divider
+            //-         a.navbar-item
+            //-             | Report an issue
 
         .navbar-end
             SearchBar.navbar-item
