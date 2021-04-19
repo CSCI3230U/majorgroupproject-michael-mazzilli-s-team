@@ -15,15 +15,28 @@
       <!-- Using Bulma's tiles to control the layout -->
       <div id="page-content" class="tile is-ancestor">
         <!-- Sidebar for additional content. Maybe put a graph here for site activity? -->
-        <div id="left-sidebar" class="tile is-3"></div>
-
+        <div v-if="show" id="left-sidebar" class="tile is-4 is-child box">
+          <ChatWindow :chatLog= "chatLog"/>
+        </div>
+        <div v-if="!show" id="left-sidebar" class="tile is-4 is-child box">
+          <Chats :message="chatLog.message2"/>
+          <Chats :message="chatLog.message1"/>
+          <Chats :message="chatLog.message1"/>
+          <Chats :message="chatLog.message2"/>
+          <Chats :message="chatLog.message2"/>
+          <Chats :message="chatLog.message1"/>
+          <Chats :message="chatLog.message2"/>
+          <Chats :message="chatLog.message2"/>
+        </div>
         <!-- center column -->
         <div id="posts" class="tile is-parent is-vertical is-6">
           <!-- Potential post layout -->
           <Post :post="post1" :user="user"/>
           <Post :post="post2" :user="user2"/>   
         </div>
+        <div id="right-sidebar" class="tile is-8 is-child box">
         <MessageBox/>
+        </div>
       </div>
     </body>
   </html>
@@ -32,6 +45,8 @@
 <script>
 import MessageBox from './MessageBox.vue'
 import Post from './Post.vue'
+import ChatWindow from './ChatWindow.vue'
+import Chats from './Chats.vue'
 
 export default {
   name: "Feed",
@@ -41,6 +56,8 @@ export default {
   components: {
     MessageBox,
     Post,
+    ChatWindow,
+    Chats,
   },
   data: function () {
       return {
@@ -63,7 +80,30 @@ export default {
           lastName: 'Ann',
           username: 'mAnn99',
           picture: 'https://randomuser.me/api/portraits/women/11.jpg',
-        }
+        },
+        chatLog: {
+          message1: {
+            user: {
+              firstName: 'John',
+              lastName: 'Doe',
+              username: 'john123',
+              picture: 'https://randomuser.me/api/portraits/men/11.jpg',
+            },
+            text: "This is a test message. Padding out the text to see how it overflows. This is a test message. Padding out the text to see how it overflows. This is a test message. Padding out the text to see how it overflows.",
+            datetime: new Date('2021-04-17T15:25:30')
+          },
+          message2: {
+            user: {
+              firstName: 'Mary',
+              lastName: 'Ann',
+              username: 'mAnn123',
+              picture: 'https://randomuser.me/api/portraits/women/11.jpg',
+            },
+            text: "This is a test message. Padding out the text to see how it overflows.",
+            datetime: new Date('2021-04-18T15:25:30')
+          }
+        },
+        show: false,
       }
     },
     methods: {
@@ -76,6 +116,10 @@ export default {
         this.user.username = results[0].username
         this.user.picture = results[0].picture.large
         console.log("fetching data");
+      },
+      toggleChat() {
+        this.show = !this.show;
+        console.log(this.show);
       }
     },
 };

@@ -10,6 +10,7 @@
       <Chats :message="chatLog.message1"/>
       <Chats :message="chatLog.message2"/>
       <Chats :message="chatLog.message2"/>
+      <Chats :message="chatLog.message2"/>
     </div>
   </div>
   <div class="tile is-parent">

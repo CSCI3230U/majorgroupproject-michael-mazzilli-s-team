@@ -1,4 +1,5 @@
 <template>
+    <div class="chats tile is-child">
     <div class="wrapper">
         <img :src="message.user.picture" width="60px"/>
         <div class="user-name"> 
@@ -6,6 +7,7 @@
         </div>
         <span class="message-text">{{ message.text }}</span>
     </div>
+  </div>
 </template>
 
 <script>
@@ -18,6 +20,7 @@ export default {
 </script>
 
 <style scoped>
+
 img {
   border-radius: 50%;
 }
