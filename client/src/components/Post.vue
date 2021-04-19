@@ -11,52 +11,73 @@
                 <div class="posttext">{{ post.contents }}</div>
             </div>
             <div v-if="!show" class="hidden"></div>
-            <div v-if="show" class="comments" @click="toggleComments">
-                <Comment :comment = "comment1"/>
-                <Comment :comment = "comment2"/>
+            <div v-if="show" class="comments" :key="post.replies.length" @click="toggleComments">
+                <Comment v-for="comment in post.replies" :key="comment._id" :comment="comment"/>
             </div>
+            <form @submit.prevent="submit">
+                <div class="container reply">
+                    <input class=input v-model="contents" type="text" placeholder="Post a repy">
+                    <Button>Post</Button>
+                </div>
+            </form>
         </div>
     </div>
 </template>
 
 <script>
 import Comment from './Comment';
+import Button from './Button';
+var cookie = require('../scripts/cookies');
 
 export default {
   name: "Post",
   components: {
       Comment,
+      Button,
   },
   props: {
       post: Object,
   },
   data: function() {
         return {
-            comment1: {
-                id: 0,
-                message: 'Comment number one.',
-                user: {
-                    firstName: 'John',
-                    lastName: 'Doe',
-                    username: 'john123',
-                    picture: 'https://randomuser.me/api/portraits/men/11.jpg',
-                },
-            },
-            comment2: {
-                id: 1,
-                message: 'Comment number two.',
-                user: {
-                    firstName: 'John',
-                    lastName: 'Doe',
-                    username: 'john123',
-                    picture: 'https://randomuser.me/api/portraits/men/11.jpg',
-                },
-            },
             timesince: 0,
             show: false,
+            contents: '',
+            reload: 0
         }
   },
   methods: {
+      submit () {
+        var post_id = this.post._id;
+        var data = {
+            contents : this.contents,
+            token : cookie.getToken()
+        }
+
+        //send the request
+        fetch(this.$server+"/submitcomment/"+post_id, {
+            method:"post",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(response => response.json())
+        .then(response => {
+            console.log(response);
+            if(response.status === "success"){
+                //clear the input 
+                this.contents = '';
+                
+                //update the comments on the post
+                fetch(this.$server+"/getcomments/"+post_id)
+                    .then(response => response.json())
+                    .then(response => {
+                        this.post.replies = response;
+                })
+            }
+        })
+
+      },
       timeSince () {
           //get the current date, and date posted
           var now = new Date();
@@ -90,7 +111,6 @@ export default {
 </script>
 
 <style scoped>
-
 .post blockquote {
   padding: 0.5rem;
   background-color: azure;
@@ -108,7 +128,7 @@ img {
 .wrapper {
     display: grid;
     grid-template-columns: 10% 90%;
-    grid-template-rows: 20% 80%;
+    grid-template-rows: 20% 60% 20%;
 }
 
 @-moz-document url-prefix() {
@@ -144,6 +164,7 @@ img {
     grid-column: 2;
     text-align: start;
     padding-left: 1em;
+    display: block;
 }
 
 .comments {
@@ -154,6 +175,12 @@ img {
 .hidden {
     border-top: 1px solid rgb(132, 216, 216);
 }
+
+.reply {
+    margin-top: 1rem;
+    display: flex;
+}
+
 
 
 </style>
