@@ -54,10 +54,13 @@ export default {
             this.user.picture = user_data.picture;
 
             //fetch user's posts
-            fetch(this.$server+'/getpost/user/'+user_data.uid)
+            fetch(this.$server+'/getpost/user/'+user_data._id)
               .then(response => response.json())
               .then(response => {
-                this.posts = response;
+                if(Object.entries(response).length != 0){
+                  console.log(response);
+                  this.posts = response;
+                }
               });
           });
 

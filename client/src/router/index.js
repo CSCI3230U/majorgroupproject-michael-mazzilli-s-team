@@ -29,7 +29,7 @@ const routes = [
       if(uid === "{}" || uid === ""){
         return {name: "Login"}
       }else{
-        return {name: "UserProfile", params: {'uid':JSON.parse(uid).msg.uid}}
+        return {name: "UserProfile", params: {'uid':JSON.parse(uid).msg._id}}
       }
     }
   },
@@ -62,7 +62,6 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if((to.name === 'Profile' || to.name === 'Messages') && !auth.isAuthenticated()) next({name: 'Login'})
   if(to.name === 'Login' && auth.isAuthenticated()) next({name: 'Home'})
-  if(to.name === 'Profile' && auth.isAuthenticated()) next({name: 'UserProfile', params: {'uid':`${JSON.parse(cookie.getCookie('user')).msg.uid}`}})
   else next()
 })
 
