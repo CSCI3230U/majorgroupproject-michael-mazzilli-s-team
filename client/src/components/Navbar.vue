@@ -33,16 +33,16 @@ div(class="navbar" role="navigation" aria-label="main navigation")
         .navbar-end
             SearchBar.navbar-item
                 | SearchBar
-            div(class="navbar-item" v-if="!$auth.loading")
-                div(class="navbar-item has-dropdown is-hoverable" v-if="$auth.isAuthenticated")
-                    img(class="profile" :src="$auth.user.picture" alt="profile")
 
+            div(class="navbar-item" )
+                div(class="navbar-item has-dropdown is-hoverable" :key="key" v-if="user")
+                    img(class="profile" :src="current_user.msg.picture" alt="profile")
                     div(class="navbar-dropdown is-right is-boxed")
                         a(class="navbar-item") Settings
                         hr(class="navbar-divider")
                         a(class="navbar-item" @click="logout") Log out
 
-                button(class="button" v-if="!$auth.isAuthenticated" @click="login") Log in
+                a(class="button" :key="key" v-if="Object.entries(current_user).length === 0" href="/login") Log in
 </template>
 
 <style scoped>
@@ -66,29 +66,36 @@ export default {
     },
     data: function(){
         return {
-            profile_pic: false
+            profile_pic: false,
+            data: {},
+            current_user: data,
+            key: 0,
         }
     },
 
-    mounted: function() {
-        //this.$nextTick(function(){
-        //    this.getInfo();
-        //    
-        //})
+    computed: {
+        user: function() {
+            var data = document.cookie;
+            data = data.split('=')[1];
+            if(data == "" || data == undefined){
+                data='{}';
+            }
+            data = JSON.parse(data);
+
+            if(Object.entries(data).length === 0){
+                return false;
+            }else{
+                return true;
+            }
+        }
     },
 
     methods: {
-        //Log the user in
-        login() {
-          this.$auth.loginWithRedirect();
-        },
-
-        //log the user out
-        logout() {
-          this.$auth.logout({
-            returnTo: window.location.origin
-          });
-        },
+        logout(){
+            console.log("logging out");
+            document.cookie='user={}';
+            this.key++;
+        }
     }
 }
 </script>

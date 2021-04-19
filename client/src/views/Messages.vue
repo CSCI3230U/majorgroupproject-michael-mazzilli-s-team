@@ -19,6 +19,8 @@ import ChatWindow from '@/components/ChatWindow.vue';
 export default {
   name: "Messages",
   components: {
+  },
+  
     ChatWindow,
   },
   data: function() {

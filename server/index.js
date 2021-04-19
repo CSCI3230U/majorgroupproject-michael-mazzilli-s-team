@@ -1,5 +1,6 @@
 //General imports
 var express = require('express');
+var cors = require('cors');
 var fs = require('fs');
 var config = JSON.parse(fs.readFileSync('./config.json'));
 
@@ -22,6 +23,7 @@ var submitcomment = require('./routes/submitcomment');
 var app = express();
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+app.use(cors());
 
 //connect to mongodb
 mongoose.connect(config.db_uri, {
