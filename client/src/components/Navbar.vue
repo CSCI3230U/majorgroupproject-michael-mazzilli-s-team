@@ -33,10 +33,10 @@ div(class="navbar" role="navigation" aria-label="main navigation")
         .navbar-end
             SearchBar.navbar-item
                 | SearchBar
+
             div(class="navbar-item" )
                 div(class="navbar-item has-dropdown is-hoverable" :key="key" v-if="user")
                     img(class="profile" :src="current_user.msg.picture" alt="profile")
-
                     div(class="navbar-dropdown is-right is-boxed")
                         a(class="navbar-item") Settings
                         hr(class="navbar-divider")
@@ -59,13 +59,6 @@ div(class="navbar" role="navigation" aria-label="main navigation")
 
 <script>
 import SearchBar from '@/components/SearchBar.vue'
-
-var data = document.cookie;
-data = data.split('=')[1];
-if(data == "" || data == undefined){
-    data = '{}';
-}
-data = JSON.parse(data);
 
 export default {
     components: {
