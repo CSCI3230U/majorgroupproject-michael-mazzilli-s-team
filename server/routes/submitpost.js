@@ -1,7 +1,6 @@
 var express = require('express');
 var Posts = require('../models/post_model');
 var router = express.Router();
-var {v4: uuidv4} = require('uuid');
 var {check, validationResult } = require('express-validator');
 
 /**
