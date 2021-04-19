@@ -1,69 +1,44 @@
 <template>
-  <div class="Comment" id="Comment">
-    <div class="label-wrapper" @click="toggleChildren">
-      <div :style="indent" :class="labelClasses">
-        <p v-if="nodes"></p>
-        {{ message }}
-      </div>
-    </div>
-    <Comment 
-        v-bind:key="node.id"
-        v-for="node in nodes"
-        :nodes="node.nodes" 
-        :message="node.message"
-        :depth="depth + 1"   
-    >
-    </Comment>
+  <div class="content">
+        <div class="wrapper">
+          <img :src="comment.user.picture" width="30px"/>
+          <div class="comment">{{ comment.message }}</div>
+        </div>
   </div>  
 </template>
 
 <script>
 export default {
   name: "Comment",
-  props: [ 'nodes', 'message', 'depth' ],
+  props: {
+    comment: Object,
+  },
    data() {
      return {
        showChildren: false
      }
   },
-  computed: {
-    labelClasses() {
-      return { 'has-children': this.nodes }
-    },
-    indent() {
-      return { transform: `translate(${this.depth * 35}px)`,
-               width: 500 - (this.depth * 35) + "px"
-      }
-    }
-  },
-  methods: {
-    toggleChildren() {
-       this.showChildren = !this.showChildren;
-       console.log(this.showChildren);
-    }
-  }
 };
 </script>
 
 <style scoped>
-.Comment .label-wrapper div {
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
+.content {
+  padding-left: 1.5em;
   background-color: azure;
+}
+
+.comment {
   text-align: start;
   font-size: 0.95em;
+  padding-left: 1em;
 }
 
-.post.box {
-  background-color: azure;
+img {
+  border-radius: 50%;
 }
 
-.Comment .label-wrapper {
-    border-bottom: 1px solid #ccc;
-}
-
-.Comment .label-wrapper .has-children {
-    cursor: pointer;
+.wrapper {
+  display: flex;
 }
 
 </style>
