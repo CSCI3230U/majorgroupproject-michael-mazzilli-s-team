@@ -10,8 +10,9 @@ const mongoose=require('mongoose');
 //generate database schema. Don't worry password should be hashed...
 let Schema = mongoose.Schema;
 let loginSchema = new Schema({
-    uid: {
-        type:String,
+    user_id: {
+        type:Schema.Types.ObjectId,
+        ref: "users",
         require: true
     },
     username: {
@@ -24,4 +25,5 @@ let loginSchema = new Schema({
     }
 })
 
-module.exports.Logins = mongoose.model('logins', loginSchema);
+const Logins = mongoose.model('logins', loginSchema);
+module.exports = Logins

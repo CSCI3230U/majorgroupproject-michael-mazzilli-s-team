@@ -1,5 +1,6 @@
 var express = require('express');
-var postModel = require('../models/post_model');
+var Comments = require('../models/comment_model');
+var Posts = require('../models/post_model');
 var router = express.Router();
 var {v4: uuidv4} = require('uuid');
 var {check, validationResult} = require('express-validator');
@@ -27,34 +28,31 @@ router.post('/submitcomment/:id', [
     if(!errors.isEmpty()){
         return res.status(422).jsonp(errors.array());
     }else{
-        //find the parent post
-        postModel.Posts.findOne({post_id: req.params.id}, (err, result) => {
-            if(err){
-                res.json({
-                    error: err
-                });
-            }else{
-                //create new comment
-                var newComment = {
-                    poster_id: req.params.id,
-                    reply_id: uuidv4(),
-                    contents: req.body.contents,
-                    date_contributed: Date.now()
-                };
-
-                //add the new comment to the database
-                result.replies.push(newComment);
-                result.save().then((response) => {
-                    res.status(201).json({
-                        error:error
-                    });
-                }).catch(error => {
-                    res.status(500).json({
-                        error:error
-                    });
-                });
-            }
+        //Create a new comment document
+        const newComment = new Comments({
+            parent: req.params.id,
+            author: req.decoded.userId,
+            contents: req.body.contents
+        })
+        //save the comment
+        newComment.save().catch(err => {
+            res.status(500).json({
+                error:err
+            });
         });
+
+        //Find the original post
+        Posts.findById(newComment.parent)
+            .then((result) => {
+                result.replies.push(newComment._id);
+                result.save();
+        }).catch(err => {
+            res.status(500).json({
+                error:error
+            });
+        });
+
+        res.status(201).send("Saved Message");
     }
 });
 

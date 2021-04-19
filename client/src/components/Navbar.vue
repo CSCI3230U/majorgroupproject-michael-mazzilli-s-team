@@ -98,9 +98,12 @@ export default {
 
     methods: {
         logout(){
-            console.log("logging out");
+            console.log('logging out');
             document.cookie='user={}';
             this.key++;
+            //TODO FIND A MUCH BETTER WAY TO DO THIS
+            window.location.reload();
+            this.$router.push('/');
         }
     }
 }

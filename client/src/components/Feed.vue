@@ -20,8 +20,7 @@
         <!-- center column -->
         <div id="posts" class="tile is-parent is-vertical is-6">
           <!-- Potential post layout -->
-          <Post :post="post1" :user="user"/>
-          <Post :post="post2" :user="user2"/>   
+          <Post v-for="post in posts" :key="post._id" :post="post"/>   
         </div>
         <MessageBox/>
       </div>
@@ -44,40 +43,22 @@ export default {
   },
   data: function () {
       return {
-        post1: {
-          text: 'A potential post layout. Obviously needs to be dynamically generated at some point, but its a start. Probably want to add authors and what not as well.',
-          datetime: new Date('2021-04-14T00:35:30'),
-        },
-        post2: {
-          text: 'There should be a way for the comments to be minimized and opened up again.',
-          datetime: new Date('2021-04-14T15:25:30'),
-        },
-        user: {
-          firstName: 'John',
-          lastName: 'Doe',
-          username: 'john123',
-          picture: 'https://randomuser.me/api/portraits/men/11.jpg',
-        },
-        user2: {
-          firstName: 'Mary',
-          lastName: 'Ann',
-          username: 'mAnn99',
-          picture: 'https://randomuser.me/api/portraits/women/11.jpg',
-        }
+        posts: [],
       }
     },
     methods: {
-      async getUser() {
-        const res = await fetch('https://randomuser.me/api')
-        const { results } = await res.json()
-
-        this.user.firstName = results[0].name.first
-        this.user.lastName = results[0].name.last
-        this.user.username = results[0].username
-        this.user.picture = results[0].picture.large
-        console.log("fetching data");
+      getPosts() {
+        fetch(this.$server+"/getpost")
+          .then(response => response.json())
+          .then(response => {
+            this.posts = response;
+        });
       }
     },
+
+    created() {
+      this.getPosts();
+    }
 };
 </script>
 

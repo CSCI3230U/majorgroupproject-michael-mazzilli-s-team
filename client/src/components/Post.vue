@@ -2,10 +2,10 @@
     <div class="post tile is-child box">
         <div class="content">
             <div class="wrapper">
-                <img :src="user.picture" width="60px"/>
+                <img :src="post.author.picture" width="60px"/>
                 <div class="user-name-date"> 
-                    <div class="user-name">{{ user.firstName }} {{ user.lastName }}</div>
-                    <div class="username">@{{ user.username }}</div>
+                    <div class="user-name">{{ post.author.name.first }} {{ post.author.name.last }}</div>
+                    <div class="username">@{{ post.author.username }}</div>
                     <div class="timeSince"> · {{ timesince }}</div> 
                 </div>
                 <div class="posttext">{{ post.contents }}</div>
@@ -28,7 +28,6 @@ export default {
       Comment,
   },
   props: {
-      user: Object,
       post: Object,
   },
   data: function() {
@@ -70,7 +69,6 @@ export default {
           //get the current date, and date posted
           var now = new Date();
           var postDate = Date.parse(this.post.date_contributed);
-          console.log((now.getTime() - postDate)/1000)
 
             //determine time between
           this.timesince = now.getTime() - postDate;

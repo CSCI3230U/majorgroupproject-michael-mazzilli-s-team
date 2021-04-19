@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 var auth = require('../scripts/auth');
+var cookie = require('../scripts/cookies');
 
 Vue.use(VueRouter)
 
@@ -12,12 +13,25 @@ const routes = [
     component: Home
   },
   {
-    path: '/profile',
-    name: 'Profile',
+    path: '/profile/:uid',
+    name: 'UserProfile',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Profile.vue')
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    redirect: () => {
+      var uid = cookie.getCookie('user');
+      console.log(uid);
+      if(uid === "{}" || uid === ""){
+        return {name: "Login"}
+      }else{
+        return {name: "UserProfile", params: {'uid':JSON.parse(uid).msg._id}}
+      }
+    }
   },
   {
     path: '/messages',

@@ -1,7 +1,6 @@
 var express = require('express');
-var postModel = require('../models/post_model');
+var Posts = require('../models/post_model');
 var router = express.Router();
-var {v4: uuidv4} = require('uuid');
 var {check, validationResult } = require('express-validator');
 
 /**
@@ -25,9 +24,8 @@ router.post('/submitpost', [
         return res.status(422).jsonp(errors.array());
     }else{
         //Create a post object from a post schema
-        var newPost = postModel.Posts({
-            poster_id: req.decoded.userId,
-            post_id: uuidv4(),
+        var newPost = Posts({
+            author: req.decoded.userId,
             contents: req.body.contents
         })
 
