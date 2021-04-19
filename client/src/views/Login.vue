@@ -9,15 +9,13 @@
     <div class="container">
         <form @submit.prevent="submit">
             <div class="field">
-                <input class="input" type="text" v-model="username" placeholder="Username"> 
+                <input class="input" v-bind:class = "(invalid)?'is-danger':'is-normal'" type="text" v-model="username" placeholder="Username"> 
             </div>
             <div class="field">
-                <input class="input" type="password" v-model="password" placeholder="Password"> 
+                <input class="input" v-bind:class = "(invalid)?'is-danger':'is-normal'" type="password" v-model="password" placeholder="Password"> 
             </div>
             <div class="field">
-                <p class="control">
-                    <button class="button">Login</button>
-                </p>
+                <p class="control"><button class="button">Login</button></p>
             </div>
         </form>
     </div>
@@ -35,7 +33,8 @@ export default defineComponent({
     data() {
         return {
             username: '',
-            password: ''
+            password: '',
+            invalid: false
         };
     },
     
@@ -58,6 +57,8 @@ export default defineComponent({
             .then( response => {
                 if(Array.isArray(response)){                        
                     console.log("error logging in");
+                    this.invalid = true;
+                    
                 }else{
                     var cvalue = JSON.stringify(response);
                     var cname = "user";
