@@ -7,12 +7,12 @@ let Schema = mongoose.Schema;
 let postSchema = new Schema({
     author: {
         type: Schema.Types.ObjectId,
-        ref:Users,
+        ref: "users",
         required: true
     },
     date_contributed: {
         type: Date, 
-        default: Date.now
+        default: Date.now()
     },
     contents: {
         type: String,
@@ -20,13 +20,10 @@ let postSchema = new Schema({
     },
     score: Number,
     replies:[{
-        author: {type: Schema.Types.ObjectId, ref:Users},
-        reply_id:String,
-        date_contributed: Date,
-        contents: String,
+        type: Schema.Types.ObjectId,
+        ref: "comments"
     }]
 });
 
-//export model for use later
-const Posts =  mongoose.model('posts', postSchema);
+const Posts = mongoose.model('posts', postSchema);
 module.exports = Posts;

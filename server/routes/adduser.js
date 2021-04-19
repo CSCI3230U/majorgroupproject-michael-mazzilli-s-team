@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var userModel = require('../models/user_model');
-var loginModel = require('../models/login_model');
+var Users = require('../models/user_model');
+var Logins = require('../models/login_model');
 var {v4 : uuidv4} = require('uuid');
 var bcrypt = require('bcrypt');
 var { check, validationResult } = require('express-validator');
@@ -41,7 +41,7 @@ router.post('/adduser',
             //hash the password right away
             bcrypt.hash(req.body.password, 10).then((hash) => {
                 //Create a new user document using the existing schema
-                const newUser = new userModel.Users({
+                const newUser = new Users({
                     username: req.body.username,
                     name: {
                         first: req.body.first,
@@ -53,7 +53,7 @@ router.post('/adduser',
                 })
 
                 //Create a new login document using the existing schema
-                const newLogin = new loginModel.Logins({
+                const newLogin = new Logins({
                     user_id: newUser._id,
                     username: req.body.username,
                     password: hash

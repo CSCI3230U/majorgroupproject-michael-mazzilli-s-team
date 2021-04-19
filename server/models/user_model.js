@@ -31,12 +31,12 @@ let userSchema = new Schema({
         default: Date.now()
     },
     friends: [
-        {type: Schema.Types.ObjectId, ref: 'Users'}
+        {type: Schema.Types.ObjectId, ref: "users"}
     ],
     settings: Array
 })
 
 //export model for use later
 userSchema.plugin(uniqueValidator, { message: "Username taken" });
-const Users = mongoose.model('users', userSchema);
-module.exports = Users;
+
+module.exports = mongoose.model('users', userSchema);

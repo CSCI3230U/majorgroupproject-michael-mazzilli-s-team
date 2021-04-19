@@ -1,5 +1,5 @@
 var express = require('express')
-var userModel = require('../models/user_model');
+var Users = require('../models/user_model');
 var router = express.Router();
 
 /**
@@ -14,10 +14,10 @@ var router = express.Router();
  */
 router.post('/addfriend/:id', (req, res) => {
     //get the user to add as friend
-    userModel.Users.findById(req.params.id)
+    Users.findById(req.params.id)
         .then(friend => {
         //get the currently logged in user
-        userModel.Users.findById(req.decoded.userId)
+        Users.findById(req.decoded.userId)
             .then(user => {
                 //create an updated friends array
                 var newFriends = user.friends;

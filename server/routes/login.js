@@ -2,8 +2,8 @@ var express = require('express');
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
-var loginModel = require('../models/login_model');
-var userModel = require('../models/user_model');
+var Logins = require('../models/login_model');
+var Users = require('../models/user_model');
 var { check, validationResult } = require('express-validator');
 var fs = require('fs');
 var secret = JSON.parse(fs.readFileSync('./config.json')).secret;
@@ -38,7 +38,7 @@ router.post('/login', [
         var getUser;
 
         //Find the user in question
-        loginModel.Logins.findOne({
+        Logins.findOne({
             username: req.body.username
         }).then(user => {
             //check if a user was found
@@ -50,7 +50,7 @@ router.post('/login', [
             console.log("found user");
 
             //get the user information
-            userModel.Users.findById(user.user_id)
+            Users.findById(user.user_id)
                 .then(info => getUser=info);
 
             console.log("got the user info");
