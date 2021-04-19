@@ -64,7 +64,13 @@ import SearchBar from '@/components/SearchBar.vue'
     if(data == "" || data == undefined){
         data='{}';
     }
-    data = JSON.parse(data);
+    
+    try {
+        data = JSON.parse(data);
+    } catch (e) {
+        console.log("data:", data)
+        console.log("exception:", e)
+    }
 
 export default {
     components: {
