@@ -56,13 +56,17 @@ export default defineComponent({
                 body: JSON.stringify(data)
             }).then( response => response.json() )
             .then( response => {
-                var cvalue = JSON.stringify(response);
-                var cname = "user";
-                var d = new Date();
-                var expiry = d.setTime(d.getTime() + response.expiresIn).toString();
-                document.cookie=cname+'='+cvalue+'; expires='+expiry;
+                if(Array.isArray(response)){                        
+                    console.log("error logging in");
+                }else{
+                    var cvalue = JSON.stringify(response);
+                    var cname = "user";
+                    var d = new Date();
+                    var expiry = d.setTime(d.getTime() + response.expiresIn).toString();
+                    document.cookie=cname+'='+cvalue+'; expires='+expiry;
 
-                this.$router.push('/');
+                    this.$router.push('/');
+                }
             });
         }
     }

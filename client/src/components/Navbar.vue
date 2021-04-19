@@ -33,8 +33,8 @@ div(class="navbar" role="navigation" aria-label="main navigation")
         .navbar-end
             SearchBar.navbar-item
                 | SearchBar
-            div(class="navbar-item")
-                div(class="navbar-item has-dropdown is-hoverable" v-if="Object.entries(current_user).length != 0")
+            div(class="navbar-item" )
+                div(class="navbar-item has-dropdown is-hoverable" :key="key" v-if="user")
                     img(class="profile" :src="current_user.msg.picture" alt="profile")
 
                     div(class="navbar-dropdown is-right is-boxed")
@@ -42,7 +42,7 @@ div(class="navbar" role="navigation" aria-label="main navigation")
                         hr(class="navbar-divider")
                         a(class="navbar-item" @click="logout") Log out
 
-                a(class="button" v-if="Object.entries(current_user).length === 0" href="/login") Log in
+                a(class="button" :key="key" v-if="Object.entries(current_user).length === 0" href="/login") Log in
 </template>
 
 <style scoped>
@@ -74,13 +74,26 @@ export default {
     data: function(){
         return {
             profile_pic: false,
-            current_user: data
+            data: {},
+            current_user: data,
+            key: 0,
         }
     },
 
     computed: {
         user: function() {
-            return JSON.parse(document.cookie);
+            var data = document.cookie;
+            data = data.split('=')[1];
+            if(data == "" || data == undefined){
+                data='{}';
+            }
+            data = JSON.parse(data);
+
+            if(Object.entries(data).length === 0){
+                return false;
+            }else{
+                return true;
+            }
         }
     },
 
@@ -88,7 +101,7 @@ export default {
         logout(){
             console.log("logging out");
             document.cookie='user={}';
-            this.Navbar.$forceUpdate();
+            this.key++;
         }
     }
 }

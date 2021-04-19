@@ -10,7 +10,6 @@ Vue.prototype.$setCurrentUser = function(user) {
   currentUser = user;
 };
 
-console.log("main.js running");
 Vue.prototype.$getCurrentUser = function() {
   console.log(currentUser);
   return currentUser;
