@@ -55,7 +55,7 @@ export default defineComponent({
                 body: JSON.stringify(data)
             }).then( response => response.json() )
             .then( response => {
-                if(Array.isArray(response)){                        
+                if(Array.isArray(response) || response.message == 'Authentication failed'){                        
                     console.log("error logging in");
                     this.invalid = true;
                     

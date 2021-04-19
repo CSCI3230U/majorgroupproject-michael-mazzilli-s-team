@@ -8,7 +8,7 @@
                     <div class="username">@{{ user.username }}</div>
                     <div class="timeSince"> · {{ timesince }}</div> 
                 </div>
-                <div class="posttext">{{ post.text }}</div>
+                <div class="posttext">{{ post.contents }}</div>
             </div>
             <Comment 
                 :nodes="commentTree.nodes" 
@@ -67,15 +67,13 @@ export default {
   },
   methods: {
       timeSince () {
-          var currentdate = new Date(); 
-          currentdate = currentdate.getFullYear() + "/"
-                + (currentdate.getMonth()+1)  + "/" 
-                + currentdate.getDate() + " "  
-                + currentdate.getHours() + ":"  
-                + currentdate.getMinutes() + ":" 
-                + currentdate.getSeconds();
-          let newDate = new Date(currentdate)
-          this.timesince = newDate.getTime() - this.post.datetime.getTime();
+          //get the current date, and date posted
+          var now = new Date();
+          var postDate = Date.parse(this.post.date_contributed);
+          console.log((now.getTime() - postDate)/1000)
+
+            //determine time between
+          this.timesince = now.getTime() - postDate;
           if (this.timesince >= 31560000000) {
               this.timesince = Math.floor(this.timesince / 1000 / 60 / 60 / 24 / 30 / 12) + 'y';
           } else if (this.timesince >= 2630000000) {

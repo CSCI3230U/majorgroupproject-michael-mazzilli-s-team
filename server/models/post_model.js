@@ -8,6 +8,10 @@ let postSchema = new Schema({
         type: String,
         required: true
     },
+    poster_username: {
+        type: String, 
+        required: true
+    },
     post_id: {
         type: String,
         required: true
@@ -23,6 +27,7 @@ let postSchema = new Schema({
     score: Number,
     replies:[{
         poster_id: String,
+        poster_username: String,
         reply_id:String,
         date_contributed: Date,
         contents: String,
