@@ -7,7 +7,7 @@
   </div>
   <div class="tile is-parent">
     <div class="tile is-child">
-      <Post v-for="post in posts" :key="post.post_id" :post="post" :user="user"/>
+      <Post v-for="post in posts" :key="post.post_id" :post="post"/>
     </div>
   </div>
 </div>
@@ -57,8 +57,8 @@ export default {
             fetch(this.$server+'/getpost/user/'+user_data._id)
               .then(response => response.json())
               .then(response => {
+                console.log(response);
                 if(Object.entries(response).length != 0){
-                  console.log(response);
                   this.posts = response;
                 }
               });

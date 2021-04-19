@@ -1,11 +1,13 @@
 //imports
 const mongoose=require('mongoose');
+const Users = require('./user_model');
 
 //generate database schema
 let Schema = mongoose.Schema;
 let postSchema = new Schema({
     author: {
         type: Schema.Types.ObjectId,
+        ref:Users,
         required: true
     },
     date_contributed: {
@@ -18,7 +20,7 @@ let postSchema = new Schema({
     },
     score: Number,
     replies:[{
-        author: Schema.Types.ObjectId,
+        author: {type: Schema.Types.ObjectId, ref:Users},
         reply_id:String,
         date_contributed: Date,
         contents: String,
@@ -26,4 +28,5 @@ let postSchema = new Schema({
 });
 
 //export model for use later
-module.exports.Posts = mongoose.model('posts', postSchema);
+const Posts =  mongoose.model('posts', postSchema);
+module.exports = Posts;

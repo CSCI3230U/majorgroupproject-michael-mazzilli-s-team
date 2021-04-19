@@ -10,7 +10,7 @@
 */
 var express = require('express');
 var router = express.Router();
-var userModel = require('../models/user_model');
+var Users = require('../models/user_model');
 
 /** gets a user's public data by their id. 
  *
@@ -21,7 +21,7 @@ var userModel = require('../models/user_model');
  */
 router.get('/getuser/:id', (req,res) => {
     //get and ensure there are queries
-    userModel.Users.findById(req.params.id, (result, err) => {
+    Users.findById(req.params.id, (result, err) => {
         if(err){
             res.send(err);
         }else{
@@ -36,7 +36,7 @@ router.get('/getuser/:id', (req,res) => {
     RETURN: Array of user objects with public information
 */
 router.get('/getuser', (req, res) => {
-    userModel.Users.find({}, (err,result) => {
+    Users.find({}, (err,result) => {
         console.log("fetching user");
         if(err){
             res.send(err);

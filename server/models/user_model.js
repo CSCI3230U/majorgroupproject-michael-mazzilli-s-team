@@ -38,4 +38,5 @@ let userSchema = new Schema({
 
 //export model for use later
 userSchema.plugin(uniqueValidator, { message: "Username taken" });
-module.exports.Users = mongoose.model('users', userSchema);
+const Users = mongoose.model('users', userSchema);
+module.exports = Users;
