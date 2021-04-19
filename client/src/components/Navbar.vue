@@ -59,6 +59,12 @@ div(class="navbar" role="navigation" aria-label="main navigation")
 
 <script>
 import SearchBar from '@/components/SearchBar.vue'
+    var data = document.cookie;
+    data = data.split('=')[1];
+    if(data == "" || data == undefined){
+        data='{}';
+    }
+    data = JSON.parse(data);
 
 export default {
     components: {
