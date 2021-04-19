@@ -4,7 +4,6 @@ Before you submit your project, modify the following table to include everyone's
 
 | Group Member Name          | GitHub Username    |
 | :------------------------- |:------------------:|
-| Nisarg Bhatt               | Nisarg27           |
 | Justin Katerberg           | jkaterberg         |
 | Ammar Khan                 | ammarkhan310       |
 | Connor Henderson           | connordhenderson   |

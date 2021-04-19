@@ -1,0 +1,4 @@
+{
+    "secret": "Secret for this api, you could leave it as it is and it'll work",
+    "db_uri": "uri to mongodb database"
+}
