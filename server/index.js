@@ -57,3 +57,16 @@ app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), function(){
 	console.log(`Listening for requests on port ${app.get('port')}`)
 });
+
+// Listen for socket.io connections
+const io = require("socket.io")(3001, {
+	cors: {
+	  origin: "*",
+	  methods: ["GET", "POST", "OPTION"]
+	}
+});
+
+// Notify us when a user establishes a socket connection
+io.on("connection", socket => {
+	console.log("Connection established!")
+});
