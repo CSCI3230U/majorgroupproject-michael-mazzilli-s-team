@@ -1,8 +1,8 @@
 <template>
   <div class="content">
         <div class="wrapper">
-          <img :src="comment.user.picture" width="30px"/>
-          <div class="comment">{{ comment.message }}</div>
+          <img :src="comment.author.picture" width="30px"/>
+          <div class="comment">{{ comment.contents }}</div>
         </div>
   </div>  
 </template>

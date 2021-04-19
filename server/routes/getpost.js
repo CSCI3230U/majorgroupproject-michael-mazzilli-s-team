@@ -17,7 +17,12 @@ Users.toString();
 router.get('/getpost', (req, res) => {
     Posts.find()
     .populate('author')
-    .populate('replies')
+    .populate({
+        path:'replies',
+        populate: {
+            path: 'author',
+        }
+    })
     .then(function(err,result){
         if(err){
             res.send(err);

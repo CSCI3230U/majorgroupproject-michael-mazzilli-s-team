@@ -12,8 +12,7 @@
             </div>
             <div v-if="!show" class="hidden"></div>
             <div v-if="show" class="comments" @click="toggleComments">
-                <Comment :comment = "comment1"/>
-                <Comment :comment = "comment2"/>
+                <Comment v-for="comment in post.replies" :key="comment._id" :comment="comment"/>
             </div>
         </div>
     </div>
