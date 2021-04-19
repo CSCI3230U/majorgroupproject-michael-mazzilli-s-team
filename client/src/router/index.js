@@ -25,7 +25,7 @@ const routes = [
     name: 'Profile',
     redirect: () => {
       var uid = cookie.getCookie('user');
-      console.log(uid);
+      console.log("uid: "+ uid);
       if(uid === "{}" || uid === ""){
         return {name: "Login"}
       }else{
@@ -49,6 +49,15 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
 
+  },
+  {
+    path: '/newaccount',
+    name: 'NewAccount',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/NewAccount.vue')
+
   }
 ]
 
@@ -61,7 +70,7 @@ const router = new VueRouter({
 //navigation guards
 router.beforeEach((to, from, next) => {
   if((to.name === 'Profile' || to.name === 'Messages') && !auth.isAuthenticated()) next({name: 'Login'})
-  if(to.name === 'Login' && auth.isAuthenticated()) next({name: 'Home'})
+  if((to.name === 'Login' || to.name === 'NewAccount') && auth.isAuthenticated()) next({name: 'Home'})
   else next()
 })
 

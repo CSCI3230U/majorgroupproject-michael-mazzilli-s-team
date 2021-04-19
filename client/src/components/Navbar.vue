@@ -35,14 +35,16 @@ div(class="navbar" role="navigation" aria-label="main navigation")
                 | SearchBar
 
             div(class="navbar-item" )
-                div(class="navbar-item has-dropdown is-hoverable" :key="key" v-if="user")
-                    img(class="profile" :src="current_user.msg.picture" alt="profile")
+                div(class="navbar-item has-dropdown is-hoverable" :key="key" v-if="has_user")
+                    img(class="profile" :src="user.msg.picture" alt="profile")
                     div(class="navbar-dropdown is-right is-boxed")
                         a(class="navbar-item") Settings
                         hr(class="navbar-divider")
                         a(class="navbar-item" @click="logout") Log out
 
-                a(class="button" :key="key" v-if="Object.entries(current_user).length === 0" href="/login") Log in
+                div(v-if="!has_user")
+                    a(class="button" href="/login") Log in
+                    a(class="button" href="/newaccount") Create Account
 </template>
 
 <style scoped>
@@ -59,40 +61,33 @@ div(class="navbar" role="navigation" aria-label="main navigation")
 
 <script>
 import SearchBar from '@/components/SearchBar.vue'
-    var data = document.cookie;
-    data = data.split('=')[1];
-    if(data == "" || data == undefined){
-        data='{}';
-    }
-    data = JSON.parse(data);
+var cookie = require('../scripts/cookies');
+var auth = require('../scripts/auth');
 
 export default {
     components: {
         SearchBar,
     },
+
+    created(){
+        var data = cookie.getCookie('user');
+        if(data === undefined || data === ""){
+            data = '{}'
+        }
+        this.user = JSON.parse(data);
+    },
+
     data: function(){
         return {
             profile_pic: false,
-            data: {},
-            current_user: data,
+            user: '',
             key: 0,
         }
     },
 
     computed: {
-        user: function() {
-            var data = document.cookie;
-            data = data.split('=')[1];
-            if(data == "" || data == undefined){
-                data='{}';
-            }
-            data = JSON.parse(data);
-
-            if(Object.entries(data).length === 0){
-                return false;
-            }else{
-                return true;
-            }
+        has_user: function(){
+            return auth.isAuthenticated();
         }
     },
 
