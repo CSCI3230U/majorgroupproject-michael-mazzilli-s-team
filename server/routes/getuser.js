@@ -19,13 +19,13 @@ var userModel = require('../models/user_model');
  *  Testing:
  *       curl http://localhost:3000/getuser/<uid of desired user>
  */
-router.get('/getuser/:uid', (req,res) => {
+router.get('/getuser/:id', (req,res) => {
     //get and ensure there are queries
-    userModel.Users.find({uid: req.params.uid}).then(function(result, err){
+    userModel.Users.findById(req.params.id, (result, err) => {
         if(err){
             res.send(err);
         }else{
-            res.send(result[0]);
+            res.send(result);
         }
     });
 });
@@ -36,7 +36,7 @@ router.get('/getuser/:uid', (req,res) => {
     RETURN: Array of user objects with public information
 */
 router.get('/getuser', (req, res) => {
-    userModel.Users.find().then(function(err,result){
+    userModel.Users.find({}, (err,result) => {
         console.log("fetching user");
         if(err){
             res.send(err);

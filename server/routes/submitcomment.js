@@ -28,7 +28,7 @@ router.post('/submitcomment/:id', [
         return res.status(422).jsonp(errors.array());
     }else{
         //find the parent post
-        postModel.Posts.findOne({post_id: req.params.id}, (err, result) => {
+        postModel.Posts.findById(req.params.id, (err, result) => {
             if(err){
                 res.json({
                     error: err
@@ -36,7 +36,7 @@ router.post('/submitcomment/:id', [
             }else{
                 //create new comment
                 var newComment = {
-                    poster_id: req.params.id,
+                    author: req.decoded.userId,
                     reply_id: uuidv4(),
                     contents: req.body.contents,
                     date_contributed: Date.now()

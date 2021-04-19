@@ -28,7 +28,7 @@ router.get('/getpost', (req, res) => {
  *  curl http://<domain>/getpost/<id>
  */
 router.get('/getpost/:id', (req,res) => {
-    postModel.Posts.find({post_id: req.params.id}, (err,result) => {
+    postModel.Posts.findById(req.params.id, (err,result) => {
         if(err){
             res.send(err);
         }else{
@@ -47,7 +47,7 @@ router.get('/getpost/:id', (req,res) => {
  *  curl http://<domain>/getpost/user/<id>
  */
 router.get('/getpost/user/:id', (req,res) => {
-    postModel.Posts.find({poster_id: req.params.id}).then(function(err,result){
+    postModel.Posts.find({'author': req.params.id}, (err,result) => {
         if(err){
             res.send(err);
         }else{

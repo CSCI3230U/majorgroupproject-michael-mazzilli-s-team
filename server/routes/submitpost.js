@@ -26,8 +26,7 @@ router.post('/submitpost', [
     }else{
         //Create a post object from a post schema
         var newPost = postModel.Posts({
-            poster_id: req.decoded.userId,
-            post_id: uuidv4(),
+            author: req.decoded.userId,
             contents: req.body.contents
         })
 

@@ -14,45 +14,40 @@ var router = express.Router();
  */
 router.post('/addfriend/:id', (req, res) => {
     //get the user to add as friend
-    userModel.Users.findOne({
-        uid: req.params.id
-    }).then(friend => {
+    userModel.Users.findById(req.params.id)
+        .then(friend => {
         //get the currently logged in user
-        userModel.Users.findOne({
-            uid: req.decoded.userId
-        }).then(user => {
-            //create an updated friends array
-            var newFriends = user.friends;
+        userModel.Users.findById(req.decoded.userId)
+            .then(user => {
+                //create an updated friends array
+                var newFriends = user.friends;
 
-            //ensure the user is not already a friend
-            var present = false;
-            for(var i=0; i<newFriends.length; i++){
-                present = (newFriends[i].uid === friend.uid);
-                if(present){ break; }
-            }
-            if(!present){
-                newFriends.push({
-                    uid: friend.uid,
-                    username: friend.username
-                });
+                //ensure the user is not already a friend
+                var present = false;
+                for(var i=0; i<newFriends.length; i++){
+                    present = (newFriends[i]._id === friend._id);
+                    if(present){ break; }
+                }
+                if(!present){
+                    newFriends.push(friend._id);
 
-                //update document
-                user.friends = newFriends;
-                user.save().then((response) => {
-                    res.status(201).json({
-                        error: error
+                    //update document
+                    user.friends = newFriends;
+                    user.save().then((response) => {
+                        res.status(201).json({
+                            error: error
+                        });
+                    }).catch(error => {
+                        res.status(500).json({
+                            error:error
+                        });
                     });
-                }).catch(error => {
-                    res.status(500).json({
-                        error:error
+                }else{
+                    res.status(403).json({
+                        error: "Users are already friends"
                     });
-                });
-            }else{
-                res.status(403).json({
-                    error: "Users are already friends"
-                });
-            }
-        });
+                }
+            });
     });
 });
 

@@ -47,10 +47,13 @@ router.post('/login', [
                     message: error 
                 });
             }
+            console.log("found user");
+
             //get the user information
-            userModel.Users.findOne({
-                uid: user.uid
-            }).then(info => getUser=info);
+            userModel.Users.findById(user.user_id)
+                .then(info => getUser=info);
+
+            console.log("got the user info");
 
             //Check the inputted password against the saved password
             return bcrypt.compare(req.body.password, user.password);
@@ -68,7 +71,7 @@ router.post('/login', [
                 //Create the token
                 var jwToken = jwt.sign({
                     username: getUser.username,
-                    userId: getUser.uid
+                    userId: getUser._id
                 }, secret, {
                     expiresIn: '24hr'
                 });
@@ -81,7 +84,8 @@ router.post('/login', [
                 });
             });
         }).catch(err => {
-            console.log(err);
+            console.log(error);
+            console.log("big problem");
             return res.status(401).json({
                 message: error 
             });

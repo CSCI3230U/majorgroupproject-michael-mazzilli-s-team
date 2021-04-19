@@ -38,26 +38,23 @@ router.post('/adduser',
         if(!errors.isEmpty()){
             return res.status(422).jsonp(errors.array());
         }else{
-            var newUID = uuidv4(); //generate unique user ID
-
             //hash the password right away
             bcrypt.hash(req.body.password, 10).then((hash) => {
                 //Create a new user document using the existing schema
                 const newUser = new userModel.Users({
-                    uid: newUID,
                     username: req.body.username,
                     name: {
                         first: req.body.first,
                         last: req.body.last
                     },
-                    picture: `https://robohash.org/${newUID}`,
+                    picture: `https://robohash.org/${req.body.username}`,
                     last_login: Date.now(),
                     date_created: Date.now()
                 })
 
                 //Create a new login document using the existing schema
                 const newLogin = new loginModel.Logins({
-                    uid: newUID,
+                    user_id: newUser._id,
                     username: req.body.username,
                     password: hash
                 })
