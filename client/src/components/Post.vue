@@ -1,7 +1,7 @@
 <template>
     <div class="post tile is-child box">
         <div class="content">
-            <div class="wrapper">
+            <div class="wrapper" @click="toggleComments">
                 <img :src="post.author.picture" width="60px"/>
                 <div class="user-name-date"> 
                     <div class="user-name">{{ post.author.name.first }} {{ post.author.name.last }}</div>
@@ -10,11 +10,11 @@
                 </div>
                 <div class="posttext">{{ post.contents }}</div>
             </div>
-            <Comment 
-                :nodes="commentTree.nodes" 
-                :depth="0"   
-                :message="commentTree.message"
-            />
+            <div v-if="!show" class="hidden"></div>
+            <div v-if="show" class="comments" @click="toggleComments">
+                <Comment :comment = "comment1"/>
+                <Comment :comment = "comment2"/>
+            </div>
         </div>
     </div>
 </template>
@@ -32,36 +32,28 @@ export default {
   },
   data: function() {
         return {
-            commentTree: {
-            id: 0,
-            message: 'Comment number one.',
-            nodes: [
-                {
-                id: 1,
-                message: 'Reply to comment number one.',
-                nodes: [
-                    {
-                    id: 2,
-                    message: 'Reply to reply to comment number one.'
-                    },
-                    {
-                    message: 'Reply to reply to comment number one (part 2).',
-                    nodes: [
-                        {
-                        id: 3,
-                        message: 'Reply to 2nd reply of comment number one.'
-                        }
-                    ]
-                    }
-                ]
-                }, 
-                {
-                id: 4,
-                message: 'Comment number two.'  
-                }
-            ]
+            comment1: {
+                id: 0,
+                message: 'Comment number one.',
+                user: {
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    username: 'john123',
+                    picture: 'https://randomuser.me/api/portraits/men/11.jpg',
+                },
             },
-            timesince: 0
+            comment2: {
+                id: 1,
+                message: 'Comment number two.',
+                user: {
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    username: 'john123',
+                    picture: 'https://randomuser.me/api/portraits/men/11.jpg',
+                },
+            },
+            timesince: 0,
+            show: false,
         }
   },
   methods: {
@@ -85,7 +77,11 @@ export default {
           } else {
               this.timesince = Math.floor(this.timesince / 1000) + 's';
           } 
-      }
+      },
+    toggleComments() {
+        this.show = !this.show;
+        console.log(this.show);
+    }
   },
   created() {
       this.timeSince()
@@ -97,7 +93,6 @@ export default {
 
 .post blockquote {
   padding: 0.5rem;
-  margin-bottom: 0.5rem;
   background-color: azure;
 }
 
@@ -144,5 +139,15 @@ img {
     text-align: start;
     padding-left: 1em;
 }
+
+.comments {
+    border-top: 1px solid rgb(132, 216, 216);
+    padding-top: 1em;
+}
+
+.hidden {
+    border-top: 1px solid rgb(132, 216, 216);
+}
+
 
 </style>

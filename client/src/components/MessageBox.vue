@@ -1,5 +1,4 @@
 <template>
-  <div id="right-sidebar" class="tile is-3 is-parent">
       <div id="new-post" class="tile is-child">
         <form @submit.prevent="submit">
           <div class="field">
@@ -16,7 +15,6 @@
           </div>
           </form>
         </div>
-    </div>
 </template>
 
 <script>
