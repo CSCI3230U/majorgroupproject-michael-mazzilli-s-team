@@ -76,7 +76,7 @@ router.post('/login', [
                 //send the token to the client
                 res.status(200).json({
                     token: jwToken,
-                    expiresIn: 3600,
+                    expiresIn: 86400,
                     msg: getUser
                 });
             });

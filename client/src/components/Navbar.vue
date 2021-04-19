@@ -33,16 +33,16 @@ div(class="navbar" role="navigation" aria-label="main navigation")
         .navbar-end
             SearchBar.navbar-item
                 | SearchBar
-            div(class="navbar-item" v-if="!$auth.loading")
-                div(class="navbar-item has-dropdown is-hoverable" v-if="$auth.isAuthenticated")
-                    img(class="profile" :src="$auth.user.picture" alt="profile")
+            div(class="navbar-item")
+                div(class="navbar-item has-dropdown is-hoverable" v-if="Object.entries(current_user).length != 0")
+                    img(class="profile" :src="current_user.msg.picture" alt="profile")
 
                     div(class="navbar-dropdown is-right is-boxed")
                         a(class="navbar-item") Settings
                         hr(class="navbar-divider")
                         a(class="navbar-item" @click="logout") Log out
 
-                button(class="button" v-if="!$auth.isAuthenticated" @click="login") Log in
+                a(class="button" v-if="Object.entries(current_user).length === 0" href="/login") Log in
 </template>
 
 <style scoped>
@@ -60,35 +60,36 @@ div(class="navbar" role="navigation" aria-label="main navigation")
 <script>
 import SearchBar from '@/components/SearchBar.vue'
 
+var data = document.cookie;
+data = data.split('=')[1];
+if(data == "" || data == undefined){
+    data = '{}';
+}
+data = JSON.parse(data);
+
 export default {
     components: {
         SearchBar,
     },
     data: function(){
         return {
-            profile_pic: false
+            profile_pic: false,
+            current_user: data
         }
     },
 
-    mounted: function() {
-        //this.$nextTick(function(){
-        //    this.getInfo();
-        //    
-        //})
+    computed: {
+        user: function() {
+            return JSON.parse(document.cookie);
+        }
     },
 
     methods: {
-        //Log the user in
-        login() {
-          this.$auth.loginWithRedirect();
-        },
-
-        //log the user out
-        logout() {
-          this.$auth.logout({
-            returnTo: window.location.origin
-          });
-        },
+        logout(){
+            console.log("logging out");
+            document.cookie='user={}';
+            this.Navbar.$forceUpdate();
+        }
     }
 }
 </script>

@@ -1,28 +1,20 @@
 import Vue from 'vue'
 import App from './App.vue'
-import AsyncComputed from 'vue-async-computed'
 import router from './router'
 
-//import Auth0 configuration
-import { domain, clientId } from "../auth_config.json";
+//Declare global variables
+Vue.prototype.$server = "http://localhost:3000";
 
-//import Auth0Plugin
-import { Auth0Plugin } from "./auth";
+let currentUser;
+Vue.prototype.$setCurrentUser = function(user) {
+  currentUser = user;
+};
 
-// Install plugins
-Vue.use(AsyncComputed);
-Vue.use(Auth0Plugin, {
-  domain,
-  clientId,
-  onRedirectCallback: appState => {
-    router.push(
-      appState && appState.targetUrl
-      ? appState.targetUrl
-      : window.location.pathname
-    );
-  }
-})
-
+console.log("main.js running");
+Vue.prototype.$getCurrentUser = function() {
+  console.log(currentUser);
+  return currentUser;
+};
 
 Vue.config.productionTip = false
 
