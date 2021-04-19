@@ -140,12 +140,12 @@ nav {
 
 #posts {
     overflow-y: scroll;
-    max-height: 90vh;
+    max-height: 85vh;
 }
 
 .chats {
     overflow-y: scroll;
-    max-height: 88vh;
+    max-height: 85vh;
 }
 
 /* width */
