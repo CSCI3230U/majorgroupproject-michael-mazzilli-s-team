@@ -12,8 +12,9 @@
             <ChatMessage :message="chatLog.message1"/>
             <ChatMessage :message="chatLog.message2"/>
         </div>
-        <div class="tile is-parent">
+        <div class="response tile is-parent">
                 <input class="input is-rounded" type="text" placeholder="Type a message">
+                <button><img src="..\assets\send.png" width="30px"/></button>
         </div>
     </div>
 </template>
@@ -41,9 +42,16 @@ export default {
 }
 
 .response {
-    position: absolute;
+    position: relative;
     width: 100%;
     bottom: 0px;
+}
+
+button {
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    padding-top: 3px;
 }
 
 /* width */

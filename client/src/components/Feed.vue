@@ -18,8 +18,8 @@
         <div v-if="show" id="left-sidebar" class="tile is-4 is-parent box" @click="toggleChat">
           <ChatWindow :chatLog= "chatLog"/>
         </div>
-        <div v-if="!show" id="left-sidebar" class="chats tile is-4 is-vertical is-parent" @click="toggleChat">
-          <div class="tile is-child box">
+        <div v-if="!show" id="left-sidebar" class="chats tile is-4 is-vertical is-parent box" @click="toggleChat">
+          <div class="tile is-child">
           <Chats :message="chatLog.message2"/>
           <Chats :message="chatLog.message1"/>
           <Chats :message="chatLog.message1"/>
