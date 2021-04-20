@@ -48,7 +48,13 @@ export default {
         }).then(response => response.json())
           .then(response => {
             console.log(response);
-        })
+            this.contents = '';
+            fetch(this.$server+'/getpost')
+              .then(response => response.json())
+              .then(response => {
+                this.$parent.posts = response;
+              });
+        });
       }else{
         this.$router.push('/login');
       }
