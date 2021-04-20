@@ -2,10 +2,10 @@
     <div class="chat-window">
         <div id="chat-messages" class="chats tile is-child">
             <ChatMessage :message="chatLog.message2"/>
-            <ChatMessage :message="chatLog.message2"/>
+            <ChatMessage v-for="msg in saved_messages" :key="msg" :message="msg"/>
         </div>
         <div class="tile is-parent">
-                <input class="input is-rounded" type="text" placeholder="Type a message">
+                <input v-model="input_msg" class="input is-rounded" type="text" placeholder="Type a message">
                 <button id="sendBtn" class="is-rounded" v-on:click="sendMessage">Send</button>
         </div>
     </div>
@@ -19,7 +19,8 @@ export default {
   name: "ChatWindow",
   data: function(){
     return {
-      a: 1
+      saved_messages : [],
+      input_msg: ""
     }
   },
 
@@ -34,10 +35,8 @@ export default {
     sendMessage: function() {
       console.log("Send!")
       var currentUser = JSON.parse(cookies.getCookie("user"));
-
-      var message = createMessage(currentUser, 'test message')
-      console.log("sending message:", message)
-
+      var message = createMessage(currentUser, this.input_msg)
+      this.input_msg = ""
       this.$socket.emit('sendMessage', currentUser.msg.username, currentUser.msg.username, message )
     }
   },
@@ -47,6 +46,7 @@ export default {
     },
     receiveMessages: function (messages) {
         console.log("received messages: ", messages)
+        this.saved_messages = messages
     },
   },
 };

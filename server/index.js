@@ -87,7 +87,7 @@ io.on("connection", socket => {
 
 	// Whenever we receive a request to send a message, perform the following
 	socket.on("sendMessage", function(sender, receiver, message) {
-		console.log(sender, "=>", receiver, ":", message)
+		console.log(sender, "=>", receiver, ": message sent")
 		
 		const newMessage = new Messages({
 			sender: sender,

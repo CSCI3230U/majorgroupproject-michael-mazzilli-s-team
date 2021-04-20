@@ -21,7 +21,7 @@ let messageSchema = new Schema({
         firstName: { type: String, required: true},
         lastName:  { type: String, required: true},
         username:  { type: String, required: true},
-        picture:   { data: Buffer, contentType: String}
+        picture:   { type: String, default: `https://robohash.org/default`}
     },
 
     // text contents
