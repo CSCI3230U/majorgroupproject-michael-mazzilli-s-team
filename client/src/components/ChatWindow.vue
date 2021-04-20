@@ -5,9 +5,9 @@
             <ChatMessage v-for="msg in saved_messages" :key="msg" :message="msg"/>
         </div>
 
-        <div class="response is-parent">
+        <div class="response tile is-parent">
                 <input v-model="input_msg" class="input is-rounded" type="text" placeholder="Type a message">
-                <button id="sendBtn" class="is-rounded" v-on:click="sendMessage">Send</button>
+                <button id="sendBtn" class="is-rounded" v-on:click="sendMessage"><img src="../assets/send.png" width="30px" alt="Send"/></button>
 
         </div>
     </div>
@@ -73,6 +73,7 @@ function createMessage(currentUser, text){
 .chats {
     position: relative;
     overflow-y: scroll;
+    height: 76vh;
     max-height: 76vh;
     padding-right: 2em;
 }
