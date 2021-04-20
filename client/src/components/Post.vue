@@ -2,8 +2,8 @@
     <div class="post tile is-child box">
         <div class="content">
             <div class="wrapper" @click="toggleComments">
-                <img :src="post.author.picture" width="60px"/>
                 <div class="user-name-date"> 
+                <img :src="post.author.picture" width="60px"/>
                     <div class="user-name">{{ post.author.name.first }} {{ post.author.name.last }}</div>
                     <div class="username">@{{ post.author.username }}</div>
                     <div class="timeSince"> · {{ timesince }}</div> 
@@ -123,23 +123,15 @@ img {
   margin-bottom: 1rem;
 }
 
-.wrapper {
-    display: grid;
-    grid-template-columns: 10% 90%;
-    grid-template-rows: 20% 60% 20%;
-}
-
-@-moz-document url-prefix() {
-  .wrapper {
-      height: 12vh
-  }
-}
 
 .user-name-date {
+    margin-top: -1.2rem;
+    margin-left: -1rem;
     justify-self: start;
-    padding-left: 1em;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .user-name {
@@ -157,11 +149,13 @@ img {
     padding-left: 0.5em;
 }
 
+
 .posttext {
     grid-row: 2;
     grid-column: 2;
     text-align: start;
     padding-left: 1em;
+    margin-bottom: 1rem;
     display: block;
 }
 

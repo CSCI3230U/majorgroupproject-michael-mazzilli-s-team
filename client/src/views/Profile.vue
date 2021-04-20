@@ -5,16 +5,28 @@
       <ProfileInfo :user="user"/>
       <div class="menu">
         <ul class="menu-list">
-          <li><a v-on:click="selected='posts'">Posts</a></li>
-          <li><a v-on:click="selected='comments'">Comments</a></li>
-          <li><a v-on:click="selected='settings'">Settings</a></li>
+          <li><a v-on:click="selected='posts'"
+                  v-bind:class="(isSelected('posts'))?'has-background-light':''">
+                  Posts
+              </a>
+          </li>
+          <li><a v-on:click="selected='comments'"
+                  v-bind:class="(isSelected('comments'))?'has-background-light':''">
+                  Comments
+              </a>
+          </li>
+          <li><a v-on:click="selected='settings'"
+                  v-bind:class="(isSelected('settings'))?'has-background-light':''">
+          Settings</a></li>
         </ul>
       </div>
     </div>
   </div>
   <div class="tile is-parent is-vertical">
     <div id="posts" v-if="isSelected('posts')" class="tile is-child">
-      <Post v-for="post in posts" :key="post.post_id" :post="post"/>
+      <div class="post" v-for="post in posts" :key="post.post_id" :post="post">
+        <Post :post="post"/>
+      </div>
     </div>
     <div id="info" v-if="isSelected('settings')" class="tile is-child">
       <LoginInfo :user="user" :key="user._id"/>
@@ -70,6 +82,7 @@ export default {
 
       isSelected(item){
         if(this.selected === item){
+          console.log("true");
           return true;
         }
         return false;
@@ -82,5 +95,7 @@ export default {
 </script>
 
 <style scoped>
-
+.post {
+  margin-bottom: 1.5rem;
+}
 </style>
