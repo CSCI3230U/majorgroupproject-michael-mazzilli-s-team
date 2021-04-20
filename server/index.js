@@ -121,7 +121,7 @@ io.on("connection", socket => {
 	
 		// Send both users an updated messages list
 		query.exec(function (err, messages) {
-			socket.emit("getMessages", messages)
+			socket.emit("receiveMessages", messages)
 		})
 	});
 

@@ -8,7 +8,7 @@
   </div>
   <div class="tile is-parent">
     <div class="tile is-child box">
-      <ChatWindow :chatLog= "chatLog"/>
+      <ChatWindow/>
     </div>
   </div>
 </div>
@@ -58,7 +58,6 @@ export default {
       } else {
         this.friends.push(message)
       }
-      console.log(this.friends)
     },
   },
 };

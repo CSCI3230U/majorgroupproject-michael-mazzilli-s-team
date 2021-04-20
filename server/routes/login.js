@@ -42,10 +42,8 @@ router.post('/login', [
             username: req.body.username
         }).then(user => {
             //check if a user was found
-            if(!user){
-                return res.status(401).json({
-                    message: error 
-                });
+            if(user === null){
+                return false;
             }
 
             //get the user information
@@ -81,11 +79,7 @@ router.post('/login', [
                     msg: getUser
                 });
             });
-        }).catch(err => {
-            return res.status(401).json({
-                message: error 
-            });
-        });
+        })
     }
 });
 

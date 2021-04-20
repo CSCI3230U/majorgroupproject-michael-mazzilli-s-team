@@ -13,9 +13,7 @@ var user = cookies.getCookie('user');
 if(user === '' || user === undefined){
   user = '{}';
 }
-console.log(user);
 var currentUser = JSON.parse(user);
-console.log(currentUser);
 
 export default {
   components: {
