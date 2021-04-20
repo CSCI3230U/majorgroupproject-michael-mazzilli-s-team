@@ -28,8 +28,8 @@
         </div>
         <div class="tile is-vertical" id="middle"/>
         <!-- Sidebar for additional content. Maybe put a graph here for site activity? -->
-        <div v-if="show" id="right-sidebar" class="tile is-3 is-parent box" @click="toggleChat">
-          <ChatWindow :chatLog= "chatLog"/>
+        <div v-if="show" id="right-sidebar" class="chat tile is-3 is-parent box">
+          <ChatWindow :chatLog= "chatLog" :back="back" @show-chat="setShow"/>
         </div>
         <div v-if="!show" id="right-sidebar" class="chats tile is-3 is-vertical is-parent box" @click="toggleChat">
           <div class="tile is-child">
@@ -94,6 +94,7 @@ export default {
         }
       },
       show: true,
+      back: true,
       }
     },
     methods: {
@@ -104,12 +105,14 @@ export default {
             this.posts = response;
         });
       },
+      setShow(show) {
+        this.show = !show;
+        console.log(this.show);
+      },
       toggleChat() {
         this.show = !this.show;
-        console.log(this.show);
       }
     },
-
     created() {
       this.getPosts();
     }
@@ -157,6 +160,10 @@ body {
 .chats {
     overflow-y: scroll;
     max-height: 85vh;
+}
+
+#toggle:hover {
+  background-color: azure;
 }
 
 /* width */
