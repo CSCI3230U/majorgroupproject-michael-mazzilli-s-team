@@ -58,6 +58,17 @@ app.listen(app.get('port'), function(){
 	console.log(`Listening for requests on port ${app.get('port')}`)
 });
 
+
+
+/* 	*	*	*	*	*	*	*	*	*	*
+ * 			CHAT COMPONENT				*
+ *	*	*	*	*	*	*	*	*	*	*/
+// Map users => sockets
+var sockets = {}
+
+// Maps sockets => users
+var users = {}
+
 // Listen for socket.io connections
 const io = require("socket.io")(3001, {
 	cors: {
@@ -67,21 +78,27 @@ const io = require("socket.io")(3001, {
 });
 
 
-
-
 // Called when a user connects to the server
 io.on("connection", socket => {
 	console.log("Connection established")
+
 	// Whenever we receive a request to send a message, perform the following
 	socket.on("sendMessage", function(sender, receiver, message) {
-		
+		console.log(sender, "=>", receiver, ":", message)
 	});
+
 	// Called when a user disconnects
 	socket.on("disconnect", function() {
+		delete sockets[users[socket]]
+		delete users[socket]
+	});
 
-	})
-
+	// Called when a user connects; stores a reference from the user to their active socket
 	socket.on("login", function(uid) {
 		console.log("uid logged in:", uid)
+
+		// Get user/socket references so we can lookup sockets for message passing
+		sockets[uid] = socket
+		users[socket] = uid
 	})
 });

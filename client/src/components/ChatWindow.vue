@@ -35,10 +35,17 @@ export default {
     // Called when the user clicks the send button
     sendMessage: function() {
       console.log("Send!")
-      this.$ChatMessage.emit("test", "test2")
-      this.$store.getters.getSocket.emit("test", "bigtest")
+      this.$socket.emit('sendMessage', "user1", "user2", "test")
     }
   },
+  sockets: {
+    connect: function () {
+        console.log('socket connected')
+    },
+    customEmit: function () {
+        console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    },
+},
 };
 
 </script>
