@@ -23,6 +23,7 @@ var login = require('./routes/login');
 var addfriend = require('./routes/addfriend');
 var submitpost = require('./routes/submitpost');
 var submitcomment = require('./routes/submitcomment');
+const Messages = require('./models/message_model');
 
 var app = express();
 app.use(express.urlencoded({extended: false}));
@@ -85,6 +86,30 @@ io.on("connection", socket => {
 	// Whenever we receive a request to send a message, perform the following
 	socket.on("sendMessage", function(sender, receiver, message) {
 		console.log(sender, "=>", receiver, ":", message)
+		
+		const newMessage = new Messages({
+			sender: sender,
+			receiver: receiver,
+			contents: message,
+			timestamp: Date.now()
+		})
+
+		// Save the message then send the updated messages to the partner
+		newMessage.save(function (err, messages) {
+			if (err) return console.error(err)
+			updateMessages(sender, receiver)
+		})
+		
+	});
+
+	// Called when a user would like to update their chat window (new window)
+	socket.on("getMessages", function(user, partner) {
+		Messages.find({$or:[
+			{sender:user, receiver:partner},
+			{sender:partner, receiver:user}
+		]}).toArray(function(err, messages){
+			console.log(messages);
+		});
 	});
 
 	// Called when a user disconnects
@@ -102,3 +127,18 @@ io.on("connection", socket => {
 		users[socket] = uid
 	})
 });
+
+/*	When a user sends a message to their conversation partner, we'd like to
+ *  send them a message with the updated messages for that conversation.
+ */
+
+function updateMessages(user, partner) {
+	var query = Messages.find({$or:[
+		{'sender':user, 'receiver':partner},
+		{'sender':partner, 'receiver':user}
+	]})
+
+	query.exec(function (err, res) {
+		console.log(res);
+	})
+}
