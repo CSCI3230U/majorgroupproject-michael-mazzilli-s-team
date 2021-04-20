@@ -17,7 +17,7 @@
             <form @submit.prevent="submit">
                 <div class="container reply">
                     <input class=input v-model="contents" type="text" placeholder="Post a reply">
-                    <Button>Post</Button>
+                    <button class="button has-background-grey-lighter">Post</button>
                 </div>
             </form>
         </div>
@@ -26,14 +26,12 @@
 
 <script>
 import Comment from './Comment';
-import Button from './Button';
 var cookie = require('../scripts/cookies');
 
 export default {
   name: "Post",
   components: {
       Comment,
-      Button,
   },
   props: {
       post: Object,

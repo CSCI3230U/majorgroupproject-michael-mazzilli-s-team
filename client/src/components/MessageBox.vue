@@ -1,20 +1,18 @@
 <template>
       <div id="new-post" class="tile is-child">
         <form @submit.prevent="submit">
-          <div class="field is-grouped">
-            <div class="control is-expanded">
-              <input
-                class="input"
-                placeholder="Share your message"
-                v-model="contents"
-              >
-            </div>
-            <div class="control">
-              <Button/>
-            </div>
+          <div class="control is-expanded">
+            <textarea
+              class="textarea"
+              placeholder="Share your message"
+              v-model="contents"
+            />
           </div>
-          </form>
-        </div>
+          <div class="control button-wrapper">
+            <Button/>
+          </div>
+        </form>
+      </div>
 </template>
 
 <script>
@@ -60,3 +58,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.button-wrapper {
+  margin-top: 0.5rem;
+  margin-right: 1.2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+</style>
