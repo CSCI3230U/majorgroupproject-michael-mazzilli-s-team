@@ -7,11 +7,19 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue';
+var cookies = require('./scripts/cookies');
+var currentUser = JSON.parse(cookies.getCookie("user"));
 
 export default {
   components: {
     Navbar
-  }
+  },
+  sockets: {
+  connect: function () {
+      console.log('socket connected')
+      this.$socket.emit("login", currentUser.msg.username)
+  },
+  },
 }
 </script>
 

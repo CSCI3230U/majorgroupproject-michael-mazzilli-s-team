@@ -83,6 +83,8 @@ const io = require("socket.io")(3001, {
 io.on("connection", socket => {
 	console.log("Connection established")
 
+	socket.emit("getUID")
+
 	// Whenever we receive a request to send a message, perform the following
 	socket.on("sendMessage", function(sender, receiver, message) {
 		console.log(sender, "=>", receiver, ":", message)
@@ -99,7 +101,6 @@ io.on("connection", socket => {
 			if (err) return console.error(err)
 			updateMessages(sender, receiver)
 		})
-		
 	});
 
 	// Called when a user would like to update their chat window (new window)
@@ -138,7 +139,12 @@ function updateMessages(user, partner) {
 		{'sender':partner, 'receiver':user}
 	]})
 
-	query.exec(function (err, res) {
-		console.log(res);
+	query.exec(function (err, messages) {
+		if (partner in sockets) {
+			console.log("sending messages to ", partner)
+			sockets[partner].emit("receiveMessages", messages)
+		} else {
+			console.log("partner not found")
+		}
 	})
 }

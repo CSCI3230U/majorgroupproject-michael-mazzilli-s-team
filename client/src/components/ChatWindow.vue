@@ -3,14 +3,6 @@
         <div id="chat-messages" class="chats tile is-child">
             <ChatMessage :message="chatLog.message2"/>
             <ChatMessage :message="chatLog.message2"/>
-            <ChatMessage :message="chatLog.message1"/>
-            <ChatMessage :message="chatLog.message2"/>
-            <ChatMessage :message="chatLog.message1"/>
-            <ChatMessage :message="chatLog.message2"/>
-            <ChatMessage :message="chatLog.message1"/>
-            <ChatMessage :message="chatLog.message2"/>
-            <ChatMessage :message="chatLog.message1"/>
-            <ChatMessage :message="chatLog.message2"/>
         </div>
         <div class="tile is-parent">
                 <input class="input is-rounded" type="text" placeholder="Type a message">
@@ -25,7 +17,11 @@ var cookies = require('../scripts/cookies');
 
 export default {
   name: "ChatWindow",
-  // Store a list of the chat messages
+  data():
+    return {
+      a: 1
+    }
+  }
   components: {
       ChatMessage,
   },
@@ -37,18 +33,17 @@ export default {
     sendMessage: function() {
       console.log("Send!")
       var currentUser = cookies.getCookie("user");
-      this.$socket.emit('sendMessage', JSON.parse(currentUser).msg.username, "user2", "test")
+      this.$socket.emit('sendMessage', JSON.parse(currentUser).msg.username, JSON.parse(currentUser).msg.username, "test")
     }
   },
   sockets: {
     connect: function () {
         console.log('socket connected')
     },
-    customEmit: function () {
-        console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    receiveMessages: function (messages) {
+        console.log("received messages: ", messages)
     },
-    
-},
+  },
 };
 
 </script>
