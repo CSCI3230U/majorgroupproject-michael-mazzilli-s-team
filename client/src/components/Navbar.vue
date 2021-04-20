@@ -16,20 +16,6 @@ div(class="navbar" role="navigation" aria-label="main navigation")
                 | Profile
             a.navbar-item(href="/messages")
                 | Messages
-            .navbar-item.has-dropdown.is-hoverable
-                a.navbar-link
-                    | More
-                .navbar-dropdown
-                    a.navbar-item
-                        | About
-                    a.navbar-item
-                        | Jobs
-                    a.navbar-item
-                        | Contact
-                    hr.navbar-divider
-                    a.navbar-item
-                        | Report an issue
-
         .navbar-end
             SearchBar.navbar-item
                 | SearchBar
@@ -61,8 +47,22 @@ div(class="navbar" role="navigation" aria-label="main navigation")
 
 <script>
 import SearchBar from '@/components/SearchBar.vue'
+
+var data = document.cookie;
+data = data.split('=')[1];
+if(data == "" || data == undefined){
+    data='{}';
+}
+
+try {
+    data = JSON.parse(data);
+} catch (e) {
+    console.log('NavBar parse error')
+}
+
 var cookie = require('../scripts/cookies');
 var auth = require('../scripts/auth');
+
 
 export default {
     components: {
@@ -75,6 +75,7 @@ export default {
             data = '{}'
         }
         this.user = JSON.parse(data);
+        this.toggleNavbar();
     },
 
     data: function(){
@@ -99,6 +100,32 @@ export default {
             //TODO FIND A MUCH BETTER WAY TO DO THIS
             window.location.reload();
             this.$router.push('/');
+        },
+        toggleNavbar() {
+            document.addEventListener('DOMContentLoaded', () => {
+
+            // Get all "navbar-burger" elements
+            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+            // Check if there are any navbar burgers
+            if ($navbarBurgers.length > 0) {
+
+                // Add a click event on each of them
+                $navbarBurgers.forEach( el => {
+                el.addEventListener('click', () => {
+
+                    // Get the target from the "data-target" attribute
+                    const target = el.dataset.target;
+                    const $target = document.getElementById(target);
+
+                    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                    el.classList.toggle('is-active');
+                    $target.classList.toggle('is-active');
+
+                });
+                });
+            }
+        });
         }
     }
 }

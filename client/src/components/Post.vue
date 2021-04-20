@@ -137,6 +137,7 @@ img {
 .user-name {
     font-weight: bold;
     justify-self: start;
+    white-space: nowrap
 }
 
 .username {
