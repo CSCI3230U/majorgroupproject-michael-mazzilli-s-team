@@ -1,7 +1,6 @@
 <template>
     <div class="chat-window">
         <div id="chat-messages" class="chats tile is-child">
-            <ChatMessage :message="chatLog.message2"/>
             <ChatMessage v-for="msg in saved_messages" :key="msg" :message="msg"/>
         </div>
 
@@ -26,6 +25,13 @@ export default {
     }
   },
 
+  created() {
+        console.log('socket connected asdfa')
+        // Get our messages on page load
+        var currentUser = JSON.parse(cookies.getCookie("user"));
+        this.$socket.emit('getMessages', currentUser.msg.username, currentUser.msg.username);
+  },
+
   components: {
       ChatMessage,
   },
@@ -43,15 +49,19 @@ export default {
     }
   },
   sockets: {
-    connect: function () {
-        console.log('socket connected')
-    },
     receiveMessages: function (messages) {
         console.log("received messages: ", messages)
         this.saved_messages = messages
     },
+    connect: function () {
+        console.log('socket connected')
+        // Get our messages on page load
+        var currentUser = JSON.parse(cookies.getCookie("user"));
+        this.$socket.emit('getMessages', currentUser.msg.username, currentUser.msg.username);
+    },
   },
 };
+
 
 function createMessage(currentUser, text){
   console.log("createMessage: ", currentUser)
@@ -66,7 +76,6 @@ function createMessage(currentUser, text){
     datetime: Date.now()
   }
 }
-
 </script>
 
 <style scoped>

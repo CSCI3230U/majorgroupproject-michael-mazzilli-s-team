@@ -113,12 +113,16 @@ io.on("connection", socket => {
 
 	// Called when a user would like to update their chat window (new window)
 	socket.on("getMessages", function(user, partner) {
-		Messages.find({$or:[
-			{sender:user, receiver:partner},
-			{sender:partner, receiver:user}
-		]}).toArray(function(err, messages){
-			console.log("err: getMessages:", messages);
-		});
+		console.log("getMessages request received from", user, " to ", partner)
+		var query = Messages.find({$or:[
+			{'sender':user, 'receiver':partner},
+			{'sender':partner, 'receiver':user}
+		]})
+	
+		// Send both users an updated messages list
+		query.exec(function (err, messages) {
+			socket.emit("receiveMessages", messages)
+		})
 	});
 
 	// Called when a user disconnects
@@ -140,7 +144,6 @@ io.on("connection", socket => {
 /*	When a user sends a message to their conversation partner, we'd like to
  *  send them a message with the updated messages for that conversation.
  */
-
 function updateMessages(user, partner) {
 	var query = Messages.find({$or:[
 		{'sender':user, 'receiver':partner},
