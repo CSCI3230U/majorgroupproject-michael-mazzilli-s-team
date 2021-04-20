@@ -1,14 +1,23 @@
 <template>
     <div class="post tile is-child box">
         <div class="content">
-            <div class="wrapper" @click="toggleComments">
+            <div class="wrapper" >
                 <div class="user-name-date"> 
-                <img :src="post.author.picture" width="60px"/>
-                    <div class="user-name">{{ post.author.name.first }} {{ post.author.name.last }}</div>
-                    <div class="username">@{{ post.author.username }}</div>
-                    <div class="timeSince"> · {{ timesince }}</div> 
-                </div>
-                <div class="posttext">{{ post.contents }}</div>
+                        <img :src="post.author.picture" 
+                            @click="$router.push('/profile/'+post.author._id)"
+                            width="60px"
+                        />
+                        <div class="user-name"
+                            @click="$router.push('/profile/'+post.author._id)">
+                                {{ post.author.name.first }} {{ post.author.name.last }}
+                        </div>
+                        <div class="username" 
+                            @click="$router.push('/profile/'+post.author._id)">
+                            @{{ post.author.username }}
+                        </div>
+                        <div class="timeSince"> · {{ timesince }}</div> 
+                    </div>
+                <div class="posttext" @click="toggleComments">{{ post.contents }}</div>
             </div>
             <div v-if="!show" class="hidden"></div>
             <div v-if="show" class="comments" :key="post.replies.length" @click="toggleComments">
