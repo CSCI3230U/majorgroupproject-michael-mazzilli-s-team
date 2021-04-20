@@ -34,16 +34,6 @@
         <div v-if="!show" id="right-sidebar" class="chats tile is-3 is-vertical is-parent box" @click="toggleChat">
           <div class="tile is-child">
           <Chats :message="chatLog.message2"/>
-          <Chats :message="chatLog.message1"/>
-          <Chats :message="chatLog.message1"/>
-          <Chats :message="chatLog.message2"/>
-          <Chats :message="chatLog.message2"/>
-          <Chats :message="chatLog.message1"/>
-          <Chats :message="chatLog.message2"/>
-          <Chats :message="chatLog.message2"/>
-          <Chats :message="chatLog.message1"/>
-          <Chats :message="chatLog.message2"/>
-          <Chats :message="chatLog.message2"/>
           </div>
         </div>
       </div>
