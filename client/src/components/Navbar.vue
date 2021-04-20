@@ -24,7 +24,7 @@ div(class="navbar" role="navigation" aria-label="main navigation")
                 div(class="navbar-item has-dropdown is-hoverable" :key="key" v-if="has_user")
                     img(class="profile" :src="user.msg.picture" alt="profile")
                     div(class="navbar-dropdown is-right is-boxed")
-                        a(class="navbar-item") Settings
+                        a(class="navbar-item" href="/profile") Settings
                         hr(class="navbar-divider")
                         a(class="navbar-item" @click="logout") Log out
 
