@@ -24,7 +24,11 @@
         <div id="posts" class="tile is-parent is-vertical is-5 box">
           <!-- Potential post layout -->
           <MessageBox/>
-          <Post v-for="post in posts" :key="post._id" :post="post"/> 
+          <div :key="posts.length">
+            <div class="post" v-for="post in posts" :key="post._id">
+              <Post :post="post"/> 
+            </div>
+          </div>
         </div>
         <div class="tile is-vertical" id="middle"/>
         <!-- Sidebar for additional content. Maybe put a graph here for site activity? -->
@@ -144,6 +148,10 @@ body {
 
 .post.box {
   background-color: azure;
+}
+
+.post {
+  margin-bottom: 0.5rem;
 }
 
 #right-sidebar {
