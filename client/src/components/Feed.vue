@@ -14,11 +14,17 @@
     <body>
       <!-- Using Bulma's tiles to control the layout -->
       <div id="page-content" class="tile is-ancestor">
+        <!-- center column -->
+        <div id="posts" class="tile is-parent is-vertical is-7 box">
+          <!-- Potential post layout -->
+          <MessageBox/>
+          <Post v-for="post in posts" :key="post._id" :post="post"/> 
+        </div>
         <!-- Sidebar for additional content. Maybe put a graph here for site activity? -->
-        <div v-if="show" id="left-sidebar" class="tile is-4 is-parent box" @click="toggleChat">
+        <div v-if="show" id="right-sidebar" class="tile is-5 is-parent box" @click="toggleChat">
           <ChatWindow :chatLog= "chatLog"/>
         </div>
-        <div v-if="!show" id="left-sidebar" class="chats tile is-4 is-vertical is-parent box" @click="toggleChat">
+        <div v-if="!show" id="right-sidebar" class="chats tile is-5 is-vertical is-parent box" @click="toggleChat">
           <div class="tile is-child">
           <Chats :message="chatLog.message2"/>
           <Chats :message="chatLog.message1"/>
@@ -32,14 +38,6 @@
           <Chats :message="chatLog.message2"/>
           <Chats :message="chatLog.message2"/>
           </div>
-        </div>
-        <!-- center column -->
-        <div id="posts" class="tile is-parent is-vertical is-6 box">
-          <!-- Potential post layout -->
-          <Post v-for="post in posts" :key="post._id" :post="post"/>   
-        </div>
-        <div id="right-sidebar" class="tile is-parent is-2 box">
-        <MessageBox/>
         </div>
       </div>
     </body>
@@ -115,6 +113,10 @@ export default {
 <style scoped>
 nav {
   margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+body {
   overflow: hidden;
 }
 
