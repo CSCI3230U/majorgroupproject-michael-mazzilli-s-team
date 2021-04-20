@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-        <div class="wrapper">
+        <div class="comment-wrapper">
           <img :src="comment.author.picture" width="30px"/>
           <div class="comment">{{ comment.contents }}</div>
         </div>
@@ -37,8 +37,10 @@ img {
   border-radius: 50%;
 }
 
-.wrapper {
+.comment-wrapper {
   display: flex;
+  align-items: center;
+  margin: 0;
 }
 
 </style>
