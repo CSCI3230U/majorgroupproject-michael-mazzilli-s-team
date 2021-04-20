@@ -1,6 +1,9 @@
 # TweetBook Client
 Client for the super popular social media site TweetBook.
 
+## Setup
+Run `npm install` in this folder to install all dependencies.
+
 ## Starting
 In the directory of this file, run the following command:
 `npm run serve`

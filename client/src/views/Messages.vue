@@ -33,12 +33,8 @@ export default {
     }
   },
 
-  create() {
-    console.log("Messages Created")
-  },
   methods: {
     setActiveFriend: function(event) {
-      console.log("[CLICKED] Set Active Friend: ", event.user.username)
       this.$socket.emit("setActiveFriend", event.user.username)
       this.$socket.emit('getMessages', currentUser.msg.username, event.user.username);
     },
@@ -52,7 +48,6 @@ export default {
         }
     },
     getLastMessage: function(friend, message) {
-      console.log("GLM:", friend, message)
       if (message == null) {
         this.friends.push(createMessage(friend, "<No Messages>"))
       } else {

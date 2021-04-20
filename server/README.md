@@ -2,7 +2,8 @@
 This is an overview of all the functionality currently implemented in the tweetbook API. Every endpoint is listed along with its function and parameters.
 
 **Setting up:**\
-Create new file called `config.json` in the root of the server directory. See `config.json.sample` for structure.
+- run `npm install` in this folder to install all dependencies
+- Create new file called `config.json` in the root of the server directory. See `config.json.sample` for structure.
 
 **Running the server**: 
 - `nodemon` for autoreload on save, 

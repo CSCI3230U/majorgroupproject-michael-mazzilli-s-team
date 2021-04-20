@@ -22,8 +22,7 @@ Vue.prototype.$server = "http://localhost:3000";
 
 Vue.config.productionTip = false
 
-
-
+document.title = "TweetBook";
 
 new Vue({
     router,

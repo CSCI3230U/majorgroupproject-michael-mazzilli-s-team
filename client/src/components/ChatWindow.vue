@@ -54,7 +54,6 @@ export default {
       var currentUser = JSON.parse(cookies.getCookie("user"));
       var message = createMessage(currentUser, this.input_msg)
       this.saved_messages.push(message);
-      console.log(this.saved_messages);
       this.input_msg = ""
       this.$socket.emit('sendMessage', currentUser.msg.username, this.active_friend, message )
       this.scrollChat();

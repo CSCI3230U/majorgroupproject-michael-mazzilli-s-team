@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="tile is-vertical" id="middle"/>
-        <!-- Sidebar for additional content. Maybe put a graph here for site activity? -->
+        <!-- Chat window that was not implemented fully. Leaving here because otherwise it feels super empty -->
         <div v-if="show" id="right-sidebar" class="chat tile is-3 is-parent box">
           <ChatWindow :chatLog= "chatLog" :back="back" @show-chat="setShow"/>
         </div>
@@ -66,16 +66,7 @@ export default {
       return {
         posts: [],
         chatLog: {
-        message1: {
-          user: {
-            firstName: 'John',
-            lastName: 'Doe',
-            username: 'john123',
-            picture: 'https://randomuser.me/api/portraits/men/11.jpg',
-          },
-          text: "This is a test message. Padding out the text to see how it overflows. This is a test message. Padding out the text to see how it overflows.",
-          datetime: new Date('2021-04-17T15:25:30')
-        },
+        //Placeholder data
         message2: {
           user: {
             firstName: 'Mary',
