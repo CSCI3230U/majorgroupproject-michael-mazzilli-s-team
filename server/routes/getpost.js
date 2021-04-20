@@ -18,11 +18,11 @@ router.get('/getpost', (req, res) => {
             path: 'author',
         }
     })
-    .then(function(err,result){
+    .then(function(result,err){
         if(err){
             res.send(err);
         }else{
-            res.send(result);
+            res.send(result.reverse());
         }
     });
 });
