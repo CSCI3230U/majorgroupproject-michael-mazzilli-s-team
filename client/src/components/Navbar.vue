@@ -17,9 +17,6 @@ div(class="navbar" role="navigation" aria-label="main navigation")
             a.navbar-item(href="/messages")
                 | Messages
         .navbar-end
-            SearchBar.navbar-item
-                | SearchBar
-
             div(class="navbar-item" )
                 div(class="navbar-item has-dropdown is-hoverable" :key="key" v-if="has_user")
                     img(class="profile" :src="user.msg.picture" alt="profile")

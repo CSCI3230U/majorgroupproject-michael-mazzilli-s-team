@@ -72,7 +72,6 @@ export default {
             body: JSON.stringify(data)
         }).then(response => response.json())
         .then(response => {
-            console.log(response);
             if(response.status === "success"){
                 //clear the input 
                 this.contents = '';
@@ -91,10 +90,7 @@ export default {
       timeSince () {
           //get the current date, and date posted
           var now = new Date();
-          console.log(this.post.date_contributed);
-          console.log(now);
           var postDate = Date.parse(this.post.date_contributed);
-          console.log(now.getTime()-(postDate-30*60*60));
 
             //determine time between
           this.timesince = now.getTime() - postDate;
@@ -114,7 +110,6 @@ export default {
       },
     toggleComments() {
         this.show = !this.show;
-        console.log(this.show);
     }
   },
   created() {

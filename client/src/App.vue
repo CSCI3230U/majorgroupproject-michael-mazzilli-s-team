@@ -8,11 +8,14 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 var cookies = require('./scripts/cookies');
+var auth = require('./scripts/auth');
 var user = cookies.getCookie('user');
 if(user === '' || user === undefined){
   user = '{}';
 }
+console.log(user);
 var currentUser = JSON.parse(user);
+console.log(currentUser);
 
 export default {
   components: {
@@ -20,8 +23,10 @@ export default {
   },
   sockets: {
   connect: function () {
+    if(auth.isAuthenticated()){
       console.log('socket connected')
       this.$socket.emit("login", currentUser.msg.username)
+    }
   },
   },
 }
