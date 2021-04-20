@@ -1,6 +1,6 @@
 <template>
 <div class="tile is-ancestor">
-  <div class="tile is-3 is-vertical is-parent">
+  <div class="tile is-4 is-vertical is-parent">
     <div class="chats tile is-child box">
       <Chats :message="chatLog.message2"/>
       <Chats :message="chatLog.message1"/>
