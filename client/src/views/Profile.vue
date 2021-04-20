@@ -3,11 +3,21 @@
   <div class="tile is-4 is-vertical is-parent">
     <div class="tile is-child box">
       <ProfileInfo :user="user"/>
+      <div class="menu">
+        <ul class="menu-list">
+          <li><a v-on:click="selected='posts'">Posts</a></li>
+          <li><a v-on:click="selected='comments'">Comments</a></li>
+          <li><a v-on:click="selected='settings'">Settings</a></li>
+        </ul>
+      </div>
     </div>
   </div>
-  <div class="tile is-parent">
-    <div class="tile is-child">
+  <div class="tile is-parent is-vertical">
+    <div id="posts" v-if="isSelected('posts')" class="tile is-child">
       <Post v-for="post in posts" :key="post.post_id" :post="post"/>
+    </div>
+    <div id="info" v-if="isSelected('settings')" class="tile is-child">
+      <LoginInfo :user="user" :key="user._id"/>
     </div>
   </div>
 </div>
@@ -16,25 +26,20 @@
 <script>
 import Post from '@/components/Post.vue'
 import ProfileInfo from '@/components/ProfileInfo.vue'
+import LoginInfo from '@/components/LoginInfo.vue'
 
 export default {
   name: "Profile",
   components: {
     Post,
     ProfileInfo,
+    LoginInfo
   },
   data: function () {
       return {
-        user: {
-          firstName: '',
-          lastName: '',
-          username: '',
-          picture: '',
-        },
-        posts: []/*{
-          text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?',
-          datetime: new Date('2021-04-17T00:35:30'),
-        },*/
+        user: {},
+        posts: [],
+        selected: 'posts'
       }
     },
     methods: {
@@ -48,10 +53,8 @@ export default {
           .then(response => {
             user_data = response;
           }).then(() => {
-            this.user.firstName = user_data.name.first;
-            this.user.lastName = user_data.name.last;
-            this.user.username = user_data.username;
-            this.user.picture = user_data.picture;
+            this.user = user_data;
+            console.log(this.user);
 
             //fetch user's posts
             fetch(this.$server+'/getpost/user/'+user_data._id)
@@ -63,8 +66,13 @@ export default {
                 }
               });
           });
+      },
 
-
+      isSelected(item){
+        if(this.selected === item){
+          return true;
+        }
+        return false;
       }
     },
     created() {
