@@ -1,17 +1,17 @@
 <template>
       <div id="new-post" class="tile is-child">
         <form @submit.prevent="submit">
-          <div class="field">
-            <div class="control">
-              <textarea
-                class="textarea has-fixed-size"
+          <div class="field is-grouped">
+            <div class="control is-expanded">
+              <input
+                class="input"
                 placeholder="Share your message"
                 v-model="contents"
-              ></textarea>
+              >
             </div>
-          </div>
-          <div class="control">
-            <Button/>
+            <div class="control">
+              <Button/>
+            </div>
           </div>
           </form>
         </div>
