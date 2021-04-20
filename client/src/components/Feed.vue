@@ -14,17 +14,20 @@
     <body>
       <!-- Using Bulma's tiles to control the layout -->
       <div id="page-content" class="tile is-ancestor">
+        <div class="tile is-parent is-3 is-vertical">
+        </div>
         <!-- center column -->
-        <div id="posts" class="tile is-parent is-vertical is-7 box">
+        <div id="posts" class="tile is-parent is-vertical is-5 box">
           <!-- Potential post layout -->
           <MessageBox/>
           <Post v-for="post in posts" :key="post._id" :post="post"/> 
         </div>
+        <div class="tile is-1 is-vertical"/>
         <!-- Sidebar for additional content. Maybe put a graph here for site activity? -->
-        <div v-if="show" id="right-sidebar" class="tile is-5 is-parent box" @click="toggleChat">
+        <div v-if="show" id="right-sidebar" class="tile is-3 is-parent box" @click="toggleChat">
           <ChatWindow :chatLog= "chatLog"/>
         </div>
-        <div v-if="!show" id="right-sidebar" class="chats tile is-5 is-vertical is-parent box" @click="toggleChat">
+        <div v-if="!show" id="right-sidebar" class="chats tile is-3 is-vertical is-parent box" @click="toggleChat">
           <div class="tile is-child">
           <Chats :message="chatLog.message2"/>
           <Chats :message="chatLog.message1"/>
