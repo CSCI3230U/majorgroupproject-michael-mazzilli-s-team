@@ -92,12 +92,14 @@ io.on("connection", socket => {
 		const newMessage = new Messages({
 			sender: sender,
 			receiver: receiver,
-			contents: message,
-			timestamp: Date.now()
+			user: message.user,
+			text: message.text,
+			timestamp: message.datetime
 		})
 
 		// Save the message then send the updated messages to the partner
 		newMessage.save(function (err, messages) {
+			console.log("saving message: ", messages)
 			if (err) return console.error(err)
 			updateMessages(sender, receiver)
 		})
@@ -109,7 +111,7 @@ io.on("connection", socket => {
 			{sender:user, receiver:partner},
 			{sender:partner, receiver:user}
 		]}).toArray(function(err, messages){
-			console.log(messages);
+			console.log("err: getMessages:", messages);
 		});
 	});
 
@@ -139,6 +141,7 @@ function updateMessages(user, partner) {
 		{'sender':partner, 'receiver':user}
 	]})
 
+	// Send both users an updated messages list
 	query.exec(function (err, messages) {
 		if (partner in sockets) {
 			console.log("sending messages to ", partner)
@@ -147,4 +150,14 @@ function updateMessages(user, partner) {
 			console.log("partner not found")
 		}
 	})
+
+	// Don't send it to ourself (testing)
+	if (user !== partner){
+		if (user in sockets) {
+			console.log("sending messages to ", user)
+			sockets[user].emit("receiveMessages", messages)
+		} else {
+			console.log("user not found")
+		}
+	}
 }

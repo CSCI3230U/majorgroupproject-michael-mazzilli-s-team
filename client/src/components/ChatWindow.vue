@@ -17,11 +17,12 @@ var cookies = require('../scripts/cookies');
 
 export default {
   name: "ChatWindow",
-  data():
+  data: function(){
     return {
       a: 1
     }
-  }
+  },
+
   components: {
       ChatMessage,
   },
@@ -32,8 +33,12 @@ export default {
     // Called when the user clicks the send button
     sendMessage: function() {
       console.log("Send!")
-      var currentUser = cookies.getCookie("user");
-      this.$socket.emit('sendMessage', JSON.parse(currentUser).msg.username, JSON.parse(currentUser).msg.username, "test")
+      var currentUser = JSON.parse(cookies.getCookie("user"));
+
+      var message = createMessage(currentUser, 'test message')
+      console.log("sending message:", message)
+
+      this.$socket.emit('sendMessage', currentUser.msg.username, currentUser.msg.username, message )
     }
   },
   sockets: {
@@ -45,6 +50,20 @@ export default {
     },
   },
 };
+
+function createMessage(currentUser, text){
+  console.log("createMessage: ", currentUser)
+  return {
+    user: {
+      firstName: currentUser.msg.name.first,
+      lastName: currentUser.msg.name.last,
+      username: currentUser.msg.username,
+      picture: currentUser.msg.picture,
+    },
+    text: text,
+    datetime: Date.now()
+  }
+}
 
 </script>
 

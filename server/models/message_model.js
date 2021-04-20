@@ -4,18 +4,32 @@ const mongoose=require('mongoose');
 //generate database schema
 let Schema = mongoose.Schema;
 let messageSchema = new Schema({
+    //uid
     sender: {
         type: String,
         required: true
     },
+
+    //uid
     receiver: {
         type: String,
         required: true
     },
-    contents: {
+
+    // profile
+    user: {
+        firstName: { type: String, required: true},
+        lastName:  { type: String, required: true},
+        username:  { type: String, required: true},
+        picture:   { data: Buffer, contentType: String}
+    },
+
+    // text contents
+    text: {
         type: String,
         required: true
     },
+
     timestamp: {
         type: Date, 
         default: Date.now()

@@ -35,6 +35,7 @@ export default {
   data: function() {
     return {
       chatLog: {
+        
         message1: {
           user: {
             firstName: 'John',
