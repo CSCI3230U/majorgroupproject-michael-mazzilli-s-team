@@ -72,7 +72,7 @@ export default {
             username: 'john123',
             picture: 'https://randomuser.me/api/portraits/men/11.jpg',
           },
-          text: "This is a test message. Padding out the text to see how it overflows. This is a test message. Padding out the text to see how it overflows. This is a test message. Padding out the text to see how it overflows.",
+          text: "This is a test message. Padding out the text to see how it overflows. This is a test message. Padding out the text to see how it overflows.",
           datetime: new Date('2021-04-17T15:25:30')
         },
         message2: {
