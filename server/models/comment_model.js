@@ -1,5 +1,9 @@
 var mongoose = require('mongoose');
 
+/**
+ * Collection to keep track of all the comments on the platform
+ * has reference to parent post, and original author
+ */
 //generate database schema
 let Schema = mongoose.Schema;
 let commentSchema = new Schema({

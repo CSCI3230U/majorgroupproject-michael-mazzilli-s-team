@@ -47,13 +47,11 @@ router.post('/login', [
                     message: error 
                 });
             }
-            console.log("found user");
 
             //get the user information
             Users.findById(user.user_id)
                 .then(info => getUser=info);
 
-            console.log("got the user info");
 
             //Check the inputted password against the saved password
             return bcrypt.compare(req.body.password, user.password);
@@ -84,8 +82,6 @@ router.post('/login', [
                 });
             });
         }).catch(err => {
-            console.log(error);
-            console.log("big problem");
             return res.status(401).json({
                 message: error 
             });

@@ -26,7 +26,8 @@ router.post('/submitpost', [
         //Create a post object from a post schema
         var newPost = Posts({
             author: req.decoded.userId,
-            contents: req.body.contents
+            contents: req.body.contents,
+            date_contributed: Date.now()
         })
 
         //save the post, return how it went

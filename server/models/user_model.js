@@ -2,6 +2,10 @@
 var mongoose=require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 
+/**
+ * Keeps track of all users in the system
+ * Has reference to Logins and all friends
+ */
 //generate database schema
 let Schema = mongoose.Schema;
 let userSchema = new Schema({

@@ -8,7 +8,11 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 var cookies = require('./scripts/cookies');
-var currentUser = JSON.parse(cookies.getCookie("user"));
+var user = cookies.getCookie('user');
+if(user === '' || user === undefined){
+  user = '{}';
+}
+var currentUser = JSON.parse(user);
 
 export default {
   components: {

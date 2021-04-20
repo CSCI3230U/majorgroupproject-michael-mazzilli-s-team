@@ -32,5 +32,5 @@ export function getToken(){
 }
 
 export function resetCookie(name){
-    document.cookie = `"${name}"=""`;
+    document.cookie = `${name}={}`;
 }

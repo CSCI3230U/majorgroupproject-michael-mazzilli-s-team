@@ -106,7 +106,6 @@ export default {
       },
       toggleChat() {
         this.show = !this.show;
-        console.log(this.show);
       }
     },
 

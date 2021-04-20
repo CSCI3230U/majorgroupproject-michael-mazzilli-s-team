@@ -54,7 +54,9 @@ export default {
         }
   },
   methods: {
+      //submits comment to server, updates comment list on post
       submit () {
+        //get the parameters
         var post_id = this.post._id;
         var data = {
             contents : this.contents,
@@ -85,10 +87,14 @@ export default {
         })
 
       },
+      //calculate time since post was contributed
       timeSince () {
           //get the current date, and date posted
           var now = new Date();
+          console.log(this.post.date_contributed);
+          console.log(now);
           var postDate = Date.parse(this.post.date_contributed);
+          console.log(now.getTime()-(postDate-30*60*60));
 
             //determine time between
           this.timesince = now.getTime() - postDate;

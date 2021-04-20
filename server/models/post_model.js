@@ -2,6 +2,11 @@
 const mongoose=require('mongoose');
 const Users = require('./user_model');
 
+/**
+ * Model to keep track of all posts in the database
+ * Has references to author, and all child comments
+ */
+
 //generate database schema
 let Schema = mongoose.Schema;
 let postSchema = new Schema({

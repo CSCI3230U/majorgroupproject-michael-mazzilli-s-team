@@ -32,13 +32,17 @@ export default {
   },
 
   methods: {
+    //Sends form data to server, creates new post
     submit() {
+      //get parameters
       var data = {
         contents: this.contents,
         token: JSON.parse(cookie.getCookie('user')).token
       }
-      console.log(JSON.stringify(data));
+
+      //make sure user is logged in
       if(data.token !== undefined){
+        //send data to server
         fetch(this.$server+"/submitpost", {
           method: 'post',
           headers: {
@@ -50,10 +54,9 @@ export default {
             console.log(response);
         })
       }else{
+        //go to login page if user isn't logged in.
         this.$router.push('/login');
       }
-
-
     }
   }
 };

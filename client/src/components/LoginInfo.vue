@@ -42,9 +42,7 @@ import { defineComponent } from '@vue/composition-api'
 var cookie = require('../scripts/cookies');
 
 export default defineComponent({
-    setup() {
-
-    },
+    name: "LoginInfo",
 
     props: {
         user: Object
@@ -60,6 +58,7 @@ export default defineComponent({
     },
 
     methods: {
+        //Submits updated data to the server
         submit(){
             if(!this.match()){
                 return;
@@ -72,10 +71,6 @@ export default defineComponent({
                 password:this.new_password,
                 token: cookie.getToken()
             }
-            var user_id = this.user._id;
-
-            console.log(user_id);
-            console.log(data);
 
             //Send request to server
             fetch(this.$server+'/updateuser',{
@@ -86,9 +81,9 @@ export default defineComponent({
                 body: JSON.stringify(data)
             }).then(response => response.json())
             .then(response => {
-                console.log(response);
+                //check that the action was successful
                 if(response.message === 'Success'){
-                    console.log("success");
+                    //reset the fields
                     this.new_password = '';
                     this.verify_password = '';
                     window.location.reload();
@@ -97,12 +92,11 @@ export default defineComponent({
 
         },
 
+        //determine if the two password inputs match
         match(){
             if(this.new_password === this.verify_password){
-                console.log("passwords match");
                 return true;
             }
-            console.log("passwords don't match");
             return false;
         }
     }
