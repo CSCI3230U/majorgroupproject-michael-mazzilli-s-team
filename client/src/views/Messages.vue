@@ -4,13 +4,6 @@
     <div class="chats tile is-child box">
       <Chats :message="chatLog.message2"/>
       <Chats :message="chatLog.message1"/>
-      <Chats :message="chatLog.message1"/>
-      <Chats :message="chatLog.message2"/>
-      <Chats :message="chatLog.message2"/>
-      <Chats :message="chatLog.message1"/>
-      <Chats :message="chatLog.message2"/>
-      <Chats :message="chatLog.message2"/>
-      <Chats :message="chatLog.message2"/>
     </div>
   </div>
   <div class="tile is-parent">
@@ -24,6 +17,7 @@
 <script>
 import ChatWindow from '@/components/ChatWindow.vue';
 import Chats from '@/components/Chats.vue';
+//var cookies = require('../scripts/cookies');
 
 export default {
   name: "Messages",
@@ -34,8 +28,9 @@ export default {
 
   data: function() {
     return {
+      friends: [],
       chatLog: {
-        
+
         message1: {
           user: {
             firstName: 'John',
@@ -59,13 +54,15 @@ export default {
       }
     }
   },
+
+  create() {
+    console.log("Messages Created")
+  },
   sockets: {
-      connect: function () {
-          console.log('socket connected')
-      },
-      customEmit: function () {
-          console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
-      },
+    getFriends: function (friends) {
+        console.log("received friends list: ", friends)
+        this.friends = friends
+    },
   },
 };
 </script>

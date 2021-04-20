@@ -26,10 +26,10 @@ export default {
   },
 
   created() {
-        console.log('socket connected asdfa')
         // Get our messages on page load
         var currentUser = JSON.parse(cookies.getCookie("user"));
         this.$socket.emit('getMessages', currentUser.msg.username, currentUser.msg.username);
+        this.$socket.emit('getFriends');
   },
 
   components: {
@@ -53,8 +53,10 @@ export default {
         console.log("received messages: ", messages)
         this.saved_messages = messages
     },
+    getFriends: function(friends) {
+      console.log("received friends: ", friends)
+    },
     connect: function () {
-        console.log('socket connected')
         // Get our messages on page load
         var currentUser = JSON.parse(cookies.getCookie("user"));
         this.$socket.emit('getMessages', currentUser.msg.username, currentUser.msg.username);

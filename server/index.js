@@ -139,6 +139,27 @@ io.on("connection", socket => {
 		sockets[uid] = socket
 		users[socket] = uid
 	})
+
+	// Return a list of accounts that the user is friends with
+	socket.on("getFriends", function() {
+		var query = Users.findOne({username : users[socket]})
+		let friends_list = []
+		query.exec(function (err, user) {
+			console.log(user, user.friends)
+
+			for (let i = 0; i < user.friends.length; i++) {
+				var friend_query = Users.findOne({_id : user.friends[i]})
+				friend_query.exec(function (err, f) {
+					friends_list.push(f)
+
+					if (i == user.friends.length - 1) {
+						console.log("emitting friends")
+						socket.emit("getFriends", friends_list)
+					}
+				})
+			}
+		})
+	})
 });
 
 /*	When a user sends a message to their conversation partner, we'd like to
