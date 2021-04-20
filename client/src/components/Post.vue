@@ -16,7 +16,7 @@
             </div>
             <form @submit.prevent="submit">
                 <div class="container reply">
-                    <input class=input v-model="contents" type="text" placeholder="Post a repy">
+                    <input class=input v-model="contents" type="text" placeholder="Post a reply">
                     <Button>Post</Button>
                 </div>
             </form>
