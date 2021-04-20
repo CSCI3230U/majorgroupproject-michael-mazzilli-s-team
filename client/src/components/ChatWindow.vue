@@ -14,7 +14,7 @@
         </div>
         <div class="response tile is-parent">
                 <input class="input is-rounded" type="text" placeholder="Type a message">
-                <button><img src="..\assets\send.png" width="30px"/></button>
+                <button><img src="../assets/send.png" width="30px"/></button>
         </div>
     </div>
 </template>
