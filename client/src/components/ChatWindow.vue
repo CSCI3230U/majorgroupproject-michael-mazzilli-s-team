@@ -1,7 +1,6 @@
 <template>
     <div class="chat-window">
         <div id="chat-messages" class="chats tile is-child">
-            <ChatMessage :message="chatLog.message2"/>
             <ChatMessage v-for="msg in saved_messages" :key="msg" :message="msg"/>
         </div>
 
@@ -16,14 +15,23 @@
 <script>
 import ChatMessage from '@/components/ChatMessage.vue';
 var cookies = require('../scripts/cookies');
+var currentUser = JSON.parse(cookies.getCookie("user"));
 
 export default {
+  
   name: "ChatWindow",
   data: function(){
     return {
       saved_messages : [],
-      input_msg: ""
+      input_msg: "",
+      active_friend: currentUser.msg.username
     }
+  },
+
+  created() {
+        // Get our messages on page load
+        this.$socket.emit('getMessages', currentUser.msg.username, this.active_friend);
+        this.$socket.emit('getFriends');
   },
 
   components: {
@@ -36,11 +44,10 @@ export default {
   methods: {
     // Called when the user clicks the send button
     sendMessage: function() {
-      console.log("Send!")
       var currentUser = JSON.parse(cookies.getCookie("user"));
       var message = createMessage(currentUser, this.input_msg)
       this.input_msg = ""
-      this.$socket.emit('sendMessage', currentUser.msg.username, currentUser.msg.username, message )
+      this.$socket.emit('sendMessage', currentUser.msg.username, this.active_friend, message )
     },
     toggleChat() {
         this.show = !this.show;
@@ -48,18 +55,25 @@ export default {
     }
   },
   sockets: {
-    connect: function () {
-        console.log('socket connected')
-    },
+    // Called when we receive messages from the server; save them to the object so they get displayed automatically
     receiveMessages: function (messages) {
-        console.log("received messages: ", messages)
         this.saved_messages = messages
     },
+    connect: function () {
+        // Get our messages on page load
+        var currentUser = JSON.parse(cookies.getCookie("user"));
+        this.$socket.emit('getMessages', currentUser.msg.username, this.active_friend);
+    },
+    setActiveFriend: function(friend) {
+      this.active_friend = friend
+      this.$socket.emit('getMessages', currentUser.msg.username, this.active_friend);
+      console.log("Set active friend: ", friend)
+    }
   },
 };
 
+
 function createMessage(currentUser, text){
-  console.log("createMessage: ", currentUser)
   return {
     user: {
       firstName: currentUser.msg.name.first,
@@ -71,7 +85,6 @@ function createMessage(currentUser, text){
     datetime: Date.now()
   }
 }
-
 </script>
 
 <style scoped>
