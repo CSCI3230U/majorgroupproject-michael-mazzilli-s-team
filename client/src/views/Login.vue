@@ -66,6 +66,9 @@ export default defineComponent({
                     //TODO FIND A MUCH BETTER WAY TO DO THIS
                     window.location.reload();
                     this.$router.push('/');
+                    
+                    // Broadcast to the server the name of UID of the account we logged in to
+                    this.$socket.emit("login", response.msg.username)
                 }
             });
         }

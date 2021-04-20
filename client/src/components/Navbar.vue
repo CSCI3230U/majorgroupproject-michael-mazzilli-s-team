@@ -16,7 +16,6 @@ div(class="navbar" role="navigation" aria-label="main navigation")
                 | Profile
             a.navbar-item(href="/messages")
                 | Messages
-
         .navbar-end
             SearchBar.navbar-item
                 | SearchBar
@@ -48,8 +47,22 @@ div(class="navbar" role="navigation" aria-label="main navigation")
 
 <script>
 import SearchBar from '@/components/SearchBar.vue'
+
+var data = document.cookie;
+data = data.split('=')[1];
+if(data == "" || data == undefined){
+    data='{}';
+}
+
+try {
+    data = JSON.parse(data);
+} catch (e) {
+    console.log('NavBar parse error')
+}
+
 var cookie = require('../scripts/cookies');
 var auth = require('../scripts/auth');
+
 
 export default {
     components: {
