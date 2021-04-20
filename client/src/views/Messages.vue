@@ -2,7 +2,7 @@
 <div class="tile is-ancestor">
   <div class="tile is-4 is-vertical is-parent">
     <div class="chats tile is-child box">
-      <Chats v-for="msg in friends" :key="msg" :message="msg"/>
+      <Chats id="msg" @click.native="setActiveFriend(msg)" v-for="msg in friends" :key="msg" :message="msg"/>
       <!-- <ChatMessage v-for="msg in saved_messages" :key="msg" :message="msg"/> -->
     </div>
   </div>
@@ -18,6 +18,7 @@
 import ChatWindow from '@/components/ChatWindow.vue';
 import Chats from '@/components/Chats.vue';
 var cookies = require('../scripts/cookies');
+var currentUser = JSON.parse(cookies.getCookie("user"));
 
 export default {
   name: "Messages",
@@ -58,12 +59,18 @@ export default {
   create() {
     console.log("Messages Created")
   },
+  methods: {
+    setActiveFriend: function(event) {
+      console.log("[CLICKED] Set Active Friend: ", event.user.username)
+      this.$socket.emit("setActiveFriend", event.user.username)
+      this.$socket.emit('getMessages', currentUser.msg.username, event.user.username);
+    },
+  },
   sockets: {
     getFriends: function (friends) {
         this.friends = []
 
         for (let i = 0; i < friends.length; i++) {
-          var currentUser = JSON.parse(cookies.getCookie("user"));
           this.$socket.emit("getLastMessage", currentUser.msg.username, friends[i].username)
         }
     },
@@ -71,9 +78,11 @@ export default {
       console.log("GLM:", friend, message)
       if (message == null) {
         this.friends.push(createMessage(friend, "<No Messages>"))
-        console.log(this.friends)
+      } else {
+        this.friends.push(message)
       }
-    }
+      console.log(this.friends)
+    },
   },
 };
 

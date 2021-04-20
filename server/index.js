@@ -103,7 +103,7 @@ io.on("connection", socket => {
 			timestamp: message.datetime
 		})
 
-		// Save the message then send the updated messages to the partner
+		// Save the message then send the updated messages to the friend
 		newMessage.save(function (err, messages) {
 			console.log("saving message: ", messages)
 			if (err) return console.error(err)
@@ -112,11 +112,11 @@ io.on("connection", socket => {
 	});
 
 	// Called when a user would like to update their chat window with msgs (new window)
-	socket.on("getMessages", function(user, partner) {
-		console.log("getMessages request received from", user, " to ", partner)
+	socket.on("getMessages", function(user, friend) {
+		console.log("getMessages request received from", user, " to ", friend)
 		var query = Messages.find({$or:[
-			{'sender':user, 'receiver':partner},
-			{'sender':partner, 'receiver':user}
+			{'sender':user, 'receiver':friend},
+			{'sender':friend, 'receiver':user}
 		]})
 	
 		// Send both users an updated messages list
@@ -173,6 +173,11 @@ io.on("connection", socket => {
 			}
 		})
 	})
+
+	socket.on("setActiveFriend", function(friend) {
+		console.log("Sending setActiveFriend(", friend,")")
+		socket.emit("setActiveFriend", friend)
+	})
 });
 
 function userFromName(username) {
@@ -182,32 +187,32 @@ function userFromName(username) {
 	})
 }
 
-/*	When a user sends a message to their conversation partner, we'd like to
+/*	When a user sends a message to their conversation friend, we'd like to
  *  send them a message with the updated messages for that conversation.
  */
-function updateMessages(user, partner) {
+function updateMessages(user, friend) {
 	var query = Messages.find({$or:[
-		{'sender':user, 'receiver':partner},
-		{'sender':partner, 'receiver':user}
+		{'sender':user, 'receiver':friend},
+		{'sender':friend, 'receiver':user}
 	]})
 
 	// Send both users an updated messages list
 	query.exec(function (err, messages) {
-		if (partner in sockets) {
-			console.log("sending messages to ", partner)
-			sockets[partner].emit("receiveMessages", messages)
+		if (friend in sockets) {
+			console.log("sending messages to ", friend)
+			sockets[friend].emit("receiveMessages", messages)
 		} else {
-			console.log("partner not found")
+			console.log("friend not found")
+		}
+		
+		// Don't send it to ourself (testing)
+		if (user !== friend){
+			if (user in sockets) {
+				console.log("sending messages to ", user)
+				sockets[user].emit("receiveMessages", messages)
+			} else {
+				console.log("user not found")
+			}
 		}
 	})
-
-	// Don't send it to ourself (testing)
-	if (user !== partner){
-		if (user in sockets) {
-			console.log("sending messages to ", user)
-			sockets[user].emit("receiveMessages", messages)
-		} else {
-			console.log("user not found")
-		}
-	}
 }

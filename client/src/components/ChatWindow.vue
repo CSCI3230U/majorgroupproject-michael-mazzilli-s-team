@@ -15,20 +15,22 @@
 <script>
 import ChatMessage from '@/components/ChatMessage.vue';
 var cookies = require('../scripts/cookies');
+var currentUser = JSON.parse(cookies.getCookie("user"));
 
 export default {
+  
   name: "ChatWindow",
   data: function(){
     return {
       saved_messages : [],
-      input_msg: ""
+      input_msg: "",
+      active_friend: currentUser.msg.username
     }
   },
 
   created() {
         // Get our messages on page load
-        var currentUser = JSON.parse(cookies.getCookie("user"));
-        this.$socket.emit('getMessages', currentUser.msg.username, currentUser.msg.username);
+        this.$socket.emit('getMessages', currentUser.msg.username, this.active_friend);
         this.$socket.emit('getFriends');
   },
 
@@ -44,7 +46,7 @@ export default {
       var currentUser = JSON.parse(cookies.getCookie("user"));
       var message = createMessage(currentUser, this.input_msg)
       this.input_msg = ""
-      this.$socket.emit('sendMessage', currentUser.msg.username, currentUser.msg.username, message )
+      this.$socket.emit('sendMessage', currentUser.msg.username, this.active_friend, message )
     }
   },
   sockets: {
@@ -55,8 +57,13 @@ export default {
     connect: function () {
         // Get our messages on page load
         var currentUser = JSON.parse(cookies.getCookie("user"));
-        this.$socket.emit('getMessages', currentUser.msg.username, currentUser.msg.username);
+        this.$socket.emit('getMessages', currentUser.msg.username, this.active_friend);
     },
+    setActiveFriend: function(friend) {
+      this.active_friend = friend
+      this.$socket.emit('getMessages', currentUser.msg.username, this.active_friend);
+      console.log("Set active friend: ", friend)
+    }
   },
 };
 
