@@ -63,7 +63,6 @@ router.get('/getpost/user/:id', (req,res) => {
         .populate('author')
         .populate('replies')
         .then(function(err,result){
-            console.log(err);
             if(err){
                 res.send(err);
             }else{

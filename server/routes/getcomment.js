@@ -24,7 +24,6 @@ router.get('/getcomments/:id', (req, res) => {
  * Retrieves all the posts with comments from a specific user
  */
 router.get('/getcomments/user/:id', (req, res) => {
-    console.log("getting comments from user");
     Comments.find({author: req.params.id})
         .populate({
             path: 'parent',
@@ -34,7 +33,6 @@ router.get('/getcomments/user/:id', (req, res) => {
             }]
         }).then((result,err) => {
             var posts = result.map(function(post){ return post.parent; });
-            console.log(posts);
             res.send(posts);
         })
 });

@@ -2,7 +2,8 @@ export function writeCookie(name, value, expiry){
     var d = new Date();
     d.setTime(d.getTime() + expiry*1000);
     var expires = "expires=" + d.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    var cookie = name + "=" + value + ";" + expires + ";path=/";
+    document.cookie = cookie;
 }
 
 export function getCookie(name){
