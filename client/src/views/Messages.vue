@@ -2,8 +2,8 @@
 <div class="tile is-ancestor">
   <div class="tile is-4 is-vertical is-parent">
     <div class="chats tile is-child box">
-      <Chats :message="chatLog.message2"/>
-      <Chats :message="chatLog.message1"/>
+      <Chats v-for="msg in friends" :key="msg" :message="msg"/>
+      <!-- <ChatMessage v-for="msg in saved_messages" :key="msg" :message="msg"/> -->
     </div>
   </div>
   <div class="tile is-parent">
@@ -17,7 +17,7 @@
 <script>
 import ChatWindow from '@/components/ChatWindow.vue';
 import Chats from '@/components/Chats.vue';
-//var cookies = require('../scripts/cookies');
+var cookies = require('../scripts/cookies');
 
 export default {
   name: "Messages",
@@ -60,11 +60,37 @@ export default {
   },
   sockets: {
     getFriends: function (friends) {
-        console.log("received friends list: ", friends)
-        this.friends = friends
+        this.friends = []
+
+        for (let i = 0; i < friends.length; i++) {
+          var currentUser = JSON.parse(cookies.getCookie("user"));
+          this.$socket.emit("getLastMessage", currentUser.msg.username, friends[i].username)
+        }
     },
+    getLastMessage: function(friend, message) {
+      console.log("GLM:", friend, message)
+      if (message == null) {
+        this.friends.push(createMessage(friend, "<No Messages>"))
+        console.log(this.friends)
+      }
+    }
   },
 };
+
+function createMessage(u, text){
+  u = u[0]
+  return {
+    user: {
+      firstName: u.name.first,
+      lastName: u.name.last,
+      username: u.username,
+      picture: u.picture,
+    },
+    text: text,
+    datetime: Date.now()
+  }
+}
+
 </script>
 
 <style scoped>

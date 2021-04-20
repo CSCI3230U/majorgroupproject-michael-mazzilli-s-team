@@ -41,7 +41,6 @@ export default {
   methods: {
     // Called when the user clicks the send button
     sendMessage: function() {
-      console.log("Send!")
       var currentUser = JSON.parse(cookies.getCookie("user"));
       var message = createMessage(currentUser, this.input_msg)
       this.input_msg = ""
@@ -49,12 +48,9 @@ export default {
     }
   },
   sockets: {
+    // Called when we receive messages from the server; save them to the object so they get displayed automatically
     receiveMessages: function (messages) {
-        console.log("received messages: ", messages)
         this.saved_messages = messages
-    },
-    getFriends: function(friends) {
-      console.log("received friends: ", friends)
     },
     connect: function () {
         // Get our messages on page load
@@ -66,7 +62,6 @@ export default {
 
 
 function createMessage(currentUser, text){
-  console.log("createMessage: ", currentUser)
   return {
     user: {
       firstName: currentUser.msg.name.first,

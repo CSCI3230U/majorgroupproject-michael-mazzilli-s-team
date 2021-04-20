@@ -111,7 +111,7 @@ io.on("connection", socket => {
 		})
 	});
 
-	// Called when a user would like to update their chat window (new window)
+	// Called when a user would like to update their chat window with msgs (new window)
 	socket.on("getMessages", function(user, partner) {
 		console.log("getMessages request received from", user, " to ", partner)
 		var query = Messages.find({$or:[
@@ -121,7 +121,25 @@ io.on("connection", socket => {
 	
 		// Send both users an updated messages list
 		query.exec(function (err, messages) {
-			socket.emit("receiveMessages", messages)
+			socket.emit("getMessages", messages)
+		})
+	});
+
+	// Called to update a users friends pane in the chat window
+	socket.on("getLastMessage", function(user, friend) {
+		// Get the most recent message
+		var query = Messages.find({$or:[
+			{'sender':user, 'receiver':friend},
+			{'sender':friend, 'receiver':user}
+		]}).sort({timestamp: -1}).findOne()
+	
+		// Send the most recent message and the friend object so we can create the message
+		query.exec(function (err, message) {
+			var friend_query = Users.findOne({'username' : friend})
+			friend_query.exec(function (err, f) {
+				console.log("GLM:", f, friend)
+				socket.emit("getLastMessage", f, message)
+			})
 		})
 	});
 
@@ -133,8 +151,6 @@ io.on("connection", socket => {
 
 	// Called when a user connects; stores a reference from the user to their active socket
 	socket.on("login", function(uid) {
-		console.log("uid logged in:", uid)
-
 		// Get user/socket references so we can lookup sockets for message passing
 		sockets[uid] = socket
 		users[socket] = uid
@@ -145,15 +161,12 @@ io.on("connection", socket => {
 		var query = Users.findOne({username : users[socket]})
 		let friends_list = []
 		query.exec(function (err, user) {
-			console.log(user, user.friends)
-
 			for (let i = 0; i < user.friends.length; i++) {
 				var friend_query = Users.findOne({_id : user.friends[i]})
 				friend_query.exec(function (err, f) {
 					friends_list.push(f)
 
 					if (i == user.friends.length - 1) {
-						console.log("emitting friends")
 						socket.emit("getFriends", friends_list)
 					}
 				})
@@ -161,6 +174,13 @@ io.on("connection", socket => {
 		})
 	})
 });
+
+function userFromName(username) {
+	var friend_query = Users.findOne({'username' : username})
+	friend_query.exec(function (err, f) {
+		return f
+	})
+}
 
 /*	When a user sends a message to their conversation partner, we'd like to
  *  send them a message with the updated messages for that conversation.
