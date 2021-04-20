@@ -11,7 +11,6 @@ let userSchema = new Schema({
         unique: true
     },
     name: {
-        type: Object,
         require: true,
         type: {
             first: String,
@@ -38,5 +37,5 @@ let userSchema = new Schema({
 
 //export model for use later
 userSchema.plugin(uniqueValidator, { message: "Username taken" });
-
-module.exports = mongoose.model('users', userSchema);
+const Users = mongoose.model('users', userSchema);
+module.exports = Users;
