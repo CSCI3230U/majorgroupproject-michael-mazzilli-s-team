@@ -15,8 +15,11 @@
       <!-- Using Bulma's tiles to control the layout -->
       <div id="page-content" class="tile is-ancestor">
         <div class="tile is-parent is-3 is-vertical" id="left"></div>
+
+        <!-- swapped out for the is-3 tile when shrinking the window. Otherwise not displaying -->
         <div class="tile is-parent is-2 is-vertical" id="left2"></div>
         <div class="tile is-parent is-1 is-vertical" id="left1"></div>
+
         <!-- center column -->
         <div id="posts" class="tile is-parent is-vertical is-5 box">
           <!-- Potential post layout -->
