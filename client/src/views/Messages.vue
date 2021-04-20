@@ -31,6 +31,7 @@ export default {
     ChatWindow,
     Chats,
   },
+
   data: function() {
     return {
       chatLog: {
@@ -53,10 +54,18 @@ export default {
           },
           text: "This is a test message. Padding out the text to see how it overflows.",
           datetime: new Date('2021-04-18T15:25:30')
-        }
+        },
       }
     }
-  }
+  },
+  sockets: {
+      connect: function () {
+          console.log('socket connected')
+      },
+      customEmit: function () {
+          console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+      },
+  },
 };
 </script>
 

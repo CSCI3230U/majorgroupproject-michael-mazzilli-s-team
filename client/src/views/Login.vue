@@ -67,6 +67,8 @@ export default defineComponent({
                     document.cookie=cname+'='+cvalue+'; expires='+expiry;
 
                     this.$router.push('/');
+                    // Broadcast to the server the name of UID of the account we logged in to
+                    this.$socket.emit("login", response.msg.username)
                 }
             });
         }

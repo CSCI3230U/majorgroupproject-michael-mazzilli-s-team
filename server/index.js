@@ -66,7 +66,22 @@ const io = require("socket.io")(3001, {
 	}
 });
 
-// Notify us when a user establishes a socket connection
+
+
+
+// Called when a user connects to the server
 io.on("connection", socket => {
-	console.log("Connection established!")
+	console.log("Connection established")
+	// Whenever we receive a request to send a message, perform the following
+	socket.on("sendMessage", function(sender, receiver, message) {
+		
+	});
+	// Called when a user disconnects
+	socket.on("disconnect", function() {
+
+	})
+
+	socket.on("login", function(uid) {
+		console.log("uid logged in:", uid)
+	})
 });

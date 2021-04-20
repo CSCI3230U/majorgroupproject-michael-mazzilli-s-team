@@ -1,7 +1,7 @@
 <template>
     <div class="chat-window">
-        <div class="chats tile is-child">
-            <ChatMessage :message="chatLog.message1"/>
+        <div id="chat-messages" class="chats tile is-child">
+            <ChatMessage :message="chatLog.message2"/>
             <ChatMessage :message="chatLog.message2"/>
             <ChatMessage :message="chatLog.message1"/>
             <ChatMessage :message="chatLog.message2"/>
@@ -14,6 +14,7 @@
         </div>
         <div class="tile is-parent">
                 <input class="input is-rounded" type="text" placeholder="Type a message">
+                <button id="sendBtn" class="is-rounded" v-on:click="sendMessage">Send</button>
         </div>
     </div>
 </template>
@@ -23,13 +24,23 @@ import ChatMessage from '@/components/ChatMessage.vue';
 
 export default {
   name: "ChatWindow",
+  // Store a list of the chat messages
   components: {
       ChatMessage,
   },
   props: {
       chatLog: Object,
   },
+  methods: {
+    // Called when the user clicks the send button
+    sendMessage: function() {
+      console.log("Send!")
+      this.$ChatMessage.emit("test", "test2")
+      this.$store.getters.getSocket.emit("test", "bigtest")
+    }
+  },
 };
+
 </script>
 
 <style scoped>

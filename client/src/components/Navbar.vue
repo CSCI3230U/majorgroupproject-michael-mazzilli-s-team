@@ -68,8 +68,7 @@ import SearchBar from '@/components/SearchBar.vue'
     try {
         data = JSON.parse(data);
     } catch (e) {
-        console.log("data:", data)
-        console.log("exception:", e)
+        console.log('NavBar parse error')
     }
 
 export default {
