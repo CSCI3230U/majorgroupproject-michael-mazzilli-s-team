@@ -5,6 +5,18 @@ var bcrypt = require('bcrypt');
 const Logins = require('../models/login_model');
 const Users = require('../models/user_model');
 
+/**
+ * Updates a user's first and last names, user's password
+ * 
+ * Required Parameters:
+ *  first - first name of user
+ *  last - last name of user
+ *  password - new password for user
+ *  token - access token received while logging in
+ * 
+ * Examples:
+ *  `curl -X POST -H "Content-Type: application/json" -d '{"first":"<first>", "last": "<last>", "password":"<password>", "token":"<token"}' http://<domain>/login`
+ */
 router.post('/updateuser', (req, res) => {
     bcrypt.hash(req.body.password,10).then(hash => {
         Users.findById(req.decoded.userId).then(user => {

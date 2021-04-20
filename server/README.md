@@ -40,6 +40,30 @@ _Requires an access token to be used_
 
 [source](routes/adduser.js)
 
+## `<domain>/getcomments/:id`
+### `GET`
+Retrieves all the posts with comments from a specific user
+
+**Required Parameters:**\
+`id`        - identifier of the post
+
+**Example:**\
+`curl http://<domain>/getcomments/<id>`
+
+[source](routes/getcomments.js)
+
+## `<domain>/getcomments/user/:id`
+### `GET`
+Gets all the posts stored in the database
+
+**Required Parameters:**\
+`id`        - user identifier
+
+**Example:**\
+`curl http://<domain>/getcomments/user/<id>`
+
+[source](routes/getpost.js)
+
 ## `<domain>/getpost`
 ### `GET`
 Gets all the posts stored in the database
@@ -141,3 +165,18 @@ _Requires token to use_
 `curl -X POST -H "Content-Type: application/json" -d '{"token":"<token>", "contents":"<post contents>"}' http://<domain>/submitpost`
 
 [source](routes/submitpost.js)
+
+## `<domain>/updateuser`
+### `POST`
+Updates a user's first name, last name and password
+_Requires token to use_
+
+**Required Parameters:**\
+`first`     - new first name of user\
+`last`      - new last name of user\
+`password`  - new password for user\
+`token`     - access token of currently logged in user
+
+**Example:**\
+ `curl -X POST -H "Content-Type: application/json" -d '{"first":"<first>", "last": "<last>", "password":"<password>", "token":"<token"}' http://<domain>/login`
+[source](routes/updateuser.js)
