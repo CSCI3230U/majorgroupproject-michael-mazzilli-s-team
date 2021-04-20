@@ -7,7 +7,7 @@
         <div class="response tile is-parent">
                 <input v-model="input_msg" class="input is-rounded" type="text" placeholder="Type a message">
                 <button id="sendBtn" class="is-rounded" v-on:click="sendMessage"><img src="../assets/send.png" width="30px" alt="Send"/></button>
-
+                <button v-if="back" id="toggle" class="is-rounded" v-on:click="toggleChat"><img src="../assets/back.png" width="30px" alt="Send"/></button>
         </div>
     </div>
 </template>
@@ -39,6 +39,7 @@ export default {
   },
   props: {
       chatLog: Object,
+      back: Boolean,
   },
   methods: {
     // Called when the user clicks the send button
@@ -47,6 +48,10 @@ export default {
       var message = createMessage(currentUser, this.input_msg)
       this.input_msg = ""
       this.$socket.emit('sendMessage', currentUser.msg.username, this.active_friend, message )
+    },
+    toggleChat() {
+        this.show = !this.show;
+        this.$emit("show-chat", this.show);
     }
   },
   sockets: {

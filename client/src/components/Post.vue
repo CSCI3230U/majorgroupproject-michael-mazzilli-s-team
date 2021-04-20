@@ -130,6 +130,7 @@ export default {
 img {
   border-radius: 50%;
   margin-bottom: 1rem;
+  cursor: pointer;
 }
 
 
@@ -146,7 +147,8 @@ img {
 .user-name {
     font-weight: bold;
     justify-self: start;
-    white-space: nowrap
+    white-space: nowrap;
+    cursor: pointer;
 }
 
 .username {
@@ -167,11 +169,13 @@ img {
     padding-left: 1em;
     margin-bottom: 1rem;
     display: block;
+    cursor: pointer;
 }
 
 .comments {
     border-top: 1px solid rgb(132, 216, 216);
     padding-top: 1em;
+    cursor: pointer;
 }
 
 .hidden {
