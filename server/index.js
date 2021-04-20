@@ -23,7 +23,11 @@ var login = require('./routes/login');
 var addfriend = require('./routes/addfriend');
 var submitpost = require('./routes/submitpost');
 var submitcomment = require('./routes/submitcomment');
+
 const Messages = require('./models/message_model');
+var getcomment = require('./routes/getcomment');
+var updateuser = require('./routes/updateuser');
+
 
 var app = express();
 app.use(express.urlencoded({extended: false}));
@@ -49,9 +53,11 @@ app.use(getuser);
 app.use(getpost);
 app.use(adduser);
 app.use(login);
+app.use(getcomment);
 app.use(verifyToken, addfriend);
 app.use(verifyToken, submitpost);
 app.use(verifyToken, submitcomment);
+app.use(verifyToken, updateuser);
 
 //start the application
 app.set('port', process.env.PORT || 3000);

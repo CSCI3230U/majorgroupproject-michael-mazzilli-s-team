@@ -52,7 +52,9 @@ router.post('/submitcomment/:id', [
             });
         });
 
-        res.status(201).send("Saved Message");
+        res.status(201).json({
+            status: 'success'
+         });
     }
 });
 

@@ -44,6 +44,7 @@ img {
     padding: 2px;
     padding-left: 1em;
     padding-right: 1em;
+    margin-bottom: 1em;
     width: fit-content;
     height: fit-content;
 }

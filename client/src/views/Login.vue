@@ -3,7 +3,7 @@
     <div class="hero">
         <div class="hero-body is-info">
             <p class="title">Log in...</p>
-            <p class="subtitle">...or create a new account</p>
+            <p class="subtitle">...or create a <a href="/newaccount">new account</a></p>
         </div>
     </div>
     <div class="container">
@@ -24,6 +24,7 @@
 
 <script>
 import { defineComponent } from '@vue/composition-api'
+var cookie = require('../scripts/cookies');
 
 export default defineComponent({
     setup() {
@@ -60,12 +61,10 @@ export default defineComponent({
                     this.invalid = true;
                     
                 }else{
-                    var cvalue = JSON.stringify(response);
-                    var cname = "user";
-                    var d = new Date();
-                    var expiry = d.setTime(d.getTime() + response.expiresIn).toString();
-                    document.cookie=cname+'='+cvalue+'; expires='+expiry;
+                    cookie.writeCookie('user', JSON.stringify(response), response.expiresIn);
 
+                    //TODO FIND A MUCH BETTER WAY TO DO THIS
+                    window.location.reload();
                     this.$router.push('/');
                     
                     // Broadcast to the server the name of UID of the account we logged in to

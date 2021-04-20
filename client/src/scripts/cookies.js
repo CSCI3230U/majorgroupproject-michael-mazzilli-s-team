@@ -1,6 +1,6 @@
 export function writeCookie(name, value, expiry){
     var d = new Date();
-    d.setTime(d.getTime() + expiry);
+    d.setTime(d.getTime() + expiry*1000);
     var expires = "expires=" + d.toUTCString();
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
@@ -20,6 +20,14 @@ export function getCookie(name){
         }
     }
     return "";
+}
+
+export function getToken(){
+    var user = this.getCookie('user');
+    if(user === "" || user === undefined){
+        user = "{}";
+    }
+    return JSON.parse(user).token;
 }
 
 export function resetCookie(name){

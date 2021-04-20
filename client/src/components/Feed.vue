@@ -14,12 +14,25 @@
     <body>
       <!-- Using Bulma's tiles to control the layout -->
       <div id="page-content" class="tile is-ancestor">
+        <div class="tile is-parent is-3 is-vertical" id="left"></div>
+
+        <!-- swapped out for the is-3 tile when shrinking the window. Otherwise not displaying -->
+        <div class="tile is-parent is-2 is-vertical" id="left2"></div>
+        <div class="tile is-parent is-1 is-vertical" id="left1"></div>
+
+        <!-- center column -->
+        <div id="posts" class="tile is-parent is-vertical is-5 box">
+          <!-- Potential post layout -->
+          <MessageBox/>
+          <Post v-for="post in posts" :key="post._id" :post="post"/> 
+        </div>
+        <div class="tile is-vertical" id="middle"/>
         <!-- Sidebar for additional content. Maybe put a graph here for site activity? -->
-        <div v-if="show" id="left-sidebar" class="tile is-4 is-parent box" @click="toggleChat">
+        <div v-if="show" id="right-sidebar" class="tile is-3 is-parent box" @click="toggleChat">
           <ChatWindow :chatLog= "chatLog"/>
         </div>
-        <div v-if="!show" id="left-sidebar" class="chats tile is-4 is-vertical is-parent" @click="toggleChat">
-          <div class="tile is-child box">
+        <div v-if="!show" id="right-sidebar" class="chats tile is-3 is-vertical is-parent box" @click="toggleChat">
+          <div class="tile is-child">
           <Chats :message="chatLog.message2"/>
           <Chats :message="chatLog.message1"/>
           <Chats :message="chatLog.message1"/>
@@ -32,14 +45,6 @@
           <Chats :message="chatLog.message2"/>
           <Chats :message="chatLog.message2"/>
           </div>
-        </div>
-        <!-- center column -->
-        <div id="posts" class="tile is-parent is-vertical is-6 box">
-          <!-- Potential post layout -->
-          <Post v-for="post in posts" :key="post._id" :post="post"/>   
-        </div>
-        <div id="right-sidebar" class="tile is-parent is-2 box">
-        <MessageBox/>
         </div>
       </div>
     </body>
@@ -74,7 +79,7 @@ export default {
             username: 'john123',
             picture: 'https://randomuser.me/api/portraits/men/11.jpg',
           },
-          text: "This is a test message. Padding out the text to see how it overflows. This is a test message. Padding out the text to see how it overflows. This is a test message. Padding out the text to see how it overflows.",
+          text: "This is a test message. Padding out the text to see how it overflows. This is a test message. Padding out the text to see how it overflows.",
           datetime: new Date('2021-04-17T15:25:30')
         },
         message2: {
@@ -118,6 +123,10 @@ nav {
   overflow: hidden;
 }
 
+body {
+  overflow: hidden;
+}
+
 #page-content {
   margin-left: 1rem;
   margin-right: 1rem;
@@ -136,16 +145,18 @@ nav {
 
 #right-sidebar {
   max-height: 85vh;
+  min-width: 300px;
 }
 
 #posts {
     overflow-y: scroll;
-    max-height: 90vh;
+    max-height: 85vh;
+    min-width: 550px;
 }
 
 .chats {
     overflow-y: scroll;
-    max-height: 88vh;
+    max-height: 85vh;
 }
 
 /* width */
@@ -167,4 +178,43 @@ nav {
 ::-webkit-scrollbar-thumb:hover {
   background: azure;
 }
+
+@media screen and (min-width: 1350px) {
+  #left1 { display: none; }
+  #left2 { display: none; }
+}
+
+@media screen and (min-width: 1125px) and (max-width: 1350px) {
+  #left { display: none; }
+  #left1 { display: none; }
+}
+
+@media screen and (min-width: 1035px) and (max-width: 1125px) {
+  #left { display: none; }
+  #left2 { display: none; }
+}
+
+@media screen and (max-width: 1035px) {
+  #left { display: none; }
+  #left1 { display: none; }
+  #left2 { display: none; }
+}
+
+@media screen and (max-width: 950px) {
+  #page-content {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  #posts {
+    min-width: 475px;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  #posts {
+    min-width: 400px;
+  }
+}
+
+
 </style>

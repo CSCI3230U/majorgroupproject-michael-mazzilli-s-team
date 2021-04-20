@@ -4,9 +4,11 @@
             <ChatMessage :message="chatLog.message2"/>
             <ChatMessage v-for="msg in saved_messages" :key="msg" :message="msg"/>
         </div>
-        <div class="tile is-parent">
+
+        <div class="response is-parent">
                 <input v-model="input_msg" class="input is-rounded" type="text" placeholder="Type a message">
                 <button id="sendBtn" class="is-rounded" v-on:click="sendMessage">Send</button>
+
         </div>
     </div>
 </template>
@@ -76,9 +78,16 @@ function createMessage(currentUser, text){
 }
 
 .response {
-    position: absolute;
+    position: relative;
     width: 100%;
     bottom: 0px;
+}
+
+button {
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    padding-top: 3px;
 }
 
 /* width */
